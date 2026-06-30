@@ -43,13 +43,6 @@ create table Forma_Pagamento(
     nome varchar(100) not null
 );
 
-create table Pagamento(
-	id_pagamento int auto_increment primary key,
-    parcelas int not null,
-    id_forma_pagamento int not null,
-    foreign key(id_forma_pagamento) references Forma_Pagamento(id_forma_pagamento)
-);
-
 create table Produto(
 	id_produto int auto_increment primary key,
     nome varchar(100) not null,
@@ -82,10 +75,11 @@ create table Itens_Operacao(
 create table Fluxo_Caixa(
 	id_fluxo_caixa int auto_increment primary key,
     tipo_operacao enum('Compra', 'Venda') not null,
+    parcelas int not null,
     id_caixa int not null,
     foreign key(id_caixa) references Conta_Bancaria(id_caixa),
-    id_pagamento int not null,
-    foreign key(id_pagamento) references Pagamento(id_pagamento),
+    id_forma_pagamento int not null,
+    foreign key(id_forma_pagamento) references Forma_Pagamento(id_forma_pagamento),
     id_operacao int not null,
     foreign key(id_operacao) references Operacao(id_operacao),
     id_folha_pagamento int not null,
