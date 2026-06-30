@@ -265,7 +265,7 @@ public class AuthenticationLdapSaslClientPlugin implements AuthenticationPlugin<
                             };
                         }
 
-                        // Login into Kerberos service and obtain subject/credentials.
+                        // Login into Kerberos net.financeiro.service and obtain subject/credentials.
                         LoginContext loginContext = new LoginContext(LOGIN_CONFIG_ENTRY, null, this.credentialsCallbackHandler, loginConfig);
                         loginContext.login();
                         this.subject = loginContext.getSubject();

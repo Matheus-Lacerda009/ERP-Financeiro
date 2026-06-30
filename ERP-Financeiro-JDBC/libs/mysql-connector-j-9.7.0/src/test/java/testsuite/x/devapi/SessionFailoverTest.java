@@ -52,11 +52,11 @@ public class SessionFailoverTest extends DevApiBaseTestCase {
     private String testsHost = "";
 
     /**
-     * Builds a connection string with the given hosts while setting priorities according to their positions.
+     * Builds a net.financeiro.connection string with the given hosts while setting priorities according to their positions.
      *
      * @param hosts
      *            the hosts list, 1st has priority=100, 2nd has priority=99, and so on
-     * @return a single host or a multi-host connection string
+     * @return a single host or a multi-host net.financeiro.connection string
      */
     private String buildConnectionString(String... hosts) {
         StringBuilder url = new StringBuilder(ConnectionUrl.Type.XDEVAPI_SESSION.getScheme()).append("//");
@@ -142,7 +142,7 @@ public class SessionFailoverTest extends DevApiBaseTestCase {
     }
 
     /*
-     * A fake server that counts how many connection attempts were made.
+     * A fake server that counts how many net.financeiro.connection attempts were made.
      */
     private class ConnectionsCounterFakeServer implements Callable<Void> {
 
@@ -222,21 +222,21 @@ public class SessionFailoverTest extends DevApiBaseTestCase {
         // TS1_3 Create a session to a Server using explicit "connectTimeout" overriding implicit "xdevapi.connect-timeout".
         testConnectionTimeout_assertFailureTimeout(buildConnectionString(fakeHost) + "?" + makeParam(PropertyKey.connectTimeout, "800", true), 800, 1800);
 
-        // TS3_1 Create a session to a remote offline host not setting the "connect-timeout" parameter. The connection must timeout in ~10 seconds.
+        // TS3_1 Create a session to a remote offline host not setting the "connect-timeout" parameter. The net.financeiro.connection must timeout in ~10 seconds.
         // Default "connect-timeout" (10000 ms) overrides implicit "connectTimeout".
         testConnectionTimeout_assertFailureTimeout(buildConnectionString(fakeHost), 10000, 11000);
 
-        // TS4_1 Create a session to a remote offline host setting "connect-timeout" to zero (0). The connection must not timeout until cancelled.
+        // TS4_1 Create a session to a remote offline host setting "connect-timeout" to zero (0). The net.financeiro.connection must not timeout until cancelled.
         testConnectionTimeout_assertFailureTimeout(buildConnectionString(fakeHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "0", true), 12000,
                 600000);
 
         // TS6_1 Create a session using the fail over functionality passing two different Server addresses.
-        // The Server with the higher priority must be offline. The connection must succeed after connect-timeout milliseconds.
+        // The Server with the higher priority must be offline. The net.financeiro.connection must succeed after connect-timeout milliseconds.
         testConnectionTimeout_assertSuccessTimeout(
                 buildConnectionString(fakeHost, this.testsHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "1000", true), 1000, 2000);
 
         // TS6_2 Create a session using the fail over functionality passing two different Server addresses.
-        // Both Servers must be offline. The connection must time out after connect-timeout * 2 milliseconds.
+        // Both Servers must be offline. The net.financeiro.connection must time out after connect-timeout * 2 milliseconds.
         testConnectionTimeout_assertFailureTimeout(buildConnectionString(fakeHost, fakeHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "500", true),
                 1000, 2000);
 
@@ -249,32 +249,32 @@ public class SessionFailoverTest extends DevApiBaseTestCase {
         assertTrue(end >= 11000 && end < 12000, "Expected: " + 11000 + ".." + 12000 + ". Got " + end);
         sess.close();
 
-        // TS11_1 Set connection property xdevapi.connect-timeout=null, try to create Session, check that WrongArgumentException is thrown
-        // with message "The connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'null' can not be converted to an integer."
+        // TS11_1 Set net.financeiro.connection property xdevapi.connect-timeout=null, try to create Session, check that WrongArgumentException is thrown
+        // with message "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'null' can not be converted to an integer."
         assertThrows(WrongArgumentException.class,
-                "The connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'null' can not be converted to an integer.",
+                "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'null' can not be converted to an integer.",
                 () -> this.fact.getSession(buildConnectionString(fakeHost, this.testsHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "null", true)));
 
-        // TS11_2 Set connection property xdevapi.connect-timeout=-1, try to create Session, check that WrongArgumentException is thrown with
-        // message "The connection property 'xdevapi.connect-timeout' only accepts integer values in the range of 0 - 2147483647, the value '-1' exceeds this range."
+        // TS11_2 Set net.financeiro.connection property xdevapi.connect-timeout=-1, try to create Session, check that WrongArgumentException is thrown with
+        // message "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values in the range of 0 - 2147483647, the value '-1' exceeds this range."
         assertThrows(WrongArgumentException.class,
-                "The connection property 'xdevapi.connect-timeout' only accepts integer values in the range of 0 - 2147483647, the value '-1' exceeds this range.",
+                "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values in the range of 0 - 2147483647, the value '-1' exceeds this range.",
                 () -> this.fact.getSession(buildConnectionString(fakeHost, this.testsHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "-1", true)));
 
-        // TS11_3 Set connection property xdevapi.connect-timeout=abc, try to create Session, check that WrongArgumentException is thrown with
-        // message "The connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'abc' can not be converted to an integer."
+        // TS11_3 Set net.financeiro.connection property xdevapi.connect-timeout=abc, try to create Session, check that WrongArgumentException is thrown with
+        // message "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'abc' can not be converted to an integer."
         assertThrows(WrongArgumentException.class,
-                "The connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'abc' can not be converted to an integer.",
+                "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values. The value 'abc' can not be converted to an integer.",
                 () -> this.fact.getSession(buildConnectionString(fakeHost, this.testsHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "abc", true)));
 
-        // TS11_4 Set connection property xdevapi.connect-timeout=, try to create Session, check that WrongArgumentException is thrown with
-        // message "The connection property 'xdevapi.connect-timeout' only accepts integer values. The value '' can not be converted to an integer."
+        // TS11_4 Set net.financeiro.connection property xdevapi.connect-timeout=, try to create Session, check that WrongArgumentException is thrown with
+        // message "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values. The value '' can not be converted to an integer."
         assertThrows(WrongArgumentException.class,
-                "The connection property 'xdevapi.connect-timeout' only accepts integer values. The value '' can not be converted to an integer.",
+                "The net.financeiro.connection property 'xdevapi.connect-timeout' only accepts integer values. The value '' can not be converted to an integer.",
                 () -> this.fact.getSession(buildConnectionString(fakeHost, this.testsHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "", true)));
 
-        // TS11_5 Set connection property xdevapi.connect-timeout=12.8. Please note that c/J truncates decimals w/o exception for integer parameters thus
-        // the error message is not thrown against the property value. Try to connect with this connection string and ensure that CJCommunicationsException
+        // TS11_5 Set net.financeiro.connection property xdevapi.connect-timeout=12.8. Please note that c/J truncates decimals w/o exception for integer parameters thus
+        // the error message is not thrown against the property value. Try to connect with this net.financeiro.connection string and ensure that CJCommunicationsException
         // is thrown not earlier than 12 ms and not later than 1000 ms.
         testConnectionTimeout_assertFailureTimeout(buildConnectionString(fakeHost) + "?" + makeParam(PropertyKey.xdevapiConnectTimeout, "12.8", true), 12,
                 1000);

@@ -44,9 +44,9 @@ import com.mysql.cj.jdbc.JdbcStatement;
 import com.mysql.cj.jdbc.exceptions.SQLError;
 
 /**
- * Connection that opens two connections, one two a replication source, and another to one or more replicas, and decides to use source when the connection is
+ * Connection that opens two connections, one two a replication source, and another to one or more replicas, and decides to use source when the net.financeiro.connection is
  * not
- * read-only, and use replica(s) when the connection is read-only.
+ * read-only, and use replica(s) when the net.financeiro.connection is read-only.
  */
 public class ReplicationConnectionProxy extends MultiHostConnectionProxy implements PingTarget {
 
@@ -72,7 +72,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
      * Static factory to create {@link ReplicationConnection} instances.
      *
      * @param connectionUrl
-     *            The connection URL containing the hosts in a replication setup.
+     *            The net.financeiro.connection URL containing the hosts in a replication setup.
      * @return A {@link ReplicationConnection} proxy.
      * @throws SQLException
      *             if an error occurs
@@ -84,11 +84,11 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
     }
 
     /**
-     * Creates a proxy for java.sql.Connection that routes requests to a load-balanced connection of source servers or a load-balanced connection of replica
-     * servers. Each sub-connection is created with its own set of independent properties.
+     * Creates a proxy for java.sql.Connection that routes requests to a load-balanced net.financeiro.connection of source servers or a load-balanced net.financeiro.connection of replica
+     * servers. Each sub-net.financeiro.connection is created with its own set of independent properties.
      *
      * @param connectionUrl
-     *            The connection URL containing the hosts in a replication setup.
+     *            The net.financeiro.connection URL containing the hosts in a replication setup.
      * @throws SQLException
      *             if an error occurs
      */
@@ -154,7 +154,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
 
         resetReadFromSourceWhenNoReplicas();
 
-        // Initialize replicas connection first so that it is ready to be used in case the sources connection fails and 'allowSourceDownConnections=true'.
+        // Initialize replicas net.financeiro.connection first so that it is ready to be used in case the sources net.financeiro.connection fails and 'allowSourceDownConnections=true'.
         try {
             initializeReplicasConnection();
         } catch (SQLException e) {
@@ -175,7 +175,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
 
         if (this.currentConnection == null) {
             if (this.allowSourceDownConnections && this.replicasConnection != null) {
-                // Set read-only and fail over to the replicas connection.
+                // Set read-only and fail over to the replicas net.financeiro.connection.
                 this.readOnly = true;
                 this.currentConnection = this.replicasConnection;
             } else {
@@ -195,7 +195,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
      * Wraps this object with a new replication Connection instance.
      *
      * @return
-     *         The connection object instance that wraps 'this'.
+     *         The net.financeiro.connection object instance that wraps 'this'.
      */
     @Override
     JdbcConnection getNewWrapperForThisAsConnection() throws SQLException {
@@ -203,10 +203,10 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
     }
 
     /**
-     * Propagates the connection proxy down through all live connections.
+     * Propagates the net.financeiro.connection proxy down through all live connections.
      *
      * @param proxyConn
-     *            The top level connection in the multi-host connections chain.
+     *            The top level net.financeiro.connection in the multi-host connections chain.
      */
     @Override
     protected void propagateProxyDown(JdbcConnection proxyConn) {
@@ -230,7 +230,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
     }
 
     /**
-     * Checks if current connection is the sources l/b connection.
+     * Checks if current net.financeiro.connection is the sources l/b net.financeiro.connection.
      */
     @Override
     public boolean isSourceConnection() {
@@ -238,9 +238,9 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
     }
 
     /**
-     * Checks if current connection is the replicas l/b connection.
+     * Checks if current net.financeiro.connection is the replicas l/b net.financeiro.connection.
      *
-     * @return true if current connection is the replicas l/b connection
+     * @return true if current net.financeiro.connection is the replicas l/b net.financeiro.connection
      */
     public boolean isReplicasConnection() {
         return this.currentConnection != null && this.currentConnection == this.replicasConnection;
@@ -257,7 +257,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
             super.syncSessionState(source, target, readonly);
         } catch (SQLException e1) {
             try {
-                // Try again. It may happen that the connection had recovered in the meantime but the right syncing wasn't done yet.
+                // Try again. It may happen that the net.financeiro.connection had recovered in the meantime but the right syncing wasn't done yet.
                 super.syncSessionState(source, target, readonly);
             } catch (SQLException e2) {
             }
@@ -320,7 +320,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
                         && ((SQLException) e.getCause()).getSQLState() == MysqlErrorNumbers.SQLSTATE_INVALID_TRANSACTION_STATE_NO_SUBCLASS
                         && ((SQLException) e.getCause()).getErrorCode() == MysqlErrorNumbers.ERROR_CODE_NULL_LOAD_BALANCED_CONNECTION) {
                     try {
-                        // Try to re-establish the connection with the last known read-only state.
+                        // Try to re-establish the net.financeiro.connection with the last known read-only state.
                         setReadOnly(this.readOnly);
                         invokeAgain = true;
                     } catch (SQLException sqlEx) {
@@ -335,7 +335,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
     }
 
     /**
-     * Checks if this connection is in a state capable to invoke the provided method. If the connection is in an inconsistent state, i.e. it has no hosts for
+     * Checks if this net.financeiro.connection is in a state capable to invoke the provided method. If the net.financeiro.connection is in an inconsistent state, i.e. it has no hosts for
      * both sub-connections, then throw an invalid transaction state exception. Nevertheless, the methods defined in the ReplicationConnection interface will be
      * allowed as they are the only way to leave from an empty hosts lists situation.
      *
@@ -353,7 +353,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
     }
 
     /**
-     * Pings both l/b connections. Switch to another connection in case of failure.
+     * Pings both l/b connections. Switch to another net.financeiro.connection in case of failure.
      */
     @Override
     public void doPing() throws SQLException {
@@ -392,7 +392,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
         }
 
         if (isSourceConn && sourcesPingException != null) {
-            // Switch to replicas connection.
+            // Switch to replicas net.financeiro.connection.
             if (this.replicasConnection != null && replicasPingException == null) {
                 this.sourceConnection = null;
                 this.currentConnection = this.replicasConnection;
@@ -401,7 +401,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
             throw sourcesPingException;
 
         } else if (!isSourceConn && (replicasPingException != null || this.replicasConnection == null)) {
-            // Switch to sources connection, setting read-only state, if 'readFromSourceWhenNoReplicas=true'.
+            // Switch to sources net.financeiro.connection, setting read-only state, if 'readFromSourceWhenNoReplicas=true'.
             if (this.sourceConnection != null && this.readFromSourceWhenNoReplicas && sourcesPingException == null) {
                 this.replicasConnection = null;
                 this.currentConnection = this.sourceConnection;
@@ -492,11 +492,11 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
     }
 
     private boolean switchToReplicasConnectionIfNecessary() throws SQLException {
-        // Switch to replicas connection:
-        // - If the current connection is null. Or,
+        // Switch to replicas net.financeiro.connection:
+        // - If the current net.financeiro.connection is null. Or,
         // - If we're currently on the source and in read-only mode - we didn't have any replicas to use until now. Or,
-        // - If we're currently on a closed source connection and there are no sources to connect to. Or,
-        // - If we're currently not on a source connection that is closed - means that we were on a closed replicas connection before it was re-initialized.
+        // - If we're currently on a closed source net.financeiro.connection and there are no sources to connect to. Or,
+        // - If we're currently not on a source net.financeiro.connection that is closed - means that we were on a closed replicas net.financeiro.connection before it was re-initialized.
         if (this.currentConnection == null || isSourceConnection() && (this.readOnly || this.sourceHosts.isEmpty() && this.currentConnection.isClosed())
                 || !isSourceConnection() && this.currentConnection.isClosed()) {
             return switchToReplicasConnection();
@@ -539,7 +539,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
                 this.sourceConnection.addHost(hostPortPair);
             }
 
-            // Switch back to the sources connection if this connection was running in fail-safe mode.
+            // Switch back to the sources net.financeiro.connection if this net.financeiro.connection was running in fail-safe mode.
             if (!this.readOnly && !isSourceConnection()) {
                 switchToSourceConnection();
             }
@@ -579,7 +579,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
             }
             this.sourceHosts.remove(host);
 
-            // The source connection may have been implicitly closed by a previous op., don't let it stop us.
+            // The source net.financeiro.connection may have been implicitly closed by a previous op., don't let it stop us.
             if (this.sourceConnection == null || this.sourceConnection.isClosed()) {
                 this.sourceConnection = null;
                 return;
@@ -591,7 +591,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
                 this.sourceConnection.removeHost(hostPortPair);
             }
 
-            // Close the connection if that was the last source.
+            // Close the net.financeiro.connection if that was the last source.
             if (this.sourceHosts.isEmpty()) {
                 this.sourceConnection.close();
                 this.sourceConnection = null;
@@ -669,7 +669,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
                 this.replicasConnection.removeHost(hostPortPair);
             }
 
-            // Close the connection if that was the last replica.
+            // Close the net.financeiro.connection if that was the last replica.
             if (this.replicaHosts.isEmpty()) {
                 this.replicasConnection.close();
                 this.replicasConnection = null;
@@ -706,7 +706,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
                         exceptionCaught = e;
                     }
                     if (!switched && this.readFromSourceWhenNoReplicas && switchToSourceConnection()) {
-                        exceptionCaught = null; // The connection is OK. Cancel the exception, if any.
+                        exceptionCaught = null; // The net.financeiro.connection is OK. Cancel the exception, if any.
                     }
                     if (exceptionCaught != null) {
                         throw exceptionCaught;
@@ -723,7 +723,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
                         exceptionCaught = e;
                     }
                     if (!switched && switchToReplicasConnectionIfNecessary()) {
-                        exceptionCaught = null; // The connection is OK. Cancel the exception, if any.
+                        exceptionCaught = null; // The net.financeiro.connection is OK. Cancel the exception, if any.
                     }
                     if (exceptionCaught != null) {
                         throw exceptionCaught;
@@ -733,7 +733,7 @@ public class ReplicationConnectionProxy extends MultiHostConnectionProxy impleme
             this.readOnly = readOnly;
 
             /*
-             * Reset sources connection read-only state if 'readFromSourceWhenNoReplicas=true'. If there are no replicas then the sources connection will be
+             * Reset sources net.financeiro.connection read-only state if 'readFromSourceWhenNoReplicas=true'. If there are no replicas then the sources net.financeiro.connection will be
              * used
              * with read-only state in its place. Even if not, it must be reset from a possible previous read-only state.
              */

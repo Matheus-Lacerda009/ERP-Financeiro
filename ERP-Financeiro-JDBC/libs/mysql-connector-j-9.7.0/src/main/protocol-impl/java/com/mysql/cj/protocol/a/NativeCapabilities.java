@@ -52,7 +52,7 @@ public class NativeCapabilities implements ServerCapabilities {
         try {
             this.serverVersion = ServerVersion.parseVersion(initialHandshakePacket.readString(StringSelfDataType.STRING_TERM, "ASCII"));
 
-            // read connection id
+            // read net.financeiro.connection id
             this.threadId = initialHandshakePacket.readInteger(IntegerDataType.INT4);
 
             // read auth-plugin-data-part-1 (string[8])

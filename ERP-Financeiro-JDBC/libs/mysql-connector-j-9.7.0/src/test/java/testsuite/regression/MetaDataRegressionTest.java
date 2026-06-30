@@ -1147,7 +1147,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#13277 - RSMD for generated keys has NPEs when a connection is referenced.
+     * Tests fix for BUG#13277 - RSMD for generated keys has NPEs when a net.financeiro.connection is referenced.
      *
      * @throws Exception
      */
@@ -1799,7 +1799,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#27867 - Schema objects with identifiers other than the connection character aren't retrieved correctly in ResultSetMetadata.
+     * Tests fix for BUG#27867 - Schema objects with identifiers other than the net.financeiro.connection character aren't retrieved correctly in ResultSetMetadata.
      *
      * @throws Exception
      */
@@ -2588,7 +2588,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     /**
      * Tests fix for BUG#61150 - First call to SP fails with "No Database Selected"
      * The workaround introduced in DatabaseMetaData.getCallStmtParameterTypes to fix the bug in server where SHOW CREATE PROCEDURE was not respecting
-     * lower-case table names is misbehaving when connection is not attached to database and on non-casesensitive OS.
+     * lower-case table names is misbehaving when net.financeiro.connection is not attached to database and on non-casesensitive OS.
      *
      * @throws Exception
      */
@@ -3139,7 +3139,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
      * Delimited names of databases and tables are handled correctly now. The edge case is ANSI quoted identifiers with leading and trailing "`" symbols, for
      * example CREATE DATABASE "`dbname`". Methods like DatabaseMetaData.getColumns() allow parameters passed both in unquoted and quoted form, quoted form is
      * not JDBC-compliant but used by third party tools. So when you pass the identifier "`dbname`" in unquoted form (`dbname`) driver handles it as quoted by
-     * "`" symbol. To handle such identifiers correctly a new behavior was added to pedantic mode (connection property pedantic=true), now if it set to true
+     * "`" symbol. To handle such identifiers correctly a new behavior was added to pedantic mode (net.financeiro.connection property pedantic=true), now if it set to true
      * methods like DatabaseMetaData.getColumns() treat all parameters as unquoted.
      *
      * @throws Exception
@@ -3696,7 +3696,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
         createProcedure("testBug17248345", "(IN proccol INT) SELECT 1");
         createFunction("testBug17248345", "(funccol INT) RETURNS INT DETERMINISTIC RETURN 1");
 
-        // test with standard connection (getProceduresReturnsFunctions=true & useInformationSchema=false)
+        // test with standard net.financeiro.connection (getProceduresReturnsFunctions=true & useInformationSchema=false)
         props.setProperty(PropertyKey.useInformationSchema.getKeyName(), "false");
         testConn = getConnectionWithProps(props);
         assertFalse(((JdbcConnection) testConn).getPropertySet().getBooleanProperty(PropertyKey.useInformationSchema).getValue(),
@@ -3949,7 +3949,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
         this.stmt.executeUpdate("INSERT INTO testBug35115 VALUES ('2002'), ('2013')");
 
         /*
-         * test connection with property 'yearIsDateType=false'
+         * test net.financeiro.connection with property 'yearIsDateType=false'
          */
         Properties props = new Properties();
         props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name());
@@ -3969,7 +3969,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
         testConnection.close();
 
         /*
-         * test connection with property 'yearIsDateType=true'
+         * test net.financeiro.connection with property 'yearIsDateType=true'
          */
         props.setProperty(PropertyKey.yearIsDateType.getKeyName(), "true");
         testConnection = getConnectionWithProps(props);

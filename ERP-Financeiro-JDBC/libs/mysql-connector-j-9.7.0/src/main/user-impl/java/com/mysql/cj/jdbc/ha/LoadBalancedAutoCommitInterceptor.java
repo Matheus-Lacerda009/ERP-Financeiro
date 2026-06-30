@@ -78,7 +78,7 @@ public class LoadBalancedAutoCommitInterceptor implements QueryInterceptor {
     @SuppressWarnings("resource")
     public <T extends Resultset> T postProcess(Supplier<String> sql, Query interceptedQuery, T originalResultSet, ServerSession serverSession) {
         try {
-            // Don't count SETs, SHOWs neither USEs. Those are mostly used internally and must not trigger a connection switch.
+            // Don't count SETs, SHOWs neither USEs. Those are mostly used internally and must not trigger a net.financeiro.connection switch.
             if (!this.countStatements || StringUtils.startsWithIgnoreCase(sql.get(), "SET") || StringUtils.startsWithIgnoreCase(sql.get(), "SHOW")
                     || StringUtils.startsWithIgnoreCase(sql.get(), "USE")) {
                 return originalResultSet;
@@ -117,7 +117,7 @@ public class LoadBalancedAutoCommitInterceptor implements QueryInterceptor {
                     this.proxy.pickNewConnection();
                 } catch (SQLException e) {
                     // eat this exception, the auto-commit statement completed, but we could not rebalance for some reason.  User may get exception when using
-                    // connection next.
+                    // net.financeiro.connection next.
                 }
             }
         } catch (SQLException ex) {

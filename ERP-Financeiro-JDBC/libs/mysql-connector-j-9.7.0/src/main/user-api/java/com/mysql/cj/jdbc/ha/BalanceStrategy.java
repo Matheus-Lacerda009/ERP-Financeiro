@@ -33,17 +33,17 @@ import com.mysql.cj.jdbc.JdbcConnection;
  *
  * The driver will not pass in a Connection instance when calling init(), but it will pass in the Properties, otherwise it acts like a normal Extension.
  *
- * One instance of a strategy *per* JDBC connection instance will be created. If you need singleton-like behavior, you're on your own to provide it.
+ * One instance of a strategy *per* JDBC net.financeiro.connection instance will be created. If you need singleton-like behavior, you're on your own to provide it.
  */
 public interface BalanceStrategy {
 
     /**
-     * Called by the driver to pick a new connection to route requests over.
+     * Called by the driver to pick a new net.financeiro.connection to route requests over.
      * See LoadBalancedConnectionProxy.createConnectionForHost(String)
      *
      * @param proxy
      *            the InvocationHandler that deals with actual method calls to
-     *            the JDBC connection, and serves as a factory for new
+     *            the JDBC net.financeiro.connection, and serves as a factory for new
      *            connections for this strategy via the
      *            createConnectionForHost() method.
      *
@@ -61,11 +61,11 @@ public interface BalanceStrategy {
      *            for each host in the configured hosts list.
      * @param numRetries
      *            the number of times the driver expects this strategy to re-try
-     *            connection attempts if creating a new connection fails.
-     * @return the physical JDBC connection for the application to use, based
+     *            net.financeiro.connection attempts if creating a new net.financeiro.connection fails.
+     * @return the physical JDBC net.financeiro.connection for the application to use, based
      *         upon the strategy employed.
      * @throws SQLException
-     *             if a new connection can not be found or created by this
+     *             if a new net.financeiro.connection can not be found or created by this
      *             strategy.
      */
     abstract JdbcConnection pickConnection(InvocationHandler proxy, List<String> configuredHosts, Map<String, JdbcConnection> liveConnections,

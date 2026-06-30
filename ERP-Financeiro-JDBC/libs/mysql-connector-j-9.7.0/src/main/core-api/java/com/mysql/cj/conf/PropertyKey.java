@@ -24,12 +24,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * PropertyKey handles connection property names, their camel-case aliases and case sensitivity.
+ * PropertyKey handles net.financeiro.connection property names, their camel-case aliases and case sensitivity.
  */
 public enum PropertyKey {
 
     /*
-     * Properties individually managed after parsing connection string. These property keys are case insensitive.
+     * Properties individually managed after parsing net.financeiro.connection string. These property keys are case insensitive.
      */
     /** The database user name. */
     USER("user", false),
@@ -260,7 +260,7 @@ public enum PropertyKey {
     xdevapiAsyncResponseTimeout("xdevapi.asyncResponseTimeout", "xdevapiAsyncResponseTimeout", true), //
     xdevapiAuth("xdevapi.auth", "xdevapiAuth", true), //
     xdevapiConnectTimeout("xdevapi.connect-timeout", "xdevapiConnectTimeout", true), //
-    xdevapiConnectionAttributes("xdevapi.connection-attributes", "xdevapiConnectionAttributes", true), //
+    xdevapiConnectionAttributes("xdevapi.net.financeiro.connection-attributes", "xdevapiConnectionAttributes", true), //
     xdevapiCompression("xdevapi.compression", "xdevapiCompression", true), //
     xdevapiCompressionAlgorithms("xdevapi.compression-algorithms", "xdevapiCompressionAlgorithms", true), //
     xdevapiCompressionExtensions("xdevapi.compression-extensions", "xdevapiCompressionExtensions", true), //
@@ -298,7 +298,7 @@ public enum PropertyKey {
     }
 
     /**
-     * Initializes each enum element with the proper key name to be used in the connection string or properties maps.
+     * Initializes each enum element with the proper key name to be used in the net.financeiro.connection string or properties maps.
      *
      * @param keyName
      *            the key name for the enum element.
@@ -311,7 +311,7 @@ public enum PropertyKey {
     }
 
     /**
-     * Initializes each enum element with the proper key name to be used in the connection string or properties maps.
+     * Initializes each enum element with the proper key name to be used in the net.financeiro.connection string or properties maps.
      *
      * @param keyName
      *            the key name for the enum element.

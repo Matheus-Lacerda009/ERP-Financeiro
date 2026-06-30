@@ -68,7 +68,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     private long queriesIssuedSinceFailover = 0;
 
     /**
-     * Proxy class to intercept and deal with errors that may occur in any object bound to the current connection.
+     * Proxy class to intercept and deal with errors that may occur in any object bound to the current net.financeiro.connection.
      * Additionally intercepts query executions and triggers an execution count on the outer class.
      */
     class FailoverJdbcInterfaceProxy extends JdbcInterfaceProxy {
@@ -108,7 +108,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Instantiates a new FailoverConnectionProxy for the given list of hosts and connection properties.
+     * Instantiates a new FailoverConnectionProxy for the given list of hosts and net.financeiro.connection properties.
      *
      * @param connectionUrl
      *            {@link ConnectionUrl} instance containing the lists of hosts available to switch on.
@@ -143,7 +143,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /*
-     * Local implementation for the connection switch exception checker.
+     * Local implementation for the net.financeiro.connection switch exception checker.
      */
     @Override
     boolean shouldExceptionTriggerConnectionSwitch(Throwable t) {
@@ -158,7 +158,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
 
         if (sqlState != null) {
             if (sqlState.startsWith("08")) {
-                // connection error
+                // net.financeiro.connection error
                 return true;
             }
         }
@@ -167,7 +167,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Checks if current connection is to a source host.
+     * Checks if current net.financeiro.connection is to a source host.
      */
     @Override
     boolean isSourceConnection() {
@@ -175,7 +175,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /*
-     * Local implementation for the new connection picker.
+     * Local implementation for the new net.financeiro.connection picker.
      */
     @Override
     void pickNewConnection() throws SQLException {
@@ -201,12 +201,12 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Creates a new connection instance for host pointed out by the given host index.
+     * Creates a new net.financeiro.connection instance for host pointed out by the given host index.
      *
      * @param hostIndex
      *            The host index in the global hosts list.
      * @return
-     *         The new connection instance.
+     *         The new net.financeiro.connection instance.
      * @throws SQLException
      *             if an error occurs
      */
@@ -220,7 +220,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Connects this dynamic failover connection proxy to the host pointed out by the given host index.
+     * Connects this dynamic failover net.financeiro.connection proxy to the host pointed out by the given host index.
      *
      * @param hostIndex
      *            The host index in the global hosts list.
@@ -248,12 +248,12 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Replaces the previous underlying connection by the connection given. State from previous connection, if any, is synchronized with the new one.
+     * Replaces the previous underlying net.financeiro.connection by the net.financeiro.connection given. State from previous net.financeiro.connection, if any, is synchronized with the new one.
      *
      * @param hostIndex
-     *            The host index in the global hosts list that matches the given connection.
+     *            The host index in the global hosts list that matches the given net.financeiro.connection.
      * @param connection
-     *            The connection instance to switch to.
+     *            The net.financeiro.connection instance to switch to.
      * @throws SQLException
      *             if an error occurs
      */
@@ -283,7 +283,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Initiates a default failover procedure starting at the current connection host index.
+     * Initiates a default failover procedure starting at the current net.financeiro.connection host index.
      *
      * @throws SQLException
      *             if an error occurs
@@ -299,10 +299,10 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
 
     /**
      * Initiates a default failover procedure starting at the given host index.
-     * This process tries to connect, sequentially, to the next host in the list. The primary host may or may not be excluded from the connection attempts.
+     * This process tries to connect, sequentially, to the next host in the list. The primary host may or may not be excluded from the net.financeiro.connection attempts.
      *
      * @param failedHostIdx
-     *            The host index where to start from. First connection attempt will be the next one.
+     *            The host index where to start from. First net.financeiro.connection attempt will be the next one.
      * @throws SQLException
      *             if an error occurs
      */
@@ -360,7 +360,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Falls back to primary host or keep current connection if primary not available.
+     * Falls back to primary host or keep current net.financeiro.connection if primary not available.
      */
     void fallBackToPrimaryIfAvailable() {
         getLock().lock();
@@ -375,7 +375,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
                 } catch (SQLException e2) {
                 }
             }
-            // Keep current connection and reset counters
+            // Keep current net.financeiro.connection and reset counters
             resetAutoFallBackCounters();
         } finally {
             getLock().unlock();
@@ -386,7 +386,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
      * Gets the next host on the hosts list. Uses a round-robin algorithm to find the next element, but it may skip the index for the primary host.
      * General rules to include the primary host are:
      * - not currently connected to any host.
-     * - primary host is vouched (usually because connection to all secondary hosts has failed).
+     * - primary host is vouched (usually because net.financeiro.connection to all secondary hosts has failed).
      * - conditions to fall back to primary host are met (or they are disabled).
      *
      * @param currHostIdx
@@ -433,9 +433,9 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Checks if there is a underlying connection for this proxy.
+     * Checks if there is a underlying net.financeiro.connection for this proxy.
      *
-     * @return true if there is a connection
+     * @return true if there is a net.financeiro.connection
      */
     boolean isConnected() {
         getLock().lock();
@@ -463,7 +463,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Checks if this proxy is using the primary host in the underlying connection.
+     * Checks if this proxy is using the primary host in the underlying net.financeiro.connection.
      *
      * @return true if so
      */
@@ -477,7 +477,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Checks if this proxy is using a secondary host in the underlying connection.
+     * Checks if this proxy is using a secondary host in the underlying net.financeiro.connection.
      *
      * @return true if so
      */
@@ -532,7 +532,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Closes current connection.
+     * Closes current net.financeiro.connection.
      *
      * @throws SQLException
      *             if an error occurs
@@ -548,7 +548,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Aborts current connection.
+     * Aborts current net.financeiro.connection.
      *
      * @throws SQLException
      *             if an error occurs
@@ -564,7 +564,7 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
     }
 
     /**
-     * Aborts current connection using the given executor.
+     * Aborts current net.financeiro.connection using the given executor.
      *
      * @throws SQLException
      *             if an error occurs
@@ -596,12 +596,12 @@ public class FailoverConnectionProxy extends MultiHostConnectionProxy {
 
         if (this.isClosed && !allowedOnClosedConnection(method)) {
             if (this.autoReconnect && !this.closedExplicitly) {
-                this.currentHostIndex = NO_CONNECTION_INDEX; // Act as if this is the first connection but let it sync with the previous one.
+                this.currentHostIndex = NO_CONNECTION_INDEX; // Act as if this is the first net.financeiro.connection but let it sync with the previous one.
                 pickNewConnection();
                 this.isClosed = false;
                 this.closedReason = null;
             } else {
-                String reason = "No operations allowed after connection closed.";
+                String reason = "No operations allowed after net.financeiro.connection closed.";
                 if (this.closedReason != null) {
                     reason += "  " + this.closedReason;
                 }

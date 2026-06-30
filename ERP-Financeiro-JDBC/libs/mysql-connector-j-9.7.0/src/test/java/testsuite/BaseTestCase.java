@@ -78,7 +78,7 @@ import com.mysql.cj.util.Util;
 public abstract class BaseTestCase {
 
     /**
-     * JDBC URL, initialized from com.mysql.cj.testsuite.url system property, or defaults to jdbc:mysql:///test and its connection URL.
+     * JDBC URL, initialized from com.mysql.cj.testsuite.url system property, or defaults to jdbc:mysql:///test and its net.financeiro.connection URL.
      */
     public static String dbUrl = "jdbc:mysql:///test";
     public static String timeZoneFreeDbUrl = "jdbc:mysql:///test";
@@ -354,13 +354,13 @@ public abstract class BaseTestCase {
     }
 
     /**
-     * Returns a new connection with the given properties
+     * Returns a new net.financeiro.connection with the given properties
      *
      * @param props
      *            the properties to use (the URL will come from the standard for
      *            this testcase).
      *
-     * @return a new connection using the given properties.
+     * @return a new net.financeiro.connection using the given properties.
      *
      * @throws SQLException
      */
@@ -450,11 +450,11 @@ public abstract class BaseTestCase {
     }
 
     /**
-     * Some tests build connections strings for internal usage but, in order for them to work, they may require some connection properties set in the main test
+     * Some tests build connections strings for internal usage but, in order for them to work, they may require some net.financeiro.connection properties set in the main test
      * suite URL. For example 'connectionTimeZone' is one of those properties.
      *
      * @param props
-     *            the Properties object where to add the missing connection properties
+     *            the Properties object where to add the missing net.financeiro.connection properties
      * @return
      *         the modified Properties objects or a new one if <code>props</code> is <code>null</code>
      */
@@ -622,7 +622,7 @@ public abstract class BaseTestCase {
         this.createdObjects = new ArrayList<>();
 
         Properties props = new Properties();
-        props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name()); // testsuite is built upon non-SSL default connection
+        props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name()); // testsuite is built upon non-SSL default net.financeiro.connection
         props.setProperty(PropertyKey.allowPublicKeyRetrieval.getKeyName(), "true");
         props.setProperty(PropertyKey.createDatabaseIfNotExist.getKeyName(), "true");
         if (StringUtils.isNullOrEmpty(mainConnectionUrl.getDatabase())) {
@@ -938,7 +938,7 @@ public abstract class BaseTestCase {
     }
 
     /**
-     * Asserts the most recent history of connection attempts from the global data in UnreliableSocketFactory.
+     * Asserts the most recent history of net.financeiro.connection attempts from the global data in UnreliableSocketFactory.
      *
      * @param expectedConnectionsHistory
      *            The list of expected events. Use UnreliableSocketFactory.getHostConnectedStatus(String), UnreliableSocketFactory.getHostFailedStatus(String)

@@ -68,13 +68,13 @@ public class ServerPreparedQuery extends ClientPreparedQuery {
     /** Field-level metadata for result sets. From statement prepare. */
     private ColumnDefinition resultFields;
 
-    /** The "profileSQL" connection property value */
+    /** The "profileSQL" net.financeiro.connection property value */
     protected boolean profileSQL = false;
 
-    /** The "gatherPerfMetrics" connection property value */
+    /** The "gatherPerfMetrics" net.financeiro.connection property value */
     protected boolean gatherPerfMetrics;
 
-    /** The "logSlowQueries" connection property value */
+    /** The "logSlowQueries" net.financeiro.connection property value */
     protected boolean logSlowQueries = false;
 
     private boolean useAutoSlowLog;

@@ -31,19 +31,19 @@ import com.mysql.cj.exceptions.SSLParamsException;
 import com.mysql.cj.log.Log;
 
 /**
- * Represents physical connection with endpoint
+ * Represents physical net.financeiro.connection with endpoint
  */
 public interface SocketConnection {
 
     /**
-     * Connect to the MySQL server and setup a stream connection.
+     * Connect to the MySQL server and setup a stream net.financeiro.connection.
      *
      * @param host
      *            the hostname to connect to
      * @param port
      *            the port number that the server is listening on
      * @param propertySet
-     *            the PropertySet with required connection options
+     *            the PropertySet with required net.financeiro.connection options
      * @param exceptionInterceptor
      *            exception interceptor
      * @param log

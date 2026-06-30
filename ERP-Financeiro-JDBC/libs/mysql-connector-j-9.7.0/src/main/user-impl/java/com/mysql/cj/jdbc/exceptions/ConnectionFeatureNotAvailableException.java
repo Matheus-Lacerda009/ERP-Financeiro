@@ -26,7 +26,7 @@ import com.mysql.cj.jdbc.JdbcConnection;
 import com.mysql.cj.protocol.PacketSentTimeHolder;
 
 /**
- * Thrown when a client requests a connection-level feature that isn't available for this particular distribution of Connector/J (currently only used by code
+ * Thrown when a client requests a net.financeiro.connection-level feature that isn't available for this particular distribution of Connector/J (currently only used by code
  * that is export-controlled).
  */
 public class ConnectionFeatureNotAvailableException extends CommunicationsException {

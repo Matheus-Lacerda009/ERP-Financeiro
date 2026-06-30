@@ -99,7 +99,7 @@ import com.mysql.cj.util.Util;
  *
  * <P>
  * A Connection's database is able to provide information describing its tables, its supported SQL grammar, its stored procedures, the capabilities of this
- * connection, etc. This information is obtained with the getMetaData method.
+ * net.financeiro.connection, etc. This information is obtained with the getMetaData method.
  * </p>
  */
 public class ConnectionImpl implements JdbcConnection, SessionEventListener, Serializable {
@@ -137,8 +137,8 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
         this.realProxy = this.topProxy instanceof MultiHostMySQLConnection ? ((MultiHostMySQLConnection) proxy).getThisAsProxy() : null;
     }
 
-    // this connection has to be proxied when using multi-host settings so that statements get routed to the right physical connection
-    // (works as "logical" connection)
+    // this net.financeiro.connection has to be proxied when using multi-host settings so that statements get routed to the right physical net.financeiro.connection
+    // (works as "logical" net.financeiro.connection)
     private JdbcConnection getProxy() {
         return this.topProxy != null ? this.topProxy : this;
     }
@@ -225,7 +225,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
     private static final int DEFAULT_RESULT_SET_CONCURRENCY = ResultSet.CONCUR_READ_ONLY;
 
     /**
-     * Creates a connection instance.
+     * Creates a net.financeiro.connection instance.
      *
      * @param hostInfo
      *            {@link HostInfo} instance
@@ -245,7 +245,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
 
     private NativeSession session = null;
 
-    /** Is this connection associated with a global tx? */
+    /** Is this net.financeiro.connection associated with a global tx? */
     private boolean isInGlobalTx = false;
 
     /** isolation level */
@@ -263,7 +263,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
     /** The password we used */
     private String password = null;
 
-    /** Properties for this connection specified by user */
+    /** Properties for this net.financeiro.connection specified by user */
     protected Properties props = null;
 
     /** Are we in read-only mode? */
@@ -326,16 +326,16 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
     }
 
     /**
-     * Creates a connection to a MySQL Server.
+     * Creates a net.financeiro.connection to a MySQL Server.
      *
      * @param hostInfo
-     *            the {@link HostInfo} instance that contains the host, user and connections attributes for this connection
+     *            the {@link HostInfo} instance that contains the host, user and connections attributes for this net.financeiro.connection
      * @exception SQLException
      *                if a database access error occurs
      */
     public ConnectionImpl(HostInfo hostInfo) throws SQLException {
         try {
-            // Stash away for later, used to clone this connection for Statement.cancel and Statement.setQueryTimeout().
+            // Stash away for later, used to clone this net.financeiro.connection for Statement.cancel and Statement.setQueryTimeout().
             this.origHostInfo = hostInfo;
             this.origHostToConnectTo = hostInfo.getHost();
             this.origPortToConnectTo = hostInfo.getPort();
@@ -819,7 +819,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
         Lock connectionLock = getConnectionLock();
         connectionLock.lock();
         try {
-            // Synchronization Not needed for *new* connections, but definitely for connections going through fail-over, since we might get the new connection
+            // Synchronization Not needed for *new* connections, but definitely for connections going through fail-over, since we might get the new net.financeiro.connection
             // up and running *enough* to start sending cached or still-open server-side prepared statements over to the backend before we get a chance to
             // re-prepare them...
 
@@ -862,7 +862,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
                 Lock connectionLock = getConnectionLock();
                 connectionLock.lock();
                 try {
-                    // save state from old connection
+                    // save state from old net.financeiro.connection
                     oldAutoCommit = getAutoCommit();
                     oldIsolationLevel = this.isolationLevel;
                     oldReadOnly = isReadOnly(false);
@@ -873,11 +873,11 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
                     connectionLock.unlock();
                 }
 
-                // Server properties might be different from previous connection, so initialize again...
+                // Server properties might be different from previous net.financeiro.connection, so initialize again...
                 initializePropsFromServer();
 
                 if (isForReconnect) {
-                    // Restore state from old connection
+                    // Restore state from old net.financeiro.connection
                     setAutoCommit(oldAutoCommit);
                     setTransactionIsolation(oldIsolationLevel);
                     setDatabase(oldDb);
@@ -963,7 +963,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
             JdbcConnection c = getProxy();
             this.session.connect(this.origHostInfo, this.user, this.password, this.database, getLoginTimeout(), c);
 
-            // save state from old connection
+            // save state from old net.financeiro.connection
             boolean oldAutoCommit = getAutoCommit();
             int oldIsolationLevel = this.isolationLevel;
             boolean oldReadOnly = isReadOnly(false);
@@ -971,11 +971,11 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
 
             this.session.setQueryInterceptors(this.queryInterceptors);
 
-            // Server properties might be different from previous connection, so initialize again...
+            // Server properties might be different from previous net.financeiro.connection, so initialize again...
             initializePropsFromServer();
 
             if (isForReconnect) {
-                // Restore state from old connection
+                // Restore state from old net.financeiro.connection
                 setAutoCommit(oldAutoCommit);
                 setTransactionIsolation(oldIsolationLevel);
                 setDatabase(oldDb);
@@ -1148,10 +1148,10 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
 
     /**
      * NOT JDBC-Compliant, but clients can use this method to determine how long
-     * this connection has been idle. This time (reported in milliseconds) is
+     * this net.financeiro.connection has been idle. This time (reported in milliseconds) is
      * updated once a query has completed.
      *
-     * @return number of ms that this connection has been idle, 0 if the driver
+     * @return number of ms that this net.financeiro.connection has been idle, 0 if the driver
      *         is busy retrieving results.
      */
     @Override
@@ -1709,7 +1709,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
     }
 
     /**
-     * Close the connection and release resources. By default the close is considered explicit, does not roll back the transaction, does not propagate to
+     * Close the net.financeiro.connection and release resources. By default the close is considered explicit, does not roll back the transaction, does not propagate to
      * dependents and is processed normally (not forced).
      */
     @Override
@@ -2096,7 +2096,7 @@ public class ConnectionImpl implements JdbcConnection, SessionEventListener, Ser
                 }
 
                 // this internal value must be set first as failover depends on it being set to true to fail over (which is done by most app servers and
-                // connection pools at the end of a transaction), and the driver issues an implicit set based on this value when it (re)-connects to a
+                // net.financeiro.connection pools at the end of a transaction), and the driver issues an implicit set based on this value when it (re)-connects to a
                 // server so the value holds across connections
                 this.session.getServerSession().setAutoCommit(autoCommitFlag);
 

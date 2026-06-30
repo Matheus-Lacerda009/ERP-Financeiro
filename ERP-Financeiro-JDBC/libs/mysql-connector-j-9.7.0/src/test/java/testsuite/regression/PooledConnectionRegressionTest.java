@@ -85,36 +85,36 @@ import testsuite.BaseTestCase;
  * </p>
  *
  * <p>
- * "When the application calls Connection.close(), an event is triggered that tells the connection pool it can recycle the physical database connection. In
- * other words, the event signals the connection pool that the PooledConnection object which originally produced the Connection object generating the event can
- * be put back in the connection pool."
+ * "When the application calls Connection.close(), an event is triggered that tells the net.financeiro.connection pool it can recycle the physical database net.financeiro.connection. In
+ * other words, the event signals the net.financeiro.connection pool that the PooledConnection object which originally produced the Connection object generating the event can
+ * be put back in the net.financeiro.connection pool."
  * </p>
  *
  * <p>
  * "A Connection-EventListener will also be notified when a fatal error occurs, so that it can make a note not to put a bad PooledConnection object back in the
  * cache when the application finishes using it. When an error occurs, the ConnectionEventListener is notified by the JDBC driver, just before the driver throws
  * an SQLException to the application to notify it of the same error. Note that automatic closing of a Connection object as discussed in the previous section
- * does not generate a connection close event."
+ * does not generate a net.financeiro.connection close event."
  * </p>
  * The JDBC 3.0 specification states the same in other words:
  *
  * <p>
- * "The Connection.close method closes the logical handle, but the physical connection is maintained. The connection pool manager is notified that the
+ * "The Connection.close method closes the logical handle, but the physical net.financeiro.connection is maintained. The net.financeiro.connection pool manager is notified that the
  * underlying PooledConnection object is now available for reuse. If the application attempts to reuse the logical handle, the Connection implementation throws
  * an SQLException."
  * </p>
  *
  * <p>
  * "For a given PooledConnection object, only the most recently produced logical Connection object will be valid. Any previously existing Connection object is
- * automatically closed when the associated PooledConnection.getConnection method is called. Listeners (connection pool managers) are not notified in this case.
- * This gives the application server a way to take a connection away from a client. This is an unlikely scenario but may be useful if the application server is
+ * automatically closed when the associated PooledConnection.getConnection method is called. Listeners (net.financeiro.connection pool managers) are not notified in this case.
+ * This gives the application server a way to take a net.financeiro.connection away from a client. This is an unlikely scenario but may be useful if the application server is
  * trying to force an orderly shutdown."
  * </p>
  *
  * <p>
- * "A connection pool manager shuts down a physical connection by calling the method PooledConnection.close. This method is typically called only in certain
- * circumstances: when the application server is undergoing an orderly shutdown, when the connection cache is being reinitialized, or when the application
- * server receives an event indicating that an unrecoverable error has occurred on the connection."
+ * "A net.financeiro.connection pool manager shuts down a physical net.financeiro.connection by calling the method PooledConnection.close. This method is typically called only in certain
+ * circumstances: when the application server is undergoing an orderly shutdown, when the net.financeiro.connection cache is being reinitialized, or when the application
+ * server receives an event indicating that an unrecoverable error has occurred on the net.financeiro.connection."
  * </p>
  * Even though the specification isn't clear about it, I think it is no use generating a close event when calling the method PooledConnection.close(), even if a
  * logical Connection is open for this PooledConnection, bc the PooledConnection will obviously not be returned to the pool.
@@ -160,7 +160,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#7136 ... Statement.getConnection() returning physical connection instead of logical connection.
+     * Tests fix for BUG#7136 ... Statement.getConnection() returning physical net.financeiro.connection instead of logical net.financeiro.connection.
      *
      * @throws Exception
      */
@@ -224,20 +224,20 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
                 Connection _conn = pc.getConnection();
 
                 try {
-                    // Try to reclaim connection.
-                    System.out.println("Before connection reclaim.");
+                    // Try to reclaim net.financeiro.connection.
+                    System.out.println("Before net.financeiro.connection reclaim.");
 
                     _conn = pc.getConnection();
 
-                    System.out.println("After connection reclaim.");
+                    System.out.println("After net.financeiro.connection reclaim.");
                 } finally {
                     if (_conn != null) {
-                        System.out.println("Before connection.close().");
+                        System.out.println("Before net.financeiro.connection.close().");
 
                         // This should generate a close event.
                         _conn.close();
 
-                        System.out.println("After connection.close().");
+                        System.out.println("After net.financeiro.connection.close().");
                     }
                 }
             }
@@ -254,7 +254,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests that PacketTooLargeException doesn't clober the connection.
+     * Tests that PacketTooLargeException doesn't clober the net.financeiro.connection.
      *
      * @throws Exception
      */
@@ -290,7 +290,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Test the nb of closeEvents generated by a PooledConnection. A JDBC-compliant driver should only generate 1 closeEvent each time connection.close() is
+     * Test the nb of closeEvents generated by a PooledConnection. A JDBC-compliant driver should only generate 1 closeEvent each time net.financeiro.connection.close() is
      * called.
      *
      * @throws Exception
@@ -309,12 +309,12 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
             for (int i = 0; i < NB_TESTS; i++) {
                 Connection pConn = pc.getConnection();
 
-                System.out.println("Before connection.close().");
+                System.out.println("Before net.financeiro.connection.close().");
 
                 // This should generate a close event.
                 pConn.close();
 
-                System.out.println("After connection.close().");
+                System.out.println("After net.financeiro.connection.close().");
             }
         } finally {
             if (pc != null) {
@@ -492,7 +492,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
         assertEquals(this.conn.getTypeMap(), cw.getTypeMap());
         assertNull(cw.getWarnings());
 
-        // testsuite is built upon non-SSL default connection with additional useSSL=false&allowPublicKeyRetrieval=true properties
+        // testsuite is built upon non-SSL default net.financeiro.connection with additional useSSL=false&allowPublicKeyRetrieval=true properties
         assertFalse(cw.hasSameProperties((JdbcConnection) this.conn));
 
         assertTrue(cw.isSameResource((JdbcConnection) this.conn));
@@ -562,10 +562,10 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
         //        cw.checkClosed();
 
         cw.close();
-        assertEquals(26, cw.getActiveStatementCount()); // Still active because the underlying connection wasn't really closed, but returned to the pool.
+        assertEquals(26, cw.getActiveStatementCount()); // Still active because the underlying net.financeiro.connection wasn't really closed, but returned to the pool.
         checkConnectionReturnedToPool(cw);
 
-        pc.close(); // Now the connection is really closed.
+        pc.close(); // Now the net.financeiro.connection is really closed.
         assertEquals(0, cw.getActiveStatementCount());
         checkReallyClosedConnection(cw);
 
@@ -793,7 +793,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
             return null;
         });
 
-        // testsuite is built upon non-SSL default connection with additional useSSL=false&allowPublicKeyRetrieval=true properties
+        // testsuite is built upon non-SSL default net.financeiro.connection with additional useSSL=false&allowPublicKeyRetrieval=true properties
         assertFalse(cw.hasSameProperties((JdbcConnection) this.conn));
 
         assertTrue(cw.isSameResource((JdbcConnection) this.conn));
@@ -1068,7 +1068,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
         assertEquals(((JdbcConnection) this.conn).getHostPortPair(), cw.getHostPortPair());
         assertEquals(Properties.class, cw.getProperties().getClass());
         assertEquals(JdbcPropertySetImpl.class, cw.getPropertySet().getClass());
-        assertThrows(SQLNonTransientConnectionException.class, "No operations allowed after connection closed.", () -> {
+        assertThrows(SQLNonTransientConnectionException.class, "No operations allowed after net.financeiro.connection closed.", () -> {
             cw.getSchema();
             return null;
         });
@@ -1130,7 +1130,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
         cw.setStatementComment("Test comment 3");
         assertNotEquals(((JdbcConnection) this.conn).getStatementComment(), cw.getStatementComment());
 
-        assertThrows(SQLNonTransientConnectionException.class, "No operations allowed after connection closed.", () -> {
+        assertThrows(SQLNonTransientConnectionException.class, "No operations allowed after net.financeiro.connection closed.", () -> {
             cw.getNetworkTimeout();
             return null;
         });
@@ -1143,7 +1143,7 @@ public final class PooledConnectionRegressionTest extends BaseTestCase {
             return null;
         });
 
-        // testsuite is built upon non-SSL default connection with additional useSSL=false&allowPublicKeyRetrieval=true properties
+        // testsuite is built upon non-SSL default net.financeiro.connection with additional useSSL=false&allowPublicKeyRetrieval=true properties
         assertFalse(cw.hasSameProperties((JdbcConnection) this.conn));
 
         assertTrue(cw.isSameResource((JdbcConnection) this.conn));

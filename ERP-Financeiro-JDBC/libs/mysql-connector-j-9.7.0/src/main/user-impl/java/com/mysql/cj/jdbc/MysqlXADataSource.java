@@ -52,10 +52,10 @@ public class MysqlXADataSource extends MysqlDataSource implements javax.sql.XADa
     }
 
     /**
-     * Wraps a connection as a 'fake' XAConnection
+     * Wraps a net.financeiro.connection as a 'fake' XAConnection
      *
      * @param conn
-     *            connection to wrap
+     *            net.financeiro.connection to wrap
      * @return {@link XAConnection}
      * @throws SQLException
      *             if an error occurs

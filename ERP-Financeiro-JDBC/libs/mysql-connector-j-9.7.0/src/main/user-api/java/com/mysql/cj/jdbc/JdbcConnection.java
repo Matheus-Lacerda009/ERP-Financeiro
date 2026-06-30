@@ -45,8 +45,8 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     public JdbcPropertySet getPropertySet();
 
     /**
-     * Changes the user on this connection by performing a re-authentication. If
-     * authentication fails, the connection is failed.
+     * Changes the user on this net.financeiro.connection by performing a re-authentication. If
+     * authentication fails, the net.financeiro.connection is failed.
      *
      * @param userName
      *            the username to authenticate with
@@ -156,16 +156,16 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     java.sql.PreparedStatement clientPrepareStatement(String sql, String[] autoGenKeyColNames) throws SQLException;
 
     /**
-     * Returns the number of statements active on this connection, which haven't been .close()d.
+     * Returns the number of statements active on this net.financeiro.connection, which haven't been .close()d.
      *
      * @return the number of active statements
      */
     int getActiveStatementCount();
 
     /**
-     * Reports how long this connection has been idle. This time (reported in milliseconds) is updated once a query has completed.
+     * Reports how long this net.financeiro.connection has been idle. This time (reported in milliseconds) is updated once a query has completed.
      *
-     * @return number of ms that this connection has been idle, 0 if the driver is busy retrieving results.
+     * @return number of ms that this net.financeiro.connection has been idle, 0 if the driver is busy retrieving results.
      */
     long getIdleFor();
 
@@ -177,9 +177,9 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     String getStatementComment();
 
     /**
-     * Is this connection currently a participant in an XA transaction?
+     * Is this net.financeiro.connection currently a participant in an XA transaction?
      *
-     * @return true if this connection currently a participant in an XA transaction
+     * @return true if this net.financeiro.connection currently a participant in an XA transaction
      */
     boolean isInGlobalTx();
 
@@ -191,19 +191,19 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
      */
     void setInGlobalTx(boolean flag);
 
-    // TODO this and other multi-host connection specific methods should be moved to special interface
+    // TODO this and other multi-host net.financeiro.connection specific methods should be moved to special interface
     /**
-     * Is this connection connected to the first host in the list if there is a list of servers in the URL?
+     * Is this net.financeiro.connection connected to the first host in the list if there is a list of servers in the URL?
      *
-     * @return true if this connection is connected to the first in the list.
+     * @return true if this net.financeiro.connection is connected to the first in the list.
      */
     boolean isSourceConnection();
 
     /**
-     * Does this connection have the same resource name as the given connection (for XA)?
+     * Does this net.financeiro.connection have the same resource name as the given net.financeiro.connection (for XA)?
      *
      * @param c
-     *            connection
+     *            net.financeiro.connection
      * @return true if it is the same one
      */
     boolean isSameResource(JdbcConnection c);
@@ -216,7 +216,7 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     boolean lowerCaseTableNames();
 
     /**
-     * Detect if the connection is still good by sending a ping command to the server.
+     * Detect if the net.financeiro.connection is still good by sending a ping command to the server.
      *
      * @throws SQLException
      *             if the ping fails
@@ -224,8 +224,8 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     void ping() throws SQLException;
 
     /**
-     * Resets the server-side state of this connection. Doesn't work if isParanoid() is set (it will become a no-op in this case). Usually only used from
-     * connection pooling code.
+     * Resets the server-side state of this net.financeiro.connection. Doesn't work if isParanoid() is set (it will become a no-op in this case). Usually only used from
+     * net.financeiro.connection pooling code.
      *
      * @throws SQLException
      *             if the operation fails while resetting server state.
@@ -360,10 +360,10 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     int getAutoIncrementIncrement();
 
     /**
-     * Does this connection have the same properties as another?
+     * Does this net.financeiro.connection have the same properties as another?
      *
      * @param c
-     *            connection
+     *            net.financeiro.connection
      * @return true if has the same properties
      */
     boolean hasSameProperties(JdbcConnection c);
@@ -375,7 +375,7 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     void setProxy(JdbcConnection proxy);
 
     /**
-     * Is the server this connection is connected to "local" (i.e. same host) as the application?
+     * Is the server this net.financeiro.connection is connected to "local" (i.e. same host) as the application?
      *
      * @return true if the server is "local"
      * @throws SQLException
@@ -405,7 +405,7 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     // **************************
 
     /**
-     * Clobbers the physical network connection and marks this connection as closed.
+     * Clobbers the physical network net.financeiro.connection and marks this net.financeiro.connection as closed.
      *
      * @throws SQLException
      *             if an error occurs
@@ -455,12 +455,12 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     void initializeSafeQueryInterceptors() throws SQLException;
 
     /**
-     * Tests to see if the connection is in Read Only Mode.
+     * Tests to see if the net.financeiro.connection is in Read Only Mode.
      *
      * @param useSessionStatus
-     *            in some cases, for example when restoring connection with autoReconnect=true, we can rely only on saved readOnly state, so use
+     *            in some cases, for example when restoring net.financeiro.connection with autoReconnect=true, we can rely only on saved readOnly state, so use
      *            useSessionStatus=false in that case
-     * @return true if the connection is read only
+     * @return true if the net.financeiro.connection is read only
      * @exception SQLException
      *                if a database access error occurs
      */
@@ -469,7 +469,7 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     void pingInternal(boolean checkForClosedConnection, int timeoutMillis) throws SQLException;
 
     /**
-     * Close the connection and release resources.
+     * Close the net.financeiro.connection and release resources.
      *
      * @param cause
      *            the exception that caused this method call
@@ -520,17 +520,17 @@ public interface JdbcConnection extends java.sql.Connection, MysqlConnection, Tr
     ClientInfoProvider getClientInfoProviderImpl() throws SQLException;
 
     /**
-     * Set current database for this connection.
+     * Set current database for this net.financeiro.connection.
      *
      * @param dbName
-     *            the database for this connection to use
+     *            the database for this net.financeiro.connection to use
      * @throws SQLException
      *             if a database access error occurs
      */
     void setDatabase(String dbName) throws SQLException;
 
     /**
-     * Retrieves this connection object's current database name.
+     * Retrieves this net.financeiro.connection object's current database name.
      *
      * @return current database name
      */

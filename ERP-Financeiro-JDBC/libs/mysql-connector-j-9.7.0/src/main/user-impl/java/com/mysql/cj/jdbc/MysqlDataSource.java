@@ -42,7 +42,7 @@ import com.mysql.cj.conf.RuntimeProperty;
 import com.mysql.cj.util.StringUtils;
 
 /**
- * A JNDI DataSource for a Mysql JDBC connection
+ * A JNDI DataSource for a Mysql JDBC net.financeiro.connection
  */
 public class MysqlDataSource extends JdbcPropertySetImpl implements DataSource, Referenceable, Serializable, JdbcPropertySet {
 
@@ -227,7 +227,7 @@ public class MysqlDataSource extends JdbcPropertySetImpl implements DataSource, 
 
     /**
      * Initializes driver properties that come from a JNDI reference (in the
-     * case of a javax.sql.DataSource bound into some name service that doesn't
+     * case of a javax.sql.DataSource bound into some name net.financeiro.service that doesn't
      * handle Java objects directly).
      *
      * @param ref
@@ -308,19 +308,19 @@ public class MysqlDataSource extends JdbcPropertySetImpl implements DataSource, 
     //
 
     /**
-     * Sets the URL for this connection
+     * Sets the URL for this net.financeiro.connection
      *
      * @param url
-     *            the URL for this connection
+     *            the URL for this net.financeiro.connection
      */
     public void setURL(String url) {
         setUrl(url);
     }
 
     /**
-     * Returns the URL for this connection
+     * Returns the URL for this net.financeiro.connection
      *
-     * @return the URL for this connection
+     * @return the URL for this net.financeiro.connection
      */
     public String getURL() {
         return getUrl();
@@ -340,9 +340,9 @@ public class MysqlDataSource extends JdbcPropertySetImpl implements DataSource, 
     }
 
     /**
-     * Returns the JDBC URL that will be used to create the database connection.
+     * Returns the JDBC URL that will be used to create the database net.financeiro.connection.
      *
-     * @return the URL for this connection
+     * @return the URL for this net.financeiro.connection
      */
     public String getUrl() {
         if (!this.explicitUrl) {
@@ -373,21 +373,21 @@ public class MysqlDataSource extends JdbcPropertySetImpl implements DataSource, 
     }
 
     /**
-     * Returns the configured user for this connection
+     * Returns the configured user for this net.financeiro.connection
      *
-     * @return the user for this connection
+     * @return the user for this net.financeiro.connection
      */
     public String getUser() {
         return this.user;
     }
 
     /**
-     * Creates a connection using the specified properties.
+     * Creates a net.financeiro.connection using the specified properties.
      *
      * @param props
      *            the properties to connect with
      *
-     * @return a connection to the database
+     * @return a net.financeiro.connection to the database
      *
      * @throws SQLException
      *             if an error occurs

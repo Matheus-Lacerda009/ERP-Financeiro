@@ -28,7 +28,7 @@ import java.util.Properties;
 /**
  * Classes that implement this interface and provide a no-args constructor can be used by the driver to store and retrieve client information and/or labels.
  *
- * The driver will create an instance for each Connection instance, and call initialize() once and only once. When the connection is closed, destroy() will be
+ * The driver will create an instance for each Connection instance, and call initialize() once and only once. When the net.financeiro.connection is closed, destroy() will be
  * called, and the provider is expected to clean up any resources at this time.
  */
 public interface ClientInfoProvider {
@@ -37,17 +37,17 @@ public interface ClientInfoProvider {
      * Called once by the driver when it needs to configure the provider.
      *
      * @param conn
-     *            the connection that the provider belongs too.
+     *            the net.financeiro.connection that the provider belongs too.
      * @param configurationProps
      *            a java.util.Properties instance that contains
-     *            configuration information for the connection.
+     *            configuration information for the net.financeiro.connection.
      * @throws SQLException
      *             if initialization fails.
      */
     void initialize(Connection conn, Properties configurationProps) throws SQLException;
 
     /**
-     * Called once by the driver when the connection this provider instance
+     * Called once by the driver when the net.financeiro.connection this provider instance
      * belongs to is being closed.
      *
      * Implementations are expected to clean up and resources at this point
@@ -59,17 +59,17 @@ public interface ClientInfoProvider {
     void destroy() throws SQLException;
 
     /**
-     * Returns the client info for the connection that this provider
-     * instance belongs to. The connection instance is passed as an argument
+     * Returns the client info for the net.financeiro.connection that this provider
+     * instance belongs to. The net.financeiro.connection instance is passed as an argument
      * for convenience's sake.
      *
-     * Providers can use the connection to communicate with the database,
+     * Providers can use the net.financeiro.connection to communicate with the database,
      * but it will be within the scope of any ongoing transactions, so therefore
      * implementations should not attempt to change isolation level, autocommit settings
-     * or call rollback() or commit() on the connection.
+     * or call rollback() or commit() on the net.financeiro.connection.
      *
      * @param conn
-     *            connection object
+     *            net.financeiro.connection object
      * @throws SQLException
      *             if an error occurs
      * @return client info as Properties
@@ -78,17 +78,17 @@ public interface ClientInfoProvider {
     Properties getClientInfo(Connection conn) throws SQLException;
 
     /**
-     * Returns the client info for the connection that this provider
-     * instance belongs to. The connection instance is passed as an argument
+     * Returns the client info for the net.financeiro.connection that this provider
+     * instance belongs to. The net.financeiro.connection instance is passed as an argument
      * for convenience's sake.
      *
-     * Providers can use the connection to communicate with the database,
+     * Providers can use the net.financeiro.connection to communicate with the database,
      * but it will be within the scope of any ongoing transactions, so therefore
      * implementations should not attempt to change isolation level, autocommit settings
-     * or call rollback() or commit() on the connection.
+     * or call rollback() or commit() on the net.financeiro.connection.
      *
      * @param conn
-     *            connection object
+     *            net.financeiro.connection object
      * @param name
      *            property name
      * @throws SQLException
@@ -99,17 +99,17 @@ public interface ClientInfoProvider {
     String getClientInfo(Connection conn, String name) throws SQLException;
 
     /**
-     * Sets the client info for the connection that this provider
-     * instance belongs to. The connection instance is passed as an argument
+     * Sets the client info for the net.financeiro.connection that this provider
+     * instance belongs to. The net.financeiro.connection instance is passed as an argument
      * for convenience's sake.
      *
-     * Providers can use the connection to communicate with the database,
+     * Providers can use the net.financeiro.connection to communicate with the database,
      * but it will be within the scope of any ongoing transactions, so therefore
      * implementations should not attempt to change isolation level, autocommit settings
-     * or call rollback() or commit() on the connection.
+     * or call rollback() or commit() on the net.financeiro.connection.
      *
      * @param conn
-     *            connection object
+     *            net.financeiro.connection object
      * @param properties
      *            Properties object
      * @throws SQLClientInfoException
@@ -120,17 +120,17 @@ public interface ClientInfoProvider {
     void setClientInfo(Connection conn, Properties properties) throws SQLClientInfoException;
 
     /**
-     * Sets the client info for the connection that this provider
-     * instance belongs to. The connection instance is passed as an argument
+     * Sets the client info for the net.financeiro.connection that this provider
+     * instance belongs to. The net.financeiro.connection instance is passed as an argument
      * for convenience's sake.
      *
-     * Providers can use the connection to communicate with the database,
+     * Providers can use the net.financeiro.connection to communicate with the database,
      * but it will be within the scope of any ongoing transactions, so therefore
      * implementations should not attempt to change isolation level, autocommit settings
-     * or call rollback() or commit() on the connection.
+     * or call rollback() or commit() on the net.financeiro.connection.
      *
      * @param conn
-     *            connection object
+     *            net.financeiro.connection object
      * @param name
      *            property name
      * @param value

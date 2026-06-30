@@ -86,7 +86,7 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Proxy class to intercept and deal with errors that may occur in any object bound to the current connection.
+     * Proxy class to intercept and deal with errors that may occur in any object bound to the current net.financeiro.connection.
      */
     class JdbcInterfaceProxy implements InvocationHandler {
 
@@ -123,7 +123,7 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Initializes a connection wrapper for this MultiHostConnectionProxy instance.
+     * Initializes a net.financeiro.connection wrapper for this MultiHostConnectionProxy instance.
      *
      * @throws SQLException
      *             if an error occurs
@@ -133,10 +133,10 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Constructs a MultiHostConnectionProxy instance for the given connection URL.
+     * Constructs a MultiHostConnectionProxy instance for the given net.financeiro.connection URL.
      *
      * @param connectionUrl
-     *            The connection URL.
+     *            The net.financeiro.connection URL.
      * @throws SQLException
      *             if an error occurs
      */
@@ -146,13 +146,13 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Initializes the hosts lists and makes a "clean" local copy of the given connection properties so that it can be later used to create standard
+     * Initializes the hosts lists and makes a "clean" local copy of the given net.financeiro.connection properties so that it can be later used to create standard
      * connections.
      *
      * @param connUrl
-     *            The connection URL that initialized this multi-host connection.
+     *            The net.financeiro.connection URL that initialized this multi-host net.financeiro.connection.
      * @param hosts
-     *            The list of hosts for this multi-host connection.
+     *            The list of hosts for this multi-host net.financeiro.connection.
      * @return
      *         The number of hosts found in the hosts list.
      */
@@ -170,33 +170,33 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Get this connection's proxy.
-     * A multi-host connection may not be at top level in the multi-host connections chain. In such case the first connection in the chain is available as a
+     * Get this net.financeiro.connection's proxy.
+     * A multi-host net.financeiro.connection may not be at top level in the multi-host connections chain. In such case the first net.financeiro.connection in the chain is available as a
      * proxy.
      *
      * @return
-     *         Returns this connection's proxy if there is one or itself if this is the first one.
+     *         Returns this net.financeiro.connection's proxy if there is one or itself if this is the first one.
      */
     protected JdbcConnection getProxy() {
         return this.topProxyConnection != null ? this.topProxyConnection : this.thisAsConnection;
     }
 
     /**
-     * Get this connection's parent proxy.
+     * Get this net.financeiro.connection's parent proxy.
      *
      * @return
-     *         Returns this connection's proxy if there is one.
+     *         Returns this net.financeiro.connection's proxy if there is one.
      */
     protected JdbcConnection getParentProxy() {
         return this.parentProxyConnection;
     }
 
     /**
-     * Sets this connection's proxy. This proxy should be the first connection in the multi-host connections chain.
-     * After setting the connection proxy locally, propagates it through the dependent connections.
+     * Sets this net.financeiro.connection's proxy. This proxy should be the first net.financeiro.connection in the multi-host connections chain.
+     * After setting the net.financeiro.connection proxy locally, propagates it through the dependent connections.
      *
      * @param proxyConn
-     *            The top level connection in the multi-host connections chain.
+     *            The top level net.financeiro.connection in the multi-host connections chain.
      */
     protected final void setProxy(JdbcConnection proxyConn) {
         if (this.parentProxyConnection == null) { // Only set this once.
@@ -207,11 +207,11 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Propagates the connection proxy down through the multi-host connections chain.
-     * This method is intended to be overridden in subclasses that manage more than one active connection at same time.
+     * Propagates the net.financeiro.connection proxy down through the multi-host connections chain.
+     * This method is intended to be overridden in subclasses that manage more than one active net.financeiro.connection at same time.
      *
      * @param proxyConn
-     *            The top level connection in the multi-host connections chain.
+     *            The top level net.financeiro.connection in the multi-host connections chain.
      */
     protected void propagateProxyDown(JdbcConnection proxyConn) {
         this.currentConnection.setProxy(proxyConn);
@@ -221,7 +221,7 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
      * Wraps this object with a new multi-host Connection instance.
      *
      * @return
-     *         The connection object instance that wraps 'this'.
+     *         The net.financeiro.connection object instance that wraps 'this'.
      * @throws SQLException
      *             if an error occurs
      */
@@ -230,7 +230,7 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * If the given return type is or implements a JDBC interface, proxies the given object so that we can catch SQL errors and fire a connection switch.
+     * If the given return type is or implements a JDBC interface, proxies the given object so that we can catch SQL errors and fire a net.financeiro.connection switch.
      *
      * @param returnType
      *            The type the object instance to proxy is supposed to be.
@@ -288,23 +288,23 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Checks if the given throwable should trigger a connection switch.
+     * Checks if the given throwable should trigger a net.financeiro.connection switch.
      *
-     * @return true if the given throwable should trigger a connection switch
+     * @return true if the given throwable should trigger a net.financeiro.connection switch
      * @param t
      *            The Throwable instance to analyze.
      */
     abstract boolean shouldExceptionTriggerConnectionSwitch(Throwable t);
 
     /**
-     * Checks if current connection is to a source host.
+     * Checks if current net.financeiro.connection is to a source host.
      *
-     * @return true if current connection is to a source host
+     * @return true if current net.financeiro.connection is to a source host
      */
     abstract boolean isSourceConnection();
 
     /**
-     * Invalidates the current connection.
+     * Invalidates the current net.financeiro.connection.
      *
      * @throws SQLException
      *             if an error occurs
@@ -319,10 +319,10 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Invalidates the specified connection by closing it.
+     * Invalidates the specified net.financeiro.connection by closing it.
      *
      * @param conn
-     *            The connection instance to invalidate.
+     *            The net.financeiro.connection instance to invalidate.
      * @throws SQLException
      *             if an error occurs
      */
@@ -333,14 +333,14 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
                 conn.doClose(null, CloseOption.IMPLICIT, CloseOption.ROLLBACK, CloseOption.FORCED);
             }
         } catch (SQLException e) {
-            // swallow this exception, current connection should be useless anyway.
+            // swallow this exception, current net.financeiro.connection should be useless anyway.
         } finally {
             this.lock.unlock();
         }
     }
 
     /**
-     * Picks the "best" connection to use from now on. Each subclass needs to implement its connection switch strategy on it.
+     * Picks the "best" net.financeiro.connection to use from now on. Each subclass needs to implement its net.financeiro.connection switch strategy on it.
      *
      * @throws SQLException
      *             if an error occurs
@@ -348,7 +348,7 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     abstract void pickNewConnection() throws SQLException;
 
     /**
-     * Creates a new physical connection for the given {@link HostInfo}.
+     * Creates a new physical net.financeiro.connection for the given {@link HostInfo}.
      *
      * @param hostInfo
      *            The host info instance.
@@ -363,9 +363,9 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
             ConnectionImpl conn = (ConnectionImpl) ConnectionImpl.getInstance(hostInfo);
             JdbcConnection topmostProxy = getProxy();
             if (topmostProxy != this.thisAsConnection) {
-                conn.setProxy(this.thisAsConnection); // First call sets this connection as underlying connection parent proxy (its creator).
+                conn.setProxy(this.thisAsConnection); // First call sets this net.financeiro.connection as underlying net.financeiro.connection parent proxy (its creator).
             }
-            conn.setProxy(topmostProxy); // Set the topmost proxy in the underlying connection.
+            conn.setProxy(topmostProxy); // Set the topmost proxy in the underlying net.financeiro.connection.
             return conn;
         } finally {
             this.lock.unlock();
@@ -376,9 +376,9 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
      * Synchronizes session state between two connections.
      *
      * @param source
-     *            The connection where to get state from.
+     *            The net.financeiro.connection where to get state from.
      * @param target
-     *            The connection where to set state.
+     *            The net.financeiro.connection where to set state.
      * @throws SQLException
      *             if an error occurs
      */
@@ -400,9 +400,9 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
      * Synchronizes session state between two connections, allowing to override the read-only status.
      *
      * @param source
-     *            The connection where to get state from.
+     *            The net.financeiro.connection where to get state from.
      * @param target
-     *            The connection where to set state.
+     *            The net.financeiro.connection where to set state.
      * @param readOnly
      *            The new read-only status.
      * @throws SQLException
@@ -460,7 +460,7 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
 
     /**
      * Proxies method invocation on the java.sql.Connection interface, trapping multi-host specific methods and generic methods.
-     * Subclasses have to override this to complete the method invocation process, deal with exceptions and decide when to switch connection.
+     * Subclasses have to override this to complete the method invocation process, deal with exceptions and decide when to switch net.financeiro.connection.
      * To avoid unnecessary additional exception handling overriders should consult #canDealWith(Method) before chaining here.
      *
      * @param proxy

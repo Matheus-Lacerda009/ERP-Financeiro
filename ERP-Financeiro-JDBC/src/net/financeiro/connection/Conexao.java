@@ -1,13 +1,18 @@
-package connection;
+package net.financeiro.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class Conexao {
-    private static final String URL = "";
-    private static final String USER = "";
-    private static final String PASSWORD = "";
+
+    static Dotenv env = Dotenv.load();
+
+    private static final String URL = env.get("URL");
+    private static final String USER = env.get("USER");
+    private static final String PASSWORD = env.get("PASSWORD");
 
     public static Connection connecting(){
         try{

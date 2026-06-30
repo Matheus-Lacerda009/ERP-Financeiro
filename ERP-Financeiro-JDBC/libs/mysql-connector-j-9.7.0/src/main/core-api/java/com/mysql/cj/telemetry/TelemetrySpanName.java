@@ -28,8 +28,8 @@ public enum TelemetrySpanName {
     CANCEL_QUERY("Cancel query"), //
     CHANGE_DATABASE("Change database"), //
     COMMIT("Commit"), //
-    CONNECTION_CREATE("Create connection"), //
-    CONNECTION_RESET("Reset connection"), //
+    CONNECTION_CREATE("Create net.financeiro.connection"), //
+    CONNECTION_RESET("Reset net.financeiro.connection"), //
     CREATE_DATABASE("Create database"), //
     EXPLAIN_QUERY("Explain query"), //
     GET_INNODB_STATUS("Get InnoDB status"), //

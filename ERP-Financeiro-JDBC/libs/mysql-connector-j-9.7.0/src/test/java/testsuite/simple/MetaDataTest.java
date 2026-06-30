@@ -1748,7 +1748,7 @@ public class MetaDataTest extends BaseTestCase {
 
         TestGetSqlKeywordsDynamicQueryInterceptor.interceptedQueries.clear();
 
-        // Second call to DatabaseMetaData.getSQLKeywords(), using same connection -> keywords are retrieved from internal cache.
+        // Second call to DatabaseMetaData.getSQLKeywords(), using same net.financeiro.connection -> keywords are retrieved from internal cache.
         assertEquals(expectedSqlKeywords, testConn.getMetaData().getSQLKeywords(), "MySQL keywords don't match expected.");
         assertFalse(TestGetSqlKeywordsDynamicQueryInterceptor.interceptedQueries.contains(keywordsQuery), "MySQL keywords weren't obtained from cache.");
         assertTrue(dbmdisKeywordsCache.containsKey(((JdbcConnection) testConn).getServerVersion()), "Keywords for current server weren't properly cached.");
@@ -1756,7 +1756,7 @@ public class MetaDataTest extends BaseTestCase {
 
         TestGetSqlKeywordsDynamicQueryInterceptor.interceptedQueries.clear();
 
-        // Third call to DatabaseMetaData.getSQLKeywords(), using different connection -> keywords are retrieved from internal cache.
+        // Third call to DatabaseMetaData.getSQLKeywords(), using different net.financeiro.connection -> keywords are retrieved from internal cache.
         testConn = getConnectionWithProps(props);
         assertEquals(expectedSqlKeywords, testConn.getMetaData().getSQLKeywords(), "MySQL keywords don't match expected.");
         assertFalse(TestGetSqlKeywordsDynamicQueryInterceptor.interceptedQueries.contains(keywordsQuery), "MySQL keywords weren't obtained from cache.");

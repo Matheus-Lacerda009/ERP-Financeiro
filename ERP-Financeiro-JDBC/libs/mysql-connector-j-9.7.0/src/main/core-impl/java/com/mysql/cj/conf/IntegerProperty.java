@@ -36,7 +36,7 @@ public class IntegerProperty extends AbstractRuntimeProperty<Integer> {
     protected void checkRange(Integer val, String valueAsString, ExceptionInterceptor exceptionInterceptor) {
         if (val.intValue() < getPropertyDefinition().getLowerBound() || val.intValue() > getPropertyDefinition().getUpperBound()) {
             throw ExceptionFactory.createException(WrongArgumentException.class,
-                    "The connection property '" + getPropertyDefinition().getName() + "' only accepts integer values in the range of "
+                    "The net.financeiro.connection property '" + getPropertyDefinition().getName() + "' only accepts integer values in the range of "
                             + getPropertyDefinition().getLowerBound() + " - " + getPropertyDefinition().getUpperBound() + ", the value '"
                             + (valueAsString == null ? val.intValue() : valueAsString) + "' exceeds this range.",
                     exceptionInterceptor);

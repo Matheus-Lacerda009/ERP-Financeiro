@@ -34,7 +34,7 @@ import java.util.Properties;
  * <li>port: the port number or 0 if not known.
  * <li>user: the user name.
  * <li>password: the password.
- * <li>host properties: host specific connection arguments.
+ * <li>host properties: host specific net.financeiro.connection arguments.
  * </ul>
  */
 public class HostInfo implements DatabaseUrlContainer {
@@ -75,7 +75,7 @@ public class HostInfo implements DatabaseUrlContainer {
     }
 
     /**
-     * Constructs a {@link HostInfo} instance initialized with the provided host, port, user, password and connection arguments.
+     * Constructs a {@link HostInfo} instance initialized with the provided host, port, user, password and net.financeiro.connection arguments.
      *
      * @param url
      *            a reference to the original database URL that produced this host info
@@ -88,7 +88,7 @@ public class HostInfo implements DatabaseUrlContainer {
      * @param password
      *            this user's password
      * @param properties
-     *            a connection arguments map.
+     *            a net.financeiro.connection arguments map.
      */
     public HostInfo(DatabaseUrlContainer url, String host, int port, String user, String password, Map<String, String> properties) {
         this.originalUrl = url;
@@ -156,19 +156,19 @@ public class HostInfo implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the connection argument for the given key.
+     * Returns the net.financeiro.connection argument for the given key.
      *
      * @param key
      *            key
      *
-     * @return the connection argument for the given key
+     * @return the net.financeiro.connection argument for the given key
      */
     public String getProperty(String key) {
         return this.hostProperties.get(key);
     }
 
     /**
-     * Shortcut to the database connection argument.
+     * Shortcut to the database net.financeiro.connection argument.
      *
      * @return the database name
      */

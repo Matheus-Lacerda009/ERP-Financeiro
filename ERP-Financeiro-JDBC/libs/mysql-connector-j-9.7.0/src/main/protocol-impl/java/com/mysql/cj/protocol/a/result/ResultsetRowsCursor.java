@@ -79,7 +79,7 @@ public class ResultsetRowsCursor extends AbstractResultsetRows implements Result
      * Creates a new cursor-backed row provider.
      *
      * @param ioChannel
-     *            connection to the server.
+     *            net.financeiro.connection to the server.
      * @param columnDefinition
      *            field-level metadata for the results that this cursor covers.
      */

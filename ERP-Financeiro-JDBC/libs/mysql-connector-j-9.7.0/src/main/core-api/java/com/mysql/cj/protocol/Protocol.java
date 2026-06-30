@@ -87,7 +87,7 @@ public interface Protocol<M extends Message> {
     void setPacketReceivedTimeHolder(PacketReceivedTimeHolder packetReceivedTimeHolder);
 
     /**
-     * Create a new session. This generally happens once at the beginning of a connection.
+     * Create a new session. This generally happens once at the beginning of a net.financeiro.connection.
      *
      * @param user
      *            DB user name

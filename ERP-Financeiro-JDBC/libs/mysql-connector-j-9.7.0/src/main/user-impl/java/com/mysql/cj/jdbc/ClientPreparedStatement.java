@@ -117,7 +117,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
      * Creates a prepared statement instance
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param sql
      *            the SQL for this statement
      * @param db
@@ -134,7 +134,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
      * Creates a prepared statement instance
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param sql
      *            the SQL for this statement
      * @param db
@@ -158,7 +158,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
      * Constructor used by server-side prepared statements
      *
      * @param conn
-     *            the connection that created us
+     *            the net.financeiro.connection that created us
      * @param db
      *            the database in use when we were created
      *
@@ -176,7 +176,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
      * Constructor for the PreparedStatement class.
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param sql
      *            the SQL for this statement
      * @param db
@@ -193,7 +193,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
      * Creates a new PreparedStatement object.
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param sql
      *            the SQL for this statement
      * @param db
@@ -978,7 +978,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
 
                 return rs;
             } catch (NullPointerException npe) {
-                checkClosed(); // we can't synchronize ourselves against async connection-close due to deadlock issues, so this is the next best thing for
+                checkClosed(); // we can't synchronize ourselves against async net.financeiro.connection-close due to deadlock issues, so this is the next best thing for
                               // this particular corner case.
 
                 throw npe;
@@ -1205,7 +1205,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
      * Returns a prepared statement for the number of batched parameters, used when re-writing batch INSERTs.
      *
      * @param localConn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param numBatches
      *            number of entries in a batch
      * @return new ClientPreparedStatement

@@ -854,7 +854,7 @@ public class CallableStatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#28689 - CallableStatement.executeBatch() doesn't work when connection property "noAccessToProcedureBodies" has been set to "true".
+     * Tests fix for BUG#28689 - CallableStatement.executeBatch() doesn't work when net.financeiro.connection property "noAccessToProcedureBodies" has been set to "true".
      *
      * The fix involves changing the behavior of "noAccessToProcedureBodies", in that the driver will now report all paramters as "IN" paramters but allow
      * callers to call registerOutParameter() on them.

@@ -90,7 +90,7 @@ public interface ServerSessionStateController {
     /**
      * The object containing server session changes collected from the latest query execution.
      * <p>
-     * Driver is getting these changes when connection property trackSessionState=true and server supports session tracking.
+     * Driver is getting these changes when net.financeiro.connection property trackSessionState=true and server supports session tracking.
      * </p>
      *
      */

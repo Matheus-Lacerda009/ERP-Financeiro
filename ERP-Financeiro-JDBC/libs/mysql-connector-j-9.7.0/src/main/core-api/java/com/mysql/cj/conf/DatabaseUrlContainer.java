@@ -26,7 +26,7 @@ package com.mysql.cj.conf;
 public interface DatabaseUrlContainer {
 
     /**
-     * Returns the original database URL that produced this connection string.
+     * Returns the original database URL that produced this net.financeiro.connection string.
      *
      * @return the original database URL
      */

@@ -47,7 +47,7 @@ public class SocksProxySocketFactory extends StandardSocketFactory {
     @SuppressWarnings("unchecked")
     public <T extends Closeable> T connect(String hostname, int portNumber, PropertySet pset, int loginTimeout) throws IOException {
         if (!pset.getBooleanProperty(PropertyKey.socksProxyRemoteDns).getValue()) {
-            // fall back to the parent connection procedure
+            // fall back to the parent net.financeiro.connection procedure
             return super.connect(hostname, portNumber, pset, loginTimeout);
         }
 
@@ -64,7 +64,7 @@ public class SocksProxySocketFactory extends StandardSocketFactory {
                     : null;
             int connectTimeout = pset.getIntegerProperty(PropertyKey.connectTimeout).getValue();
 
-            // save last exception to propagate to caller if connection fails
+            // save last exception to propagate to caller if net.financeiro.connection fails
             try {
                 this.rawSocket = createSocket(pset);
                 configureSocket(this.rawSocket, pset);

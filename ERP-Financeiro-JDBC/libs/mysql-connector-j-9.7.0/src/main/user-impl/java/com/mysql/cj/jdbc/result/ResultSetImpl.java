@@ -253,7 +253,7 @@ public class ResultSetImpl extends NativeResultset implements ResultSetInternalM
     public ResultSetImpl(ResultsetRows tuples, JdbcConnection conn, StatementImpl creatorStmt) throws SQLException {
         this.connection = conn;
         this.session = (NativeSession) conn.getSession();
-        // TODO which database to use, from connection or from statement?
+        // TODO which database to use, from net.financeiro.connection or from statement?
         this.db = creatorStmt != null ? creatorStmt.getCurrentDatabase() : conn.getDatabase();
         this.owningStatement = creatorStmt;
 
@@ -482,7 +482,7 @@ public class ResultSetImpl extends NativeResultset implements ResultSetInternalM
     /**
      * Ensures that the result set is not closed
      *
-     * @return connection
+     * @return net.financeiro.connection
      *
      * @throws SQLException
      *             if the result set is closed
@@ -1759,7 +1759,7 @@ public class ResultSetImpl extends NativeResultset implements ResultSetInternalM
      * Checks whether this ResultSet is scrollable even if its type is ResultSet.TYPE_FORWARD_ONLY. Required for backwards compatibility.
      *
      * @return
-     *         <code>true</code> if this result set type is ResultSet.TYPE_FORWARD_ONLY and the connection property 'scrollTolerantForwardOnly' has not been set
+     *         <code>true</code> if this result set type is ResultSet.TYPE_FORWARD_ONLY and the net.financeiro.connection property 'scrollTolerantForwardOnly' has not been set
      *         to <code>true</code>.
      */
     protected boolean isStrictlyForwardOnly() {

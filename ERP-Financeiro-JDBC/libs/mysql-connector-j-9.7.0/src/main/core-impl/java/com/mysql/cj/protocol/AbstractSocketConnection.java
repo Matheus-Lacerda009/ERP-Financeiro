@@ -111,7 +111,7 @@ public abstract class AbstractSocketConnection implements SocketConnection {
     }
 
     // We do this to break the chain between MysqlIO and Connection, so that we can have PhantomReferences on connections that let the driver clean up the
-    // socket connection without having to use finalize() somewhere (which although more straightforward, is horribly inefficient).
+    // socket net.financeiro.connection without having to use finalize() somewhere (which although more straightforward, is horribly inefficient).
     @Override
     public NetworkResources getNetworkResources() {
         return new NetworkResources(this.mysqlSocket, this.mysqlInput, this.mysqlOutput);

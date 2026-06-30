@@ -131,9 +131,9 @@ public class CancelQueryTaskImpl extends TimerTask implements CancelQueryTask {
                         session.invokeCleanupListeners(new OperationCancelledException(Messages.getString("Statement.ConnectionKilledDueToTimeout")));
                     }
                 } catch (NullPointerException npe) {
-                    // Case when connection closed while starting to cancel.
+                    // Case when net.financeiro.connection closed while starting to cancel.
                     // We can't easily synchronize this, because then one thread can't cancel() a running query.
-                    // Ignore, we shouldn't re-throw this, because the connection's already closed, so the statement has been timed out.
+                    // Ignore, we shouldn't re-throw this, because the net.financeiro.connection's already closed, so the statement has been timed out.
                 } catch (Throwable t) {
                     CancelQueryTaskImpl.this.caughtWhileCancelling = t;
                 } finally {

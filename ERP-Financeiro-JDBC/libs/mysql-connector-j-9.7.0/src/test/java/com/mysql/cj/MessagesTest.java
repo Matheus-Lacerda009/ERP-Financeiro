@@ -35,7 +35,7 @@ public class MessagesTest {
         assertEquals("Malformed database URL, failed to parse the URL authority segment 'Test'.",
                 Messages.getString("ConnectionString.2", new Object[] { "Test" }));
         assertEquals("Failed to parse the host:port pair 'host:123'.", Messages.getString("ConnectionString.3", new Object[] { "host:123" }));
-        assertEquals("Malformed database URL, failed to parse the connection string near 'Test'.",
+        assertEquals("Malformed database URL, failed to parse the net.financeiro.connection string near 'Test'.",
                 Messages.getString("ConnectionString.4", new Object[] { "Test" }));
         assertEquals("Connector/J cannot handle a database URL of type 'Test'.", Messages.getString("ConnectionString.5", new Object[] { "Test" }));
         assertEquals("Connector/J cannot handle a database URL of type 'Test' that takes 100 hosts.",
@@ -54,13 +54,13 @@ public class MessagesTest {
                 Messages.getString("ConnectionString.13", new Object[] { "Test1", "Test2" }));
         assertEquals("Illegal database URL, the option 'Test1' cannot be set in 'Test2' connections.",
                 Messages.getString("ConnectionString.14", new Object[] { "Test1", "Test2" }));
-        assertEquals("Illegal database URL, in a 'Test' multi-host connection it is required the same credentials in all hosts.",
+        assertEquals("Illegal database URL, in a 'Test' multi-host net.financeiro.connection it is required the same credentials in all hosts.",
                 Messages.getString("ConnectionString.15", new Object[] { "Test" }));
-        assertEquals("Illegal database URL, in a 'Test' multi-host connection it is required that all or none of the hosts set a \"priority\" value.",
+        assertEquals("Illegal database URL, in a 'Test' multi-host net.financeiro.connection it is required that all or none of the hosts set a \"priority\" value.",
                 Messages.getString("ConnectionString.16", new Object[] { "Test" }));
-        assertEquals("Illegal database URL, in a 'Test' multi-host connection the \"priority\" setting must be a value between 0 and 100.",
+        assertEquals("Illegal database URL, in a 'Test' multi-host net.financeiro.connection the \"priority\" setting must be a value between 0 and 100.",
                 Messages.getString("ConnectionString.17", new Object[] { "Test" }));
-        assertEquals("Connector/J cannot handle a connection string 'Test'.", Messages.getString("ConnectionString.18", new Object[] { "Test" }));
+        assertEquals("Connector/J cannot handle a net.financeiro.connection string 'Test'.", Messages.getString("ConnectionString.18", new Object[] { "Test" }));
         assertEquals("A host name is required for DNS SRV lookup enabled connections.", Messages.getString("ConnectionString.19"));
         assertEquals("Specifying multiple host names with DNS SRV lookup is not allowed.", Messages.getString("ConnectionString.20"));
         assertEquals("Exactly two host names of different types are required for DNS SRV lookup enabled replication connections.",
@@ -73,7 +73,7 @@ public class MessagesTest {
                 Messages.getString("ConnectionString.26", new Object[] { "Test" }));
         assertEquals("Unable to locate any hosts for Test.", Messages.getString("ConnectionString.27", new Object[] { "Test" }));
 
-        assertEquals("Cannot load connection class because of underlying exception: " + ex.toString(),
+        assertEquals("Cannot load net.financeiro.connection class because of underlying exception: " + ex.toString(),
                 Messages.getString("NonRegisteringDriver.17", new Object[] { ex.toString() }));
 
         assertEquals("Unsupported character encoding 'Test'", Messages.getString("Field.12", new Object[] { "Test" }));
@@ -123,7 +123,7 @@ public class MessagesTest {
 
         assertEquals(
                 "User does not have access to metadata required to determine stored procedure parameter types."
-                        + " If rights can not be granted, configure connection with \"noAccessToProcedureBodies=true\" "
+                        + " If rights can not be granted, configure net.financeiro.connection with \"noAccessToProcedureBodies=true\" "
                         + "to have driver generate parameters that represent INOUT strings irregardless of actual parameter types.",
                 Messages.getString("DatabaseMetaData.4"));
 
@@ -153,9 +153,9 @@ public class MessagesTest {
         assertEquals("Illegal minute value '99' for java.sql.Time type in value 'Test'.", Messages.getString("TimeUtil.1", new Object[] { 99, "Test" }));
         assertEquals("Illegal second value '99' for java.sql.Time type in value 'Test'.", Messages.getString("TimeUtil.2", new Object[] { 99, "Test" }));
 
-        assertEquals("Can not call setNCharacterStream() when connection character set isn't UTF-8", Messages.getString("ServerPreparedStatement.28"));
-        assertEquals("Can not call setNClob() when connection character set isn't UTF-8", Messages.getString("ServerPreparedStatement.29"));
-        assertEquals("Can not call setNString() when connection character set isn't UTF-8", Messages.getString("ServerPreparedStatement.30"));
+        assertEquals("Can not call setNCharacterStream() when net.financeiro.connection character set isn't UTF-8", Messages.getString("ServerPreparedStatement.28"));
+        assertEquals("Can not call setNClob() when net.financeiro.connection character set isn't UTF-8", Messages.getString("ServerPreparedStatement.29"));
+        assertEquals("Can not call setNString() when net.financeiro.connection character set isn't UTF-8", Messages.getString("ServerPreparedStatement.30"));
 
         assertEquals("Can not call getNCharacterStream() when field's charset isn't UTF-8", Messages.getString("ResultSet.11"));
         assertEquals("Can not call getNClob() when field's charset isn't UTF-8", Messages.getString("ResultSet.12"));

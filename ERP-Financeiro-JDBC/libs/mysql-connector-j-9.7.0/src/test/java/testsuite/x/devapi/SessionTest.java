@@ -159,7 +159,7 @@ public class SessionTest extends DevApiBaseTestCase {
             for (String authMech : authMechs) {
                 final String testCase = "Testing default schema provided in authentication mecanism '" + authMech + "'.";
 
-                // Test using a connection String.
+                // Test using a net.financeiro.connection String.
                 final String testUri = String.format(testUriPattern, getTestHost(), getTestPort(), testSchemaName, authMech);
 
                 Session testSession = testSessionFactory.getSession(testUri);
@@ -211,7 +211,7 @@ public class SessionTest extends DevApiBaseTestCase {
                     : new String[] { "PLAIN", "MYSQL41" };
             for (String authMech : authMechs) {
                 for (String testUriPattern : new String[] { testUriPattern1, testUriPattern2, testUriPattern3 }) {
-                    // Test using a connection String.
+                    // Test using a net.financeiro.connection String.
                     final String testUri = String.format(testUriPattern, getTestHost(), getTestPort(), authMech);
                     final String testCase = "Testing no default schema with authentication mecanism '" + authMech + "' and URI '" + testUri + "'.";
 
@@ -264,7 +264,7 @@ public class SessionTest extends DevApiBaseTestCase {
             for (String authMech : authMechs) {
                 final String testCase = "Testing missing default schema provided in authentication mecanism '" + authMech + "'.";
 
-                // Test using a connection String.
+                // Test using a net.financeiro.connection String.
                 final String testUri = String.format(testUriPattern, getTestHost(), getTestPort(), testSchemaName, authMech);
 
                 assertThrows(testCase, XProtocolError.class, "ERROR \\d{4} \\(HY000\\) Unknown database '" + testSchemaName + "'", () -> {
@@ -711,7 +711,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
         /*
          * UT3/2: Start a client with pooling enabled, call Client.getSession() twice and verify that the objects returned are different and the internal
-         * connection instances are different too.
+         * net.financeiro.connection instances are different too.
          */
         Client cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": true}}");
         Session s0 = cli0.getSession();
@@ -725,7 +725,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
         /*
          * UT3/3: Start a client with pooling enabled, call Client.getSession() twice, closing the first session before getting the second one, and verify that
-         * the objects returned are different and that the internal connection instances are the same.
+         * the objects returned are different and that the internal net.financeiro.connection instances are the same.
          */
         cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": true}}");
         s0 = cli0.getSession();
@@ -738,7 +738,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
         /*
          * UT3/4: Start a client with pooling disabled, call Client.getSession() twice and verify that the objects returned are different and the internal
-         * connection instances are different too.
+         * net.financeiro.connection instances are different too.
          */
         cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": false}}");
         s0 = cli0.getSession();
@@ -749,7 +749,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
         /*
          * UT3/5: Start a client with pooling disabled, call Client.getSession() twice, closing the first session before getting the second one, and verify that
-         * the objects returned are different and that the internal connection instances are different too.
+         * the objects returned are different and that the internal net.financeiro.connection instances are different too.
          */
         cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": false}}");
         s0 = cli0.getSession();
@@ -774,8 +774,8 @@ public class SessionTest extends DevApiBaseTestCase {
         cli1.close();
 
         /*
-         * UT12/1: Having a pool with a single connection, close the Session, get another Session with Client.getSession(). Verify that the received Session
-         * object is new and uses the same internal connection (MysqlxSession) instance.
+         * UT12/1: Having a pool with a single net.financeiro.connection, close the Session, get another Session with Client.getSession(). Verify that the received Session
+         * object is new and uses the same internal net.financeiro.connection (MysqlxSession) instance.
          */
         cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": true, \"maxSize\" : 1}}");
         s0 = cli0.getSession();
@@ -788,7 +788,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
         /*
          * UT12/2: Having a pool with a number of connections greater than 1 and lower than maxPoolSize, close on Session, get another Session with
-         * Client.getSession(). Verify that the received Session object is new and uses the same internal connection (MysqlxSession) instance.
+         * Client.getSession(). Verify that the received Session object is new and uses the same internal net.financeiro.connection (MysqlxSession) instance.
          */
         cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": true, \"maxSize\" : 3}}");
         s0 = cli0.getSession();
@@ -801,7 +801,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
         /*
          * UT12/3: Having a full pool with all sessions in active state, close one Session, get another Session with Client.getSession(). Verify that the
-         * received Session object is new and uses the same internal connection (MysqlxSession) instance.
+         * received Session object is new and uses the same internal net.financeiro.connection (MysqlxSession) instance.
          */
         cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": true, \"maxSize\" : 3}}");
         s0 = cli0.getSession();
@@ -815,7 +815,7 @@ public class SessionTest extends DevApiBaseTestCase {
         cli0.close();
 
         /*
-         * UT11/2: Having a pool with a single idle connection and maxIdleTime = n, verify that after n milliseconds a Client.getSession() call will remove all
+         * UT11/2: Having a pool with a single idle net.financeiro.connection and maxIdleTime = n, verify that after n milliseconds a Client.getSession() call will remove all
          * expired sessions from pool and return a new Session object that uses a new MysqlxSession instance.
          */
         cli0 = cf.getClient(this.baseUrl, "{\"pooling\": {\"enabled\": true, \"maxSize\" : 3, \"maxIdleTime\" : 1000}}");
@@ -1030,11 +1030,11 @@ public class SessionTest extends DevApiBaseTestCase {
             Client cli1 = cf.getClient(this.baseUrl, props);
             Client cli2 = cf.getClient(this.baseUrl, props);
 
-            Session sess1 = cli1.getSession(); // new connection #1
+            Session sess1 = cli1.getSession(); // new net.financeiro.connection #1
             sess1.sql("SELECT 1").execute();
             sess1.close();
-            sess1 = cli1.getSession(); // reuse connection #1
-            Session sess2 = cli1.getSession(); // new connection #2
+            sess1 = cli1.getSession(); // reuse net.financeiro.connection #1
+            Session sess2 = cli1.getSession(); // new net.financeiro.connection #2
             sess2.sql("SELECT 1").execute();
 
             assertThrows(CJCommunicationsException.class, "Unable to connect to any of the target hosts\\.", cli2::getSession);
@@ -1060,7 +1060,7 @@ public class SessionTest extends DevApiBaseTestCase {
             }
             try {
                 this.fact.getSession(url);
-                fail("The named-pipe connection attempt must fail with " + (path != null ? path : "default") + " path.");
+                fail("The named-pipe net.financeiro.connection attempt must fail with " + (path != null ? path : "default") + " path.");
             } catch (Exception e) {
                 Throwable cause = e.getCause();
                 if (cause != null) {
@@ -1086,13 +1086,13 @@ public class SessionTest extends DevApiBaseTestCase {
         ClientFactory cf = new ClientFactory();
         Map<String, String> userAttributes = new HashMap<>();
 
-        // TSFR1/TSFR2/TSFR3 Create a Session with xdevapi.connection-attributes in the connection string, verify that
-        // the session is successfully established. Create a Session using a connection string containing the properties
+        // TSFR1/TSFR2/TSFR3 Create a Session with xdevapi.net.financeiro.connection-attributes in the net.financeiro.connection string, verify that
+        // the session is successfully established. Create a Session using a net.financeiro.connection string containing the properties
         // as listed below, verify that the session is successfully established and the server contains the defined session attributes.
-        //    xdevapi.connection-attributes=[key1=value1]
-        //    xdevapi.connection-attributes=[key1=value1,key2=value2]
-        //    xdevapi.connection-attributes=key1=value1
-        //    xdevapi.connection-attributes=key1=value1,key2=value2
+        //    xdevapi.net.financeiro.connection-attributes=[key1=value1]
+        //    xdevapi.net.financeiro.connection-attributes=[key1=value1,key2=value2]
+        //    xdevapi.net.financeiro.connection-attributes=key1=value1
+        //    xdevapi.net.financeiro.connection-attributes=key1=value1,key2=value2
         userAttributes.clear();
         userAttributes.put("key1", "value1");
 
@@ -1111,68 +1111,68 @@ public class SessionTest extends DevApiBaseTestCase {
         testSessionAttributes_checkClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "key1=value1,key2=value2", true), userAttributes);
         testSessionAttributes_checkClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "[key1=value1,key2=value2]", true), userAttributes);
 
-        // TSFR4/TSFR5/TSFR6 Create a Session without xdevapi.connection-attributes in the connection string, verify that all predefined attributes
-        // exist and contain the correct values. Verify that only connection attributes starting with "_" were set for current session.
+        // TSFR4/TSFR5/TSFR6 Create a Session without xdevapi.net.financeiro.connection-attributes in the net.financeiro.connection string, verify that all predefined attributes
+        // exist and contain the correct values. Verify that only net.financeiro.connection attributes starting with "_" were set for current session.
         userAttributes.clear();
         testSessionAttributes_checkSession(this.baseUrl, userAttributes);
         testSessionAttributes_checkClient(this.baseUrl, userAttributes);
 
-        // TSFR7 Create a Session using a connection string containing the properties as listed below, verify that a WrongArgumentException exception is thrown
-        // with the message Key names in "xdevapi.connection-attributes" cannot start with "_".
-        //    xdevapi.connection-attributes=[_key1=value1]
-        //    xdevapi.connection-attributes=[key1=value1,_key2=value2]
-        //    xdevapi.connection-attributes=_key1=value1
-        //    xdevapi.connection-attributes=key1=value1,_key2=value2
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        // TSFR7 Create a Session using a net.financeiro.connection string containing the properties as listed below, verify that a WrongArgumentException exception is thrown
+        // with the message Key names in "xdevapi.net.financeiro.connection-attributes" cannot start with "_".
+        //    xdevapi.net.financeiro.connection-attributes=[_key1=value1]
+        //    xdevapi.net.financeiro.connection-attributes=[key1=value1,_key2=value2]
+        //    xdevapi.net.financeiro.connection-attributes=_key1=value1
+        //    xdevapi.net.financeiro.connection-attributes=key1=value1,_key2=value2
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             this.fact.getSession(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "[_key1=value1]", true));
             return null;
         });
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             Client cli1 = cf.getClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "[_key1=value1]", true), new Properties());
             cli1.getSession();
             return null;
         });
 
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             this.fact.getSession(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "[key1=value1,_key2=value2]", true));
             return null;
         });
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             Client cli1 = cf.getClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "[key1=value1,_key2=value2]", true), new Properties());
             cli1.getSession();
             return null;
         });
 
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             this.fact.getSession(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "_key1=value1", true));
             return null;
         });
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             Client cli1 = cf.getClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "_key1=value1", true), new Properties());
             cli1.getSession();
             return null;
         });
 
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             this.fact.getSession(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "key1=value1,_key2=value2", true));
             return null;
         });
-        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.connection-attributes\" cannot start with \"_\".", () -> {
+        assertThrows(WrongArgumentException.class, "Key names in \"xdevapi.net.financeiro.connection-attributes\" cannot start with \"_\".", () -> {
             Client cli1 = cf.getClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "key1=value1,_key2=value2", true), new Properties());
             cli1.getSession();
             return null;
         });
 
-        // TSFR9 Create a Session using a connection string containing the properties as listed below, verify
-        // that the user-defined connection attribute key1 has an empty value.
-        //    xdevapi.connection-attributes=[key1]
-        //    xdevapi.connection-attributes=[key1,key2=value2]
-        //    xdevapi.connection-attributes=[key1=]
-        //    xdevapi.connection-attributes=[key1=,key2=value2]
-        //    xdevapi.connection-attributes=key1
-        //    xdevapi.connection-attributes=key1,key2=value2
-        //    xdevapi.connection-attributes=key1=
-        //    xdevapi.connection-attributes=key1=,key2=value2
+        // TSFR9 Create a Session using a net.financeiro.connection string containing the properties as listed below, verify
+        // that the user-defined net.financeiro.connection attribute key1 has an empty value.
+        //    xdevapi.net.financeiro.connection-attributes=[key1]
+        //    xdevapi.net.financeiro.connection-attributes=[key1,key2=value2]
+        //    xdevapi.net.financeiro.connection-attributes=[key1=]
+        //    xdevapi.net.financeiro.connection-attributes=[key1=,key2=value2]
+        //    xdevapi.net.financeiro.connection-attributes=key1
+        //    xdevapi.net.financeiro.connection-attributes=key1,key2=value2
+        //    xdevapi.net.financeiro.connection-attributes=key1=
+        //    xdevapi.net.financeiro.connection-attributes=key1=,key2=value2
         userAttributes.clear();
         userAttributes.put("key1", "");
 
@@ -1196,26 +1196,26 @@ public class SessionTest extends DevApiBaseTestCase {
         testSessionAttributes_checkClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "key1,key2=value2", true), userAttributes);
         testSessionAttributes_checkClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "key1=,key2=value2", true), userAttributes);
 
-        // TSFR10 Create a Session with xdevapi.connection-attributes=false in the connection string, verify
-        // that no connection attribute was set for current session.
+        // TSFR10 Create a Session with xdevapi.net.financeiro.connection-attributes=false in the net.financeiro.connection string, verify
+        // that no net.financeiro.connection attribute was set for current session.
         Session s10 = this.fact.getSession(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "false", true));
         SqlResult res = s10.sql("SELECT * FROM performance_schema.session_connect_attrs WHERE processlist_id = CONNECTION_ID()").execute();
-        assertFalse(res.hasNext(), "Expected no connection attributes.");
+        assertFalse(res.hasNext(), "Expected no net.financeiro.connection attributes.");
         s10.close();
 
         Client c10 = cf.getClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "false", true), new Properties());
         s10 = c10.getSession();
         res = s10.sql("SELECT * FROM performance_schema.session_connect_attrs WHERE processlist_id = CONNECTION_ID()").execute();
-        assertFalse(res.hasNext(), "Expected no connection attributes.");
+        assertFalse(res.hasNext(), "Expected no net.financeiro.connection attributes.");
         s10.close();
         c10.close();
 
-        // TSFR11 Create a Session using a connection string containing the properties as listed below, verify
-        // that only the client-defined connection attributes were set for the current session.
-        //    xdevapi.connection-attributes
-        //    xdevapi.connection-attributes=
-        //    xdevapi.connection-attributes=true
-        //    xdevapi.connection-attributes=[]
+        // TSFR11 Create a Session using a net.financeiro.connection string containing the properties as listed below, verify
+        // that only the client-defined net.financeiro.connection attributes were set for the current session.
+        //    xdevapi.net.financeiro.connection-attributes
+        //    xdevapi.net.financeiro.connection-attributes=
+        //    xdevapi.net.financeiro.connection-attributes=true
+        //    xdevapi.net.financeiro.connection-attributes=[]
         userAttributes.clear();
 
         testSessionAttributes_checkSession(baseUrlLocal + PropertyKey.xdevapiConnectionAttributes.getKeyName(), userAttributes);
@@ -1227,13 +1227,13 @@ public class SessionTest extends DevApiBaseTestCase {
         testSessionAttributes_checkClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "true", true), userAttributes);
         testSessionAttributes_checkClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "[]", true), userAttributes);
 
-        // TSFR13 Create a Session with xdevapi.connection-attributes=[key1=value1,key1=value2] in the connection string, verify that
-        // a WrongArgumentException exception is thrown with the message Duplicate key "key1" used in "xdevapi.connection-attributes".
-        assertThrows(WrongArgumentException.class, "Duplicate key \"key1\" used in \"xdevapi.connection-attributes\".", () -> {
+        // TSFR13 Create a Session with xdevapi.net.financeiro.connection-attributes=[key1=value1,key1=value2] in the net.financeiro.connection string, verify that
+        // a WrongArgumentException exception is thrown with the message Duplicate key "key1" used in "xdevapi.net.financeiro.connection-attributes".
+        assertThrows(WrongArgumentException.class, "Duplicate key \"key1\" used in \"xdevapi.net.financeiro.connection-attributes\".", () -> {
             this.fact.getSession(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "key1=value1,key1=value2", true));
             return null;
         });
-        assertThrows(WrongArgumentException.class, "Duplicate key \"key1\" used in \"xdevapi.connection-attributes\".", () -> {
+        assertThrows(WrongArgumentException.class, "Duplicate key \"key1\" used in \"xdevapi.net.financeiro.connection-attributes\".", () -> {
             Client cli1 = cf.getClient(baseUrlLocal + makeParam(PropertyKey.xdevapiConnectionAttributes, "key1=value1,key1=value2", true), new Properties());
             cli1.getSession();
             return null;
@@ -1266,7 +1266,7 @@ public class SessionTest extends DevApiBaseTestCase {
             Row r = res.next();
             String key = r.getString(1);
             String val = r.getString(2);
-            assertTrue(matchValues.containsKey(key), "Unexpected connection attribute key:  " + key);
+            assertTrue(matchValues.containsKey(key), "Unexpected net.financeiro.connection attribute key:  " + key);
             Integer cnt = matchedCounts.get(key);
             matchedCounts.put(key, cnt == null ? 1 : cnt++);
 
@@ -1454,7 +1454,7 @@ public class SessionTest extends DevApiBaseTestCase {
             sessionThreadId = getThreadId(testSession);
             assertPreparedStatementsCount(sessionThreadId, 0, 1);
 
-            // The underlying connection object in testFind is the same as the one returned from the pool to the new session.
+            // The underlying net.financeiro.connection object in testFind is the same as the one returned from the pool to the new session.
             assertThrows(XProtocolError.class, "ERROR 5110 \\(HY000\\) Statement with ID=1 was not prepared", testFind::execute); // This exec attempt counts.
             if (mysqlVersionMeetsMinimum(ServerVersion.parseVersion("8.0.16"))) { // Mysqlx.Session.Reset doesn't clear PS counters.
                 assertPreparedStatementsStatusCounts(testSession, 1, 2, 0);
@@ -1687,7 +1687,7 @@ public class SessionTest extends DevApiBaseTestCase {
         for (int i = 1; i <= 5; i++) {
             Session testSession = client.getSession();
             assertTrue(UnreliableSocketFactory.isConnected());
-            testSession.close(); // Pool this connection.
+            testSession.close(); // Pool this net.financeiro.connection.
 
             String lastHost = UnreliableSocketFactory.getHostFromLastConnection();
             for (String h : downHosts) {
@@ -1713,9 +1713,9 @@ public class SessionTest extends DevApiBaseTestCase {
         assertEquals(UnreliableSocketFactory.getHostConnectedStatus("host3"), UnreliableSocketFactory.getHostFromLastConnection());
 
         UnreliableSocketFactory.flushConnectionAttempts();
-        Session testSession1 = client.getSession(); // Pick previous connection from the pool. Doesn't count as new connections.
+        Session testSession1 = client.getSession(); // Pick previous net.financeiro.connection from the pool. Doesn't count as new connections.
         assertEquals(0, UnreliableSocketFactory.getHostsFromAllConnections().size());
-        Session testSession2 = client.getSession(); // Create a new connection.
+        Session testSession2 = client.getSession(); // Create a new net.financeiro.connection.
         assertTrue(UnreliableSocketFactory.isConnected());
         testSession1.close();
         testSession2.close();
@@ -1740,7 +1740,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
         Set<String> downHosts = new HashSet<>();
         for (int i = 1; i <= 5; i++) {
-            client.getSession(); // Don't pool this connection.
+            client.getSession(); // Don't pool this net.financeiro.connection.
             assertTrue(UnreliableSocketFactory.isConnected());
 
             String lastHost = UnreliableSocketFactory.getHostFromLastConnection();
@@ -1794,7 +1794,7 @@ public class SessionTest extends DevApiBaseTestCase {
 
             Session testSession = client.getSession();
             assertTrue(UnreliableSocketFactory.isConnected());
-            testSession.close(); // Pool this connection.
+            testSession.close(); // Pool this net.financeiro.connection.
 
             String lastHost = UnreliableSocketFactory.getHostFromLastConnection();
             assertEquals(UnreliableSocketFactory.getHostConnectedStatus("host" + h), lastHost);
@@ -1812,7 +1812,7 @@ public class SessionTest extends DevApiBaseTestCase {
             client.getSession();
             return null;
         });
-        // Final connection tried the last known to be good host (host4) and then the remaining hosts by their priority
+        // Final net.financeiro.connection tried the last known to be good host (host4) and then the remaining hosts by their priority
         List<String> connectionAttempts = UnreliableSocketFactory.getHostsFromAllConnections();
         for (int i = 0; i < hostsOrder.length; i++) {
             assertEquals(UnreliableSocketFactory.getHostFailedStatus("host" + hostsOrder[(i + 4) % 5]), connectionAttempts.get(i));
@@ -1830,9 +1830,9 @@ public class SessionTest extends DevApiBaseTestCase {
         assertEquals(UnreliableSocketFactory.getHostConnectedStatus("host" + hostsOrder[1]), connectionAttempts.get(1));
 
         UnreliableSocketFactory.flushConnectionAttempts();
-        Session testSession1 = client.getSession(); // Pick previous connection from the pool. Doesn't count as new connections.
+        Session testSession1 = client.getSession(); // Pick previous net.financeiro.connection from the pool. Doesn't count as new connections.
         assertEquals(0, UnreliableSocketFactory.getHostsFromAllConnections().size());
-        Session testSession2 = client.getSession(); // Create a new connection.
+        Session testSession2 = client.getSession(); // Create a new net.financeiro.connection.
         assertTrue(UnreliableSocketFactory.isConnected());
         testSession1.close();
         testSession2.close();
@@ -1862,7 +1862,7 @@ public class SessionTest extends DevApiBaseTestCase {
         for (int i = 0; i < hostsOrder.length; i++) {
             int h = hostsOrder[i];
 
-            client.getSession(); // Don't pool this connection.
+            client.getSession(); // Don't pool this net.financeiro.connection.
             assertTrue(UnreliableSocketFactory.isConnected());
 
             String lastHost = UnreliableSocketFactory.getHostFromLastConnection();
@@ -1881,7 +1881,7 @@ public class SessionTest extends DevApiBaseTestCase {
             client.getSession();
             return null;
         });
-        // Final connection tried the last known to be good host (host4) and then the remaining hosts by their priority
+        // Final net.financeiro.connection tried the last known to be good host (host4) and then the remaining hosts by their priority
         List<String> connectionAttempts = UnreliableSocketFactory.getHostsFromAllConnections();
         for (int i = 0; i < hostsOrder.length; i++) {
             assertEquals(UnreliableSocketFactory.getHostFailedStatus("host" + hostsOrder[(i + 4) % 5]), connectionAttempts.get(i));

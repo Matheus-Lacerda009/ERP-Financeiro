@@ -84,9 +84,9 @@ public interface ProfilerEvent {
     String getDatabase();
 
     /**
-     * Returns the id of the associated connection (-1 for none).
+     * Returns the id of the associated net.financeiro.connection (-1 for none).
      *
-     * @return the connection in use
+     * @return the net.financeiro.connection in use
      */
     long getConnectionId();
 

@@ -115,7 +115,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
 
     /**
      * Initialize communications with the MySQL server. Handles logging on, and
-     * handling initial connection errors.
+     * handling initial net.financeiro.connection errors.
      *
      * @param user
      *            user name
@@ -194,7 +194,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
 
         sessState.setClientParam(clientParam);
 
-        /* First, negotiate SSL connection */
+        /* First, negotiate SSL net.financeiro.connection */
         if ((clientParam & NativeServerSession.CLIENT_SSL) != 0) {
             this.protocol.negotiateSSLConnection();
         }
@@ -212,7 +212,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
      * Fill the authentication plugins map.
      *
      * Starts by filling the map with instances of the built-in authentication plugins. Then creates instances of plugins listed in the "authenticationPlugins"
-     * connection property and adds them to the map too.
+     * net.financeiro.connection property and adds them to the map too.
      *
      * The plugins map uses the plugin names as keys, which are obtained from {@link AuthenticationPlugin#getProtocolPluginName()} thus it is possible to
      * replace built-in plugins with custom implementations as long as the implementations use the same MySQL authentication plugin client-side name, such as,
@@ -253,7 +253,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
         pluginsToInit.add(new AuthenticationWebAuthnClient());
         pluginsToInit.add(new AuthenticationOpenidConnectClient());
 
-        // plugins from authenticationPluginClasses connection parameter
+        // plugins from authenticationPluginClasses net.financeiro.connection parameter
         String authenticationPluginClasses = this.propertySet.getStringProperty(PropertyKey.authenticationPlugins).getValue();
         if (authenticationPluginClasses != null && !"".equals(authenticationPluginClasses.trim())) {
             List<String> pluginsToCreate = StringUtils.split(authenticationPluginClasses, ",", true);
@@ -310,7 +310,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
      *
      * @param pluginName
      *            mysql protocol plugin names, for example "caching_sha2_password" and "mysql_native_password" for built-in plugins
-     * @return null if plugin is not found or authentication plugin instance initialized with current connection properties
+     * @return null if plugin is not found or authentication plugin instance initialized with current net.financeiro.connection properties
      */
     @SuppressWarnings("unchecked")
     private AuthenticationPlugin<NativePacketPayload> getAuthenticationPlugin(String pluginName) {
@@ -335,7 +335,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
     }
 
     /**
-     * Check if given plugin requires confidentiality, but connection is without SSL
+     * Check if given plugin requires confidentiality, but net.financeiro.connection is without SSL
      *
      * @param plugin
      *            {@link AuthenticationPlugin}
@@ -349,15 +349,15 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
     }
 
     /**
-     * Performs an authentication handshake to authorize connection to a given database as a given MySQL user.
-     * This can happen upon initial connection to the server, after receiving Auth Challenge Packet, or
-     * at any moment during the connection life-time via a Change User request.
+     * Performs an authentication handshake to authorize net.financeiro.connection to a given database as a given MySQL user.
+     * This can happen upon initial net.financeiro.connection to the server, after receiving Auth Challenge Packet, or
+     * at any moment during the net.financeiro.connection life-time via a Change User request.
      *
      * This method will use registered authentication plugins as requested by the server.
      *
      * @param challenge
      *            the Auth Challenge Packet received from server if
-     *            this method is used during the initial connection.
+     *            this method is used during the initial net.financeiro.connection.
      *            Otherwise null.
      */
     private void proceedHandshakeWithPluggableAuthentication(final NativePacketPayload challenge) {
@@ -633,7 +633,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
 
         last_sent.writeBytes(StringSelfDataType.STRING_TERM, StringUtils.getBytes(pluginName, enc));
 
-        // connection attributes
+        // net.financeiro.connection attributes
         if ((clientParam & NativeServerSession.CLIENT_CONNECT_ATTRS) != 0) {
             appendConnectionAttributes(last_sent, this.propertySet.getStringProperty(PropertyKey.connectionAttributes).getValue(), enc);
         }
@@ -677,7 +677,7 @@ public class NativeAuthenticationProvider implements AuthenticationProvider<Nati
         // plugin name
         last_sent.writeBytes(StringSelfDataType.STRING_TERM, StringUtils.getBytes(pluginName, enc));
 
-        // connection attributes
+        // net.financeiro.connection attributes
         if ((clientParam & NativeServerSession.CLIENT_CONNECT_ATTRS) != 0) {
             appendConnectionAttributes(last_sent, this.propertySet.getStringProperty(PropertyKey.connectionAttributes).getValue(), enc);
         }

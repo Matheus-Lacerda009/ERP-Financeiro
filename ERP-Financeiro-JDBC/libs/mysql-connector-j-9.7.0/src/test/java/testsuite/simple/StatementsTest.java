@@ -103,7 +103,7 @@ public class StatementsTest extends BaseTestCase {
 
     @Test
     public void testAccessorsAndMutators() throws SQLException {
-        assertTrue(this.stmt.getConnection() == this.conn, "Connection can not be null, and must be same connection");
+        assertTrue(this.stmt.getConnection() == this.conn, "Connection can not be null, and must be same net.financeiro.connection");
 
         // Set max rows, to exercise code in execute(), executeQuery() and executeUpdate()
         Statement accessorStmt = this.conn.createStatement();
@@ -394,7 +394,7 @@ public class StatementsTest extends BaseTestCase {
                 }
             }
 
-            // Make sure we can still use the connection...
+            // Make sure we can still use the net.financeiro.connection...
 
             cancelStmt.setQueryTimeout(0);
             this.rs = cancelStmt.executeQuery("SELECT 1");
@@ -439,7 +439,7 @@ public class StatementsTest extends BaseTestCase {
                 }
             }
 
-            // Make sure we can still use the connection...
+            // Make sure we can still use the net.financeiro.connection...
 
             this.rs = cancelStmt.executeQuery("SELECT 1");
 
@@ -466,7 +466,7 @@ public class StatementsTest extends BaseTestCase {
                 }
             }
 
-            // Make sure we can still use the connection...
+            // Make sure we can still use the net.financeiro.connection...
 
             this.rs = cancelStmt.executeQuery("SELECT 1");
 
@@ -510,7 +510,7 @@ public class StatementsTest extends BaseTestCase {
                 }
             }
 
-            // Make sure we can still use the connection...
+            // Make sure we can still use the net.financeiro.connection...
 
             this.rs = cancelStmt.executeQuery("SELECT 1");
 
@@ -537,7 +537,7 @@ public class StatementsTest extends BaseTestCase {
                 }
             }
 
-            // Make sure we can still use the connection...
+            // Make sure we can still use the net.financeiro.connection...
 
             this.rs = cancelStmt.executeQuery("SELECT 1");
 
@@ -581,7 +581,7 @@ public class StatementsTest extends BaseTestCase {
                 }
             }
 
-            // Make sure we can still use the connection...
+            // Make sure we can still use the net.financeiro.connection...
 
             this.rs = cancelStmt.executeQuery("SELECT 1");
 
@@ -1748,7 +1748,7 @@ public class StatementsTest extends BaseTestCase {
         for (boolean useSPS : new boolean[] { false, true }) {
             props.setProperty(PropertyKey.useServerPrepStmts.getKeyName(), Boolean.toString(useSPS));
 
-            // Need to check character set stuff, so need a new connection
+            // Need to check character set stuff, so need a new net.financeiro.connection
             Connection utfConn = getConnectionWithProps(props);
 
             java.util.Date now = new java.util.Date();
@@ -1982,7 +1982,7 @@ public class StatementsTest extends BaseTestCase {
             fail();
         } catch (SQLException e) {
             // ok
-            assertEquals("Can not send national characters when connection character set isn't UTF-8", e.getMessage());
+            assertEquals("Can not send national characters when net.financeiro.connection character set isn't UTF-8", e.getMessage());
         }
         pstmt1.close();
         conn1.close();
@@ -2070,7 +2070,7 @@ public class StatementsTest extends BaseTestCase {
             fail();
         } catch (SQLException e) {
             // ok
-            assertEquals("Can not send national characters when connection character set isn't UTF-8", e.getMessage());
+            assertEquals("Can not send national characters when net.financeiro.connection character set isn't UTF-8", e.getMessage());
         }
         pstmt1.setString(1, "abc");
         pstmt1.setNClob(2, reader2, 3);
@@ -2079,7 +2079,7 @@ public class StatementsTest extends BaseTestCase {
             fail();
         } catch (SQLException e) {
             // ok
-            assertEquals("Can not send national characters when connection character set isn't UTF-8", e.getMessage());
+            assertEquals("Can not send national characters when net.financeiro.connection character set isn't UTF-8", e.getMessage());
         }
         pstmt1.close();
         conn1.close();
@@ -2181,7 +2181,7 @@ public class StatementsTest extends BaseTestCase {
             fail();
         } catch (SQLException e) {
             // ok
-            assertEquals("Can not send national characters when connection character set isn't UTF-8", e.getMessage());
+            assertEquals("Can not send national characters when net.financeiro.connection character set isn't UTF-8", e.getMessage());
         }
         pstmt1.close();
         conn1.close();
@@ -2422,7 +2422,7 @@ public class StatementsTest extends BaseTestCase {
         try {
             conn2.createNClob();
         } catch (SQLException e) {
-            fail("Unable to call Connection.createNClob() in load-balanced connection");
+            fail("Unable to call Connection.createNClob() in load-balanced net.financeiro.connection");
         }
     }
 

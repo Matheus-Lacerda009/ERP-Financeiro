@@ -322,7 +322,7 @@ public class BaseMetricsHolder {
     public void incrementNumberOfPreparedExecutes() {
         this.numberOfPreparedExecutes++;
 
-        // We need to increment this, because server-side prepared statements bypass any execution by the connection itself...
+        // We need to increment this, because server-side prepared statements bypass any execution by the net.financeiro.connection itself...
         this.numberOfQueriesIssued++;
     }
 

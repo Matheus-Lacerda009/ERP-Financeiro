@@ -1216,7 +1216,7 @@ public class NativeProtocol extends AbstractProtocol<NativePacketPayload> implem
                 if (!ExportControlled.isSSLEstablished(this.socketConnection.getMysqlSocket())) { // Fix for Bug#56979 does not apply to secure sockets.
                     if (!this.socketConnection.getMysqlSocket().isClosed()) {
                         try {
-                            // The response won't be read, this fixes BUG#56979 [Improper connection closing logic leads to TIME_WAIT sockets on server].
+                            // The response won't be read, this fixes BUG#56979 [Improper net.financeiro.connection closing logic leads to TIME_WAIT sockets on server].
                             this.socketConnection.getMysqlSocket().shutdownInput();
                         } catch (UnsupportedOperationException e) {
                             // Ignore, some sockets do not support this method.

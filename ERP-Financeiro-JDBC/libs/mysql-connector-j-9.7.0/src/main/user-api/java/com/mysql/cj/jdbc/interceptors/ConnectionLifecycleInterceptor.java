@@ -29,22 +29,22 @@ import com.mysql.cj.log.Log;
 
 /**
  * Implementors of this interface can be installed via the "connectionLifecycleInterceptors" configuration property and receive events and alter behavior of
- * "lifecycle" methods on our connection implementation.
+ * "lifecycle" methods on our net.financeiro.connection implementation.
  *
- * The driver will create one instance of a given interceptor per-connection.
+ * The driver will create one instance of a given interceptor per-net.financeiro.connection.
  */
 public interface ConnectionLifecycleInterceptor {
 
     /**
-     * Called once per connection that wants to use the extension
+     * Called once per net.financeiro.connection that wants to use the extension
      *
      * The properties are the same ones passed in in the URL or arguments to
      * Driver.connect() or DriverManager.getConnection().
      *
      * @param conn
-     *            the connection for which this extension is being created
+     *            the net.financeiro.connection for which this extension is being created
      * @param props
-     *            configuration values as passed to the connection. Note that
+     *            configuration values as passed to the net.financeiro.connection. Note that
      *            in order to support javax.sql.DataSources, configuration properties specific
      *            to an interceptor <strong>must</strong> be passed via setURL() on the
      *            DataSource. Extension properties are not exposed via
@@ -57,7 +57,7 @@ public interface ConnectionLifecycleInterceptor {
 
     /**
      * Called by the driver when this extension should release any resources
-     * it is holding and cleanup internally before the connection is
+     * it is holding and cleanup internally before the net.financeiro.connection is
      * closed.
      */
     void destroy();

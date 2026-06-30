@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://apache.org">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Identificação do Projeto -->
+    <groupId>ERP-Financeiro</groupId>
+    <artifactId>net.financeiro</artifactId>
+    <version>1.0.0</version>
+
+    <!-- Propriedades -->
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+
+    <!-- Dependências do Projeto -->
+    <dependencies>
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

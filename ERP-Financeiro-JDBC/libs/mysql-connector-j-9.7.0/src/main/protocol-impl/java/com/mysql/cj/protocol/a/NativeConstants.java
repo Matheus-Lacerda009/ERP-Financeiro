@@ -89,7 +89,7 @@ public class NativeConstants {
     public static final int COM_RESET_CONNECTION = 31;
 
     /**
-     * Used to indicate that the server sent no field-level character set information, so the driver should use the connection-level character encoding instead.
+     * Used to indicate that the server sent no field-level character set information, so the driver should use the net.financeiro.connection-level character encoding instead.
      */
     public static final int NO_CHARSET_INFO = -1;
 

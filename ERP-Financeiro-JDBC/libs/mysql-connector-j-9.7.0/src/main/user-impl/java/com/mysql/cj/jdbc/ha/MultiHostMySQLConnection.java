@@ -61,19 +61,19 @@ import com.mysql.cj.protocol.ServerSessionStateController;
  *
  * While this class implements MySQLConnection directly, MultiHostConnectionProxy does the same but via a dynamic proxy.
  *
- * Most of the methods in this class refer directly to the active connection from its MultiHostConnectionProxy pair, providing a non-proxied access to the
- * current active connection managed by this multi-host structure. The remaining methods either implement some local behavior or refer to the proxy itself
- * instead of the sub-connection.
+ * Most of the methods in this class refer directly to the active net.financeiro.connection from its MultiHostConnectionProxy pair, providing a non-proxied access to the
+ * current active net.financeiro.connection managed by this multi-host structure. The remaining methods either implement some local behavior or refer to the proxy itself
+ * instead of the sub-net.financeiro.connection.
  *
- * Referring to the higher level proxy connection is needed when some operation needs to be extended to all open sub-connections existing in this multi-host
- * structure as opposed to just refer to the active current connection, such as with close() which is most likely required to close all sub-connections as
+ * Referring to the higher level proxy net.financeiro.connection is needed when some operation needs to be extended to all open sub-connections existing in this multi-host
+ * structure as opposed to just refer to the active current net.financeiro.connection, such as with close() which is most likely required to close all sub-connections as
  * well.
  */
 public class MultiHostMySQLConnection implements JdbcConnection {
 
     /**
-     * thisAsProxy holds the proxy (MultiHostConnectionProxy or one of its subclasses) this connection is associated with.
-     * It is used as a gateway to the current active sub-connection managed by this multi-host structure or as a target to where some of the methods implemented
+     * thisAsProxy holds the proxy (MultiHostConnectionProxy or one of its subclasses) this net.financeiro.connection is associated with.
+     * It is used as a gateway to the current active sub-net.financeiro.connection managed by this multi-host structure or as a target to where some of the methods implemented
      * here in this class refer to.
      */
     protected MultiHostConnectionProxy thisAsProxy;

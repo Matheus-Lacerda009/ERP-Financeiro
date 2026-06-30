@@ -906,7 +906,7 @@ public class QueryAttributesTest extends BaseTestCase {
      */
     @Test
     void plainStatementWithQueryAttributesInMultiHost() throws Exception {
-        // Failover connection.
+        // Failover net.financeiro.connection.
         Connection testConn = getFailoverConnection();
 
         Statement testStmt = testConn.createStatement();
@@ -922,7 +922,7 @@ public class QueryAttributesTest extends BaseTestCase {
 
         testConn.close();
 
-        // Loadbalanced connection.
+        // Loadbalanced net.financeiro.connection.
         testConn = getLoadBalancedConnection();
 
         testStmt = testConn.createStatement();
@@ -938,7 +938,7 @@ public class QueryAttributesTest extends BaseTestCase {
 
         testConn.close();
 
-        // Replication connection.
+        // Replication net.financeiro.connection.
         testConn = getSourceReplicaReplicationConnection();
 
         testStmt = testConn.createStatement();
@@ -967,7 +967,7 @@ public class QueryAttributesTest extends BaseTestCase {
         props.setProperty(PropertyKey.allowPublicKeyRetrieval.getKeyName(), "true");
         props.setProperty(PropertyKey.useServerPrepStmts.getKeyName(), "true");
 
-        // Failover connection.
+        // Failover net.financeiro.connection.
         Connection testConn = getFailoverConnection(props);
 
         PreparedStatement testPstmt = testConn.prepareStatement("SELECT mysql_query_attribute_string('qa')");
@@ -983,7 +983,7 @@ public class QueryAttributesTest extends BaseTestCase {
 
         testConn.close();
 
-        // Loadbalanced connection.
+        // Loadbalanced net.financeiro.connection.
         testConn = getLoadBalancedConnection(props);
 
         testPstmt = testConn.prepareStatement("SELECT mysql_query_attribute_string('qa')");
@@ -999,7 +999,7 @@ public class QueryAttributesTest extends BaseTestCase {
 
         testConn.close();
 
-        // Replication connection.
+        // Replication net.financeiro.connection.
         testConn = getSourceReplicaReplicationConnection(props);
 
         testPstmt = testConn.prepareStatement("SELECT mysql_query_attribute_string('qa')");

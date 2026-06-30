@@ -23,7 +23,7 @@ package com.mysql.cj.protocol;
 import com.mysql.cj.ServerVersion;
 
 /**
- * Represents server capabilities, retrieved right after creating physical connection and before handshake.
+ * Represents server capabilities, retrieved right after creating physical net.financeiro.connection and before handshake.
  */
 public interface ServerCapabilities {
 

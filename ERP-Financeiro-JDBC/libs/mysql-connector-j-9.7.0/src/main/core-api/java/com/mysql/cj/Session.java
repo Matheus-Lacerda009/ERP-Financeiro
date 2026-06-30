@@ -79,7 +79,7 @@ public interface Session {
     void quit();
 
     /**
-     * Clobbers the physical network connection and marks this session as closed.
+     * Clobbers the physical network net.financeiro.connection and marks this session as closed.
      */
     void forceClose();
 

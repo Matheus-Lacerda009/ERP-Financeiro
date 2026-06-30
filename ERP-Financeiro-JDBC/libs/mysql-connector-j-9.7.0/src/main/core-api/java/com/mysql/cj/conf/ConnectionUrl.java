@@ -50,9 +50,9 @@ import com.mysql.cj.util.LRUCache;
 import com.mysql.cj.util.Util;
 
 /**
- * A container for a database URL and a collection of given connection arguments.
- * The connection string is parsed and split by its components, each of which is then processed and fixed according to the needs of the connection type.
- * This abstract class holds all common behavior to all connection string types. Its subclasses must implement their own specifics such as classifying hosts by
+ * A container for a database URL and a collection of given net.financeiro.connection arguments.
+ * The net.financeiro.connection string is parsed and split by its components, each of which is then processed and fixed according to the needs of the net.financeiro.connection type.
+ * This abstract class holds all common behavior to all net.financeiro.connection string types. Its subclasses must implement their own specifics such as classifying hosts by
  * type or apply validation rules.
  */
 public abstract class ConnectionUrl implements DatabaseUrlContainer {
@@ -98,7 +98,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * The database URL type which is determined by the scheme section of the connection string.
+     * The database URL type which is determined by the scheme section of the net.financeiro.connection string.
      */
     public enum Type {
 
@@ -182,12 +182,12 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
         }
 
         /**
-         * Instantiates a class that implements the right type of connection URLs for the given {@link ConnectionUrlParser}.
+         * Instantiates a class that implements the right type of net.financeiro.connection URLs for the given {@link ConnectionUrlParser}.
          *
          * @param parser
          *            the {@link ConnectionUrlParser} containing the URL components.
          * @param info
-         *            a connection properties map to add to the {@link ConnectionUrl} structure.
+         *            a net.financeiro.connection properties map to add to the {@link ConnectionUrl} structure.
          * @return
          *         an instance of {@link ConnectionUrl}.
          */
@@ -199,7 +199,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
 
             // Check if the Type must be replaced by a DNS SRV one.
             if (dnsSrvPropKey != null && type.getAlternateDnsSrvType() != null) {
-                if (info != null && info.containsKey(dnsSrvPropKey.getKeyName())) { // Properties map prevails over connection string options.
+                if (info != null && info.containsKey(dnsSrvPropKey.getKeyName())) { // Properties map prevails over net.financeiro.connection string options.
                     if ((Boolean) PropertyDefinitions.getPropertyDefinition(dnsSrvPropKey).parseObject(info.getProperty(dnsSrvPropKey.getKeyName()), null)) {
                         type = fromValue(type.getAlternateDnsSrvType().getScheme(), hostsCount);
                     }
@@ -213,10 +213,10 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
         }
 
         /**
-         * Checks if the given scheme corresponds to one of the connection types the driver supports.
+         * Checks if the given scheme corresponds to one of the net.financeiro.connection types the driver supports.
          *
          * @param scheme
-         *            scheme part from connection string, like "jdbc:mysql:"
+         *            scheme part from net.financeiro.connection string, like "jdbc:mysql:"
          * @return true if the given scheme is supported by driver
          */
         public static boolean isSupported(String scheme) {
@@ -229,12 +229,12 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
         }
 
         /**
-         * Instantiates a class that implements this type of connection URLs with the given arguments.
+         * Instantiates a class that implements this type of net.financeiro.connection URLs with the given arguments.
          *
          * @param parser
          *            the {@link ConnectionUrlParser} containing the URL components.
          * @param info
-         *            a connection properties map to add to the {@link ConnectionUrl} structure.
+         *            a net.financeiro.connection properties map to add to the {@link ConnectionUrl} structure.
          * @return
          *         an instance of {@link ConnectionUrl}.
          */
@@ -254,13 +254,13 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
 
     /**
      * Static factory method that returns either a new instance of a {@link ConnectionUrl} or a cached one.
-     * Returns "null" it can't handle the connection string.
+     * Returns "null" it can't handle the net.financeiro.connection string.
      *
      * @param connString
-     *            the connection string
+     *            the net.financeiro.connection string
      * @param info
-     *            the connection arguments map
-     * @return an instance of a {@link ConnectionUrl} or "null" if isn't able to handle the connection string
+     *            the net.financeiro.connection arguments map
+     * @return an instance of a {@link ConnectionUrl} or "null" if isn't able to handle the net.financeiro.connection string
      */
     public static ConnectionUrl getConnectionUrlInstance(String connString, Properties info) {
         if (connString == null) {
@@ -292,13 +292,13 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Builds a connection URL cache map key based on the connection string itself plus the string representation of the given connection properties.
+     * Builds a net.financeiro.connection URL cache map key based on the net.financeiro.connection string itself plus the string representation of the given net.financeiro.connection properties.
      *
      * @param connString
-     *            the connection string
+     *            the net.financeiro.connection string
      * @param info
-     *            the connection arguments map
-     * @return a connection string cache map key
+     *            the net.financeiro.connection arguments map
+     * @return a net.financeiro.connection string cache map key
      */
     private static String buildConnectionStringCacheKey(String connString, Properties info) {
         StringBuilder sbKey = new StringBuilder(connString);
@@ -312,7 +312,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
      * Checks if this {@link ConnectionUrl} is able to process the given database URL.
      *
      * @param connString
-     *            the connection string
+     *            the net.financeiro.connection string
      * @return true if this class is able to process the given URL, false otherwise
      */
     public static boolean acceptsUrl(String connString) {
@@ -339,9 +339,9 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
      * Constructs an instance of {@link ConnectionUrl}, performing all the required initializations.
      *
      * @param connStrParser
-     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original connection string
+     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original net.financeiro.connection string
      * @param info
-     *            the connection arguments map
+     *            the net.financeiro.connection arguments map
      */
     protected ConnectionUrl(ConnectionUrlParser connStrParser, Properties info) {
         this.originalConnStr = connStrParser.getDatabaseUrl();
@@ -351,19 +351,19 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Joins the connection arguments from the connection string with the ones from the given connection arguments map collecting them in a single map.
-     * Additionally may also collect other connection arguments from configuration files.
+     * Joins the net.financeiro.connection arguments from the net.financeiro.connection string with the ones from the given net.financeiro.connection arguments map collecting them in a single map.
+     * Additionally may also collect other net.financeiro.connection arguments from configuration files.
      *
      * @param connStrParser
      *            the {@link ConnectionUrlParser} from where to collect the properties
      * @param info
-     *            the connection arguments map
+     *            the net.financeiro.connection arguments map
      */
     protected void collectProperties(ConnectionUrlParser connStrParser, Properties info) {
-        // Fill in the properties from the connection string.
+        // Fill in the properties from the net.financeiro.connection string.
         connStrParser.getProperties().entrySet().stream().forEach(e -> this.properties.put(PropertyKey.normalizeCase(e.getKey()), e.getValue()));
 
-        // Properties passed in override the ones from the connection string.
+        // Properties passed in override the ones from the net.financeiro.connection string.
         if (info != null) {
             info.stringPropertyNames().stream().forEach(k -> this.properties.put(PropertyKey.normalizeCase(k), info.getProperty(k)));
         }
@@ -391,10 +391,10 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Expands the connection argument "useConfig" by reading the mentioned configuration files.
+     * Expands the net.financeiro.connection argument "useConfig" by reading the mentioned configuration files.
      *
      * @param props
-     *            a connection arguments map from where to read the "useConfig" property and where to save the loaded properties.
+     *            a net.financeiro.connection arguments map from where to read the "useConfig" property and where to save the loaded properties.
      */
     protected void expandPropertiesFromConfigFiles(Map<String, String> props) {
         // Properties from config files should not override the existing ones.
@@ -431,10 +431,10 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Subclasses must override this method if they need to inject additional properties in the connection arguments map while it's being constructed.
+     * Subclasses must override this method if they need to inject additional properties in the net.financeiro.connection arguments map while it's being constructed.
      *
      * @param props
-     *            the properties already containing all known connection arguments
+     *            the properties already containing all known net.financeiro.connection arguments
      */
     protected void injectPerTypeProperties(Map<String, String> props) {
         return;
@@ -467,7 +467,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
 
     /**
      * Fixes the host information by moving data around and filling in missing data.
-     * Applies properties transformations to the collected properties if {@link ConnectionPropertiesTransform} was declared in the connection arguments.
+     * Applies properties transformations to the collected properties if {@link ConnectionPropertiesTransform} was declared in the net.financeiro.connection arguments.
      *
      * @param hi
      *            the host information data to fix
@@ -476,9 +476,9 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     protected HostInfo fixHostInfo(HostInfo hi) {
         Map<String, String> hostProps = new HashMap<>();
 
-        // Add global connection arguments.
+        // Add global net.financeiro.connection arguments.
         hostProps.putAll(this.properties);
-        // Add/override host specific connection arguments.
+        // Add/override host specific net.financeiro.connection arguments.
         hi.getHostProperties().entrySet().stream().forEach(e -> hostProps.put(PropertyKey.normalizeCase(e.getKey()), e.getValue()));
         // Add the database name.
         if (!hostProps.containsKey(PropertyKey.DBNAME.getKeyName())) {
@@ -558,7 +558,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the default user. Usually the one provided in the method {@link DriverManager#getConnection(String, String, String)} or as connection argument.
+     * Returns the default user. Usually the one provided in the method {@link DriverManager#getConnection(String, String, String)} or as net.financeiro.connection argument.
      *
      * @return the default user
      */
@@ -567,7 +567,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the default password. Usually the one provided in the method {@link DriverManager#getConnection(String, String, String)} or as connection
+     * Returns the default password. Usually the one provided in the method {@link DriverManager#getConnection(String, String, String)} or as net.financeiro.connection
      * argument.
      *
      * @return the default password
@@ -592,16 +592,16 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns this connection URL type.
+     * Returns this net.financeiro.connection URL type.
      *
-     * @return the connection URL type
+     * @return the net.financeiro.connection URL type
      */
     public Type getType() {
         return this.type;
     }
 
     /**
-     * Returns the original database URL that produced this connection string.
+     * Returns the original database URL that produced this net.financeiro.connection string.
      *
      * @return the original database URL
      */
@@ -611,7 +611,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the database from this connection URL. Note that a "DBNAME" property overrides the database identified in the connection string.
+     * Returns the database from this net.financeiro.connection URL. Note that a "DBNAME" property overrides the database identified in the net.financeiro.connection string.
      *
      * @return the database name
      */
@@ -620,7 +620,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the number of hosts in this connection URL.
+     * Returns the number of hosts in this net.financeiro.connection URL.
      *
      * @return the number of hosts
      */
@@ -638,16 +638,16 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns a list of the hosts in this connection URL.
+     * Returns a list of the hosts in this net.financeiro.connection URL.
      *
-     * @return the hosts list from this connection URL
+     * @return the hosts list from this net.financeiro.connection URL
      */
     public List<HostInfo> getHostsList() {
         return getHostsList(HostsListView.ALL);
     }
 
     /**
-     * Returns a list of the hosts in this connection URL, filtered for the given view.
+     * Returns a list of the hosts in this net.financeiro.connection URL, filtered for the given view.
      *
      * By default returns all hosts. Subclasses should override this method in order to implement support for different views, usually by splitting the global
      * hosts into smaller sub-lists.
@@ -655,14 +655,14 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
      * @param view
      *            the type of the view to use in the returned list of hosts. This argument is ignored in this implementation.
      * @return
-     *         the hosts list from this connection URL, filtered for the given view.
+     *         the hosts list from this net.financeiro.connection URL, filtered for the given view.
      */
     public List<HostInfo> getHostsList(HostsListView view) {
         return Collections.unmodifiableList(this.hosts);
     }
 
     /**
-     * Returns an existing host info with the same host:port part or spawns a new isolated host info based on this connection URL if none was found.
+     * Returns an existing host info with the same host:port part or spawns a new isolated host info based on this net.financeiro.connection URL if none was found.
      *
      * @param hostPortPair
      *            the host:port part to search for
@@ -673,7 +673,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns an existing host info with the same host:port part or spawns a new isolated host info based on this connection URL if none was found.
+     * Returns an existing host info with the same host:port part or spawns a new isolated host info based on this net.financeiro.connection URL if none was found.
      *
      * @param hostPortPair
      *            the host:port part to search for
@@ -698,7 +698,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Creates a new {@link HostInfo} structure with the given components, passing through the properties transformer if there is one defined in this connection
+     * Creates a new {@link HostInfo} structure with the given components, passing through the properties transformer if there is one defined in this net.financeiro.connection
      * string;
      *
      * @param host
@@ -755,19 +755,19 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the original (common to all hosts) connection arguments as provided in the connection string query section.
+     * Returns the original (common to all hosts) net.financeiro.connection arguments as provided in the net.financeiro.connection string query section.
      *
-     * @return the original (common to all hosts) connection arguments
+     * @return the original (common to all hosts) net.financeiro.connection arguments
      */
     public Map<String, String> getOriginalProperties() {
         return Collections.unmodifiableMap(this.properties);
     }
 
     /**
-     * Returns a {@link Properties} instance containing the connection arguments extracted from the URL query section, i.e., per host attributes are excluded.
-     * Applies properties transformations to the collected properties if {@link ConnectionPropertiesTransform} was declared in the connection arguments.
+     * Returns a {@link Properties} instance containing the net.financeiro.connection arguments extracted from the URL query section, i.e., per host attributes are excluded.
+     * Applies properties transformations to the collected properties if {@link ConnectionPropertiesTransform} was declared in the net.financeiro.connection arguments.
      *
-     * @return a {@link Properties} instance containing the common connection arguments.
+     * @return a {@link Properties} instance containing the common net.financeiro.connection arguments.
      */
     public Properties getConnectionArgumentsAsProperties() {
         Properties props = new Properties();
@@ -782,7 +782,7 @@ public abstract class ConnectionUrl implements DatabaseUrlContainer {
      * Returns a hosts list built from the result of the DNS SRV lookup for the original host name.
      *
      * @param srvHost
-     *            the {@link HostInfo} from where to get the DNS SRV service name to lookup.
+     *            the {@link HostInfo} from where to get the DNS SRV net.financeiro.service name to lookup.
      * @return
      *         the hosts list from the result of the DNS SRV lookup, filtered for the given view.
      */

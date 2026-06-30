@@ -211,7 +211,7 @@ public class XProtocol extends AbstractProtocol<XMessage> implements Protocol<XM
         }
 
         if (!((XServerCapabilities) this.serverSession.getCapabilities()).hasCapability(XServerCapabilities.KEY_TLS)) {
-            throw new CJCommunicationsException("A secure connection is required but the server is not configured with SSL.");
+            throw new CJCommunicationsException("A secure net.financeiro.connection is required but the server is not configured with SSL.");
         }
 
         // the message reader is async and is always "reading". we need to stop it to use the socket for the TLS handshake
@@ -299,7 +299,7 @@ public class XProtocol extends AbstractProtocol<XMessage> implements Protocol<XM
 
         this.serverSession.setCapabilities(readServerCapabilities());
 
-        // connection attributes
+        // net.financeiro.connection attributes
         String attributes = this.propertySet.getStringProperty(PropertyKey.xdevapiConnectionAttributes).getValue();
         if (attributes == null || !attributes.equalsIgnoreCase("false")) {
             Map<String, String> attMap = getConnectionAttributesMap("true".equalsIgnoreCase(attributes) ? "" : attributes);
@@ -431,7 +431,7 @@ public class XProtocol extends AbstractProtocol<XMessage> implements Protocol<XM
     }
 
     /**
-     * Parses and validates the value given for the connection option 'xdevapi.compression-extensions'. With the information obtained, creates a map of
+     * Parses and validates the value given for the net.financeiro.connection option 'xdevapi.compression-extensions'. With the information obtained, creates a map of
      * supported compression algorithms.
      *
      * @param compressionExtensions
@@ -946,7 +946,7 @@ public class XProtocol extends AbstractProtocol<XMessage> implements Protocol<XM
             readQueryResult(new OkBuilder());
 
             if (this.clientCapabilities.containsKey(XServerCapabilities.KEY_SESSION_CONNECT_ATTRS)) {
-                // this code may never work because xplugin connection attributes were introduced later than new session reset
+                // this code may never work because xplugin net.financeiro.connection attributes were introduced later than new session reset
                 Map<String, Object> reducedClientCapabilities = new HashMap<>();
                 reducedClientCapabilities.put(XServerCapabilities.KEY_SESSION_CONNECT_ATTRS,
                         this.clientCapabilities.get(XServerCapabilities.KEY_SESSION_CONNECT_ATTRS));

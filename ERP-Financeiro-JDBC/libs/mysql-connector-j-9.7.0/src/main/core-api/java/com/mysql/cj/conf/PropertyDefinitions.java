@@ -94,7 +94,7 @@ public class PropertyDefinitions {
     public static final String SYSP_com_mysql_cj_build_verbose /*             */ = "com.mysql.cj.build.verbose";
 
     /*
-     * Categories of connection properties.
+     * Categories of net.financeiro.connection properties.
      */
     public static final String CATEGORY_AUTH = Messages.getString("ConnectionProperties.categoryAuthentication");
     public static final String CATEGORY_CONNECTION = Messages.getString("ConnectionProperties.categoryConnection");

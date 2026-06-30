@@ -35,13 +35,13 @@ import com.mysql.cj.util.StringUtils;
 public class LoadBalanceConnectionUrl extends ConnectionUrl {
 
     /**
-     * Constructs an instance of {@link LoadBalanceConnectionUrl}, performing all the required initializations and validations. A load-balanced connection
+     * Constructs an instance of {@link LoadBalanceConnectionUrl}, performing all the required initializations and validations. A load-balanced net.financeiro.connection
      * cannot deal with multiple hosts with same host:port.
      *
      * @param connStrParser
-     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original connection string
+     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original net.financeiro.connection string
      * @param info
-     *            the connection arguments map
+     *            the net.financeiro.connection arguments map
      */
     public LoadBalanceConnectionUrl(ConnectionUrlParser connStrParser, Properties info) {
         super(connStrParser, info);
@@ -61,12 +61,12 @@ public class LoadBalanceConnectionUrl extends ConnectionUrl {
     }
 
     /**
-     * Constructs an instance of a {@link LoadBalanceConnectionUrl} based on a list of hosts and a global set of properties instead of connection string
+     * Constructs an instance of a {@link LoadBalanceConnectionUrl} based on a list of hosts and a global set of properties instead of net.financeiro.connection string
      * parsing.
      * {@link ConnectionUrl} instances created by this process are not cached.
      *
      * @param hosts
-     *            the hosts list to use in this connection URL
+     *            the hosts list to use in this net.financeiro.connection URL
      * @param properties
      *            the properties common to all hosts
      */
@@ -76,15 +76,15 @@ public class LoadBalanceConnectionUrl extends ConnectionUrl {
         this.type = ConnectionUrl.Type.LOADBALANCE_CONNECTION;
         this.properties.putAll(properties);
         injectPerTypeProperties(this.properties);
-        setupPropertiesTransformer(); // This is needed if new hosts come to be spawned in this connection URL.
+        setupPropertiesTransformer(); // This is needed if new hosts come to be spawned in this net.financeiro.connection URL.
         hosts.stream().map(this::fixHostInfo).forEach(this.hosts::add); // Fix the hosts info based on the new properties before adding them.
     }
 
     /**
-     * Injects additional properties into the connection arguments while it's being constructed.
+     * Injects additional properties into the net.financeiro.connection arguments while it's being constructed.
      *
      * @param props
-     *            the properties already containing all known connection arguments
+     *            the properties already containing all known net.financeiro.connection arguments
      */
     @Override
     protected void injectPerTypeProperties(Map<String, String> props) {
@@ -107,9 +107,9 @@ public class LoadBalanceConnectionUrl extends ConnectionUrl {
     }
 
     /**
-     * Returns a list of this connection URL hosts in the form of host:port pairs.
+     * Returns a list of this net.financeiro.connection URL hosts in the form of host:port pairs.
      *
-     * @return a list of this connection URL hosts in the form of host:port pairs
+     * @return a list of this net.financeiro.connection URL hosts in the form of host:port pairs
      */
     public List<String> getHostInfoListAsHostPortPairs() {
         return this.hosts.stream().map(HostInfo::getHostPortPair).collect(Collectors.toList());

@@ -25,13 +25,13 @@ import java.util.Properties;
 public interface LoadBalanceExceptionChecker {
 
     /**
-     * Called once per connection that wants to use the extension
+     * Called once per net.financeiro.connection that wants to use the extension
      *
      * The properties are the same ones passed in in the URL or arguments to
      * Driver.connect() or DriverManager.getConnection().
      *
      * @param props
-     *            configuration values as passed to the connection. Note that
+     *            configuration values as passed to the net.financeiro.connection. Note that
      *            in order to support javax.sql.DataSources, configuration properties specific
      *            to an interceptor <strong>must</strong> be passed via setURL() on the
      *            DataSource. Extension properties are not exposed via
@@ -41,7 +41,7 @@ public interface LoadBalanceExceptionChecker {
 
     /**
      * Called by the driver when this extension should release any resources
-     * it is holding and cleanup internally before the connection is
+     * it is holding and cleanup internally before the net.financeiro.connection is
      * closed.
      */
     void destroy();
@@ -53,7 +53,7 @@ public interface LoadBalanceExceptionChecker {
      * The driver will not pass in a Connection instance when calling init(), but it
      * will pass in the Properties, otherwise it acts like a normal Extension.
      *
-     * One instance of a handler *per* JDBC connection instance will be created. If
+     * One instance of a handler *per* JDBC net.financeiro.connection instance will be created. If
      * you need singleton-like behavior, you're on your own to provide it.
      *
      * @param ex

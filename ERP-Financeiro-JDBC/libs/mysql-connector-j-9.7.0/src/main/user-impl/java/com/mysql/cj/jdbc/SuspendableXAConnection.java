@@ -178,7 +178,7 @@ public class SuspendableXAConnection extends MysqlPooledConnection implements XA
         }
 
         //
-        // Emulate join, by using resume on the same physical connection
+        // Emulate join, by using resume on the same physical net.financeiro.connection
         //
 
         this.currentXAResource.start(xid, XAResource.TMRESUME);

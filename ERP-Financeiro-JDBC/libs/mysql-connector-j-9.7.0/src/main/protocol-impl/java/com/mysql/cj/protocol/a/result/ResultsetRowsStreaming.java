@@ -77,7 +77,7 @@ public class ResultsetRowsStreaming<T extends ProtocolEntity> extends AbstractRe
      * Creates a new ResultsetRowsStreaming object.
      *
      * @param protocol
-     *            the connection to MySQL that this data is coming from
+     *            the net.financeiro.connection to MySQL that this data is coming from
      * @param columnDefinition
      *            the metadata that describe this data
      * @param isBinaryEncoded

@@ -23,7 +23,7 @@ package com.mysql.cj.xdevapi;
 import java.util.List;
 
 /**
- * X DevAPI introduces a new, high-level database connection concept that is called Session. When working with X DevAPI it is important to understand this new
+ * X DevAPI introduces a new, high-level database net.financeiro.connection concept that is called Session. When working with X DevAPI it is important to understand this new
  * Session concept which is different from working with traditional low-level MySQL connections.
  * <p>
  * An application using the Session class can be run against a single MySQL server or large number of MySQL servers forming a sharding cluster with no code
@@ -50,7 +50,7 @@ import java.util.List;
  * session.sql("USE ?").bind(defaultSchema).execute();<br>
  * <p>
  * A quoting function exists to escape SQL names/identifiers. StringUtils.quoteIdentifier(String, boolean) will escape the identifier given in
- * accordance to the settings of the current connection.
+ * accordance to the settings of the current net.financeiro.connection.
  * The escape function must not be used to escape values. Use the value bind syntax of {@link Session#sql(String)} instead.
  * <p>
  * // use bind syntax for values<br>
@@ -84,14 +84,14 @@ public interface Session extends AutoCloseable {
     Schema getSchema(String schemaName);
 
     /**
-     * Retrieve the default schema name, which might have been configured at the time of connection. Returns empty String if no default schema has been set.
+     * Retrieve the default schema name, which might have been configured at the time of net.financeiro.connection. Returns empty String if no default schema has been set.
      *
      * @return default schema name or empty String if no default schema has been set
      */
     String getDefaultSchemaName();
 
     /**
-     * Retrieve the default schema name, which might have been configured at the time of connection. Returns <code>null</code> if no default schema has been
+     * Retrieve the default schema name, which might have been configured at the time of net.financeiro.connection. Returns <code>null</code> if no default schema has been
      * set.
      *
      * @return default {@link Schema} or <code>null</code> if no default schema has been set

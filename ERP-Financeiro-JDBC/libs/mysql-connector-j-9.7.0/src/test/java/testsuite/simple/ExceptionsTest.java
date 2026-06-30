@@ -61,7 +61,7 @@ public class ExceptionsTest extends BaseTestCase {
             return null;
         });
         assertThrows(SQLException.class,
-                "The connection property 'useServerPrepStmts' acceptable values are: 'TRUE', 'FALSE', 'YES' or 'NO'\\. The value 'wrongvalue' is not acceptable\\.",
+                "The net.financeiro.connection property 'useServerPrepStmts' acceptable values are: 'TRUE', 'FALSE', 'YES' or 'NO'\\. The value 'wrongvalue' is not acceptable\\.",
                 () -> {
                     new NonRegisteringDriver().getPropertyInfo(dbUrl + "&useServerPrepStmts=wrongvalue", null);
                     return null;

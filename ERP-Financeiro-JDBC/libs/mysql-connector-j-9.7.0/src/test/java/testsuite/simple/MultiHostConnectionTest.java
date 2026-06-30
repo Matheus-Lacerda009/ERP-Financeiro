@@ -85,10 +85,10 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Asserts the SQLException thrown for connection commit() or rollback();
+     * Asserts the SQLException thrown for net.financeiro.connection commit() or rollback();
      *
      * @param testConn
-     *            The connection instance where to issue the command.
+     *            The net.financeiro.connection instance where to issue the command.
      * @param command
      *            The command to issue.
      * @param messageRegEx
@@ -123,7 +123,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests failover connection establishing with multiple up/down combinations of 3 hosts.
+     * Tests failover net.financeiro.connection establishing with multiple up/down combinations of 3 hosts.
      *
      * @throws Exception
      */
@@ -176,7 +176,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests failover transitions in a default failover connection using three hosts.
+     * Tests failover transitions in a default failover net.financeiro.connection using three hosts.
      *
      * @throws Exception
      */
@@ -228,9 +228,9 @@ public class MultiHostConnectionTest extends BaseTestCase {
      * @param downedHosts
      *            The set of hosts initially down.
      * @param recoverHost
-     *            The host that recovers after first connection.
+     *            The host that recovers after first net.financeiro.connection.
      * @param expectedConnectionsHistory
-     *            The expected connection attempts sequence.
+     *            The expected net.financeiro.connection attempts sequence.
      * @throws Exception
      */
     @Test
@@ -266,7 +266,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
             // still connected to 'fromHost'
             assertEquals(fromHostOk, UnreliableSocketFactory.getHostFromLastConnection());
 
-            // connects to 'toHost' on connection error
+            // connects to 'toHost' on net.financeiro.connection error
             assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
             assertEquals(toHostOk, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -293,7 +293,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests a default failover connection using three hosts and the following sequence of events:
+     * Tests a default failover net.financeiro.connection using three hosts and the following sequence of events:
      * - [/HOST_1 : /HOST_2 : /HOST_3] --> HOST_1
      * - [\HOST_1 : /HOST_2 : /HOST_3] --> HOST_2
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3
@@ -331,7 +331,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
             // still connected to HOST_1
             assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-            // connects to HOST_2 on connection error
+            // connects to HOST_2 on net.financeiro.connection error
             assertSQLException(testStmt1, "SELECT 1", COMM_LINK_ERR_PATTERN);
             assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -351,7 +351,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
             // still connected to HOST_2
             assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-            // connects to HOST_3 on connection error
+            // connects to HOST_3 on net.financeiro.connection error
             assertSQLException(testStmt1, "SELECT 1", COMM_LINK_ERR_PATTERN);
             assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -375,7 +375,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
             // still connected to HOST_3
             assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-            // connects to HOST_2 on connection error (not time to come back to HOST_1 yet)
+            // connects to HOST_2 on net.financeiro.connection error (not time to come back to HOST_1 yet)
             assertSQLException(testStmt2, "SELECT 2", COMM_LINK_ERR_PATTERN);
             assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -395,7 +395,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
             // still connected to HOST_2
             assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-            // connects to HOST_1 on connection error
+            // connects to HOST_1 on net.financeiro.connection error
             assertSQLException(testStmt1, "SELECT 1", COMM_LINK_ERR_PATTERN);
             assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -425,7 +425,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Repeatedly tests a failover connection using three hosts and the following sequence of events, combining distinct failover event triggering:
+     * Repeatedly tests a failover net.financeiro.connection using three hosts and the following sequence of events, combining distinct failover event triggering:
      * - [/HOST_1 : /HOST_2 : /HOST_3] --> HOST_1
      * - [\HOST_1 : /HOST_2 : /HOST_3] --> HOST_2
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3
@@ -466,7 +466,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_1
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_2 on connection error
+                // connects to HOST_2 on net.financeiro.connection error
                 if (run == 1) {
                     assertSQLException(testStmt1, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 } else if (run == 2) {
@@ -492,7 +492,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_2
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_3 on connection error
+                // connects to HOST_3 on net.financeiro.connection error
                 if (run == 1) {
                     assertSQLException(testConn, "commit", COMM_LINK_ERR_PATTERN);
                 } else if (run == 2) {
@@ -522,7 +522,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_3
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_2 on connection error (not time to come back to HOST_1 yet)
+                // connects to HOST_2 on net.financeiro.connection error (not time to come back to HOST_1 yet)
                 if (run == 1) {
                     assertSQLException(testConn, "rollback", COMM_LINK_ERR_PATTERN);
                 } else if (run == 2) {
@@ -548,7 +548,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_2
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_1 on connection error
+                // connects to HOST_1 on net.financeiro.connection error
                 if (run == 1) {
                     assertSQLException(testStmt1, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 } else if (run == 2) {
@@ -583,7 +583,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests the property 'failOverReadOnly' in a failover connection using three hosts and the following sequence of events:
+     * Tests the property 'failOverReadOnly' in a failover net.financeiro.connection using three hosts and the following sequence of events:
      * - [\HOST_1 : /HOST_2 : /HOST_3] --> HOST_2
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3
      * - [\HOST_1 : /HOST_2 : \HOST_3] --> HOST_2
@@ -625,7 +625,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_2
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects ('failOverReadOnly') to HOST_3 on connection error
+                // connects ('failOverReadOnly') to HOST_3 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
                 assertEquals(foReadOnly, testConn.isReadOnly());
@@ -641,7 +641,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_3
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects ('failOverReadOnly') to HOST_2 on connection error
+                // connects ('failOverReadOnly') to HOST_2 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
                 assertEquals(foReadOnly, testConn.isReadOnly());
@@ -657,7 +657,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_2
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects (r+w) to HOST_1 on connection error
+                // connects (r+w) to HOST_1 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
                 assertFalse(testConn.isReadOnly());
@@ -673,7 +673,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_1
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects ('failOverReadOnly') to HOST_2 on connection error
+                // connects ('failOverReadOnly') to HOST_2 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
                 assertEquals(foReadOnly, testConn.isReadOnly());
@@ -692,7 +692,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests the property 'queriesBeforeRetrySource' in a failover connection using three hosts and the following sequence of events:
+     * Tests the property 'queriesBeforeRetrySource' in a failover net.financeiro.connection using three hosts and the following sequence of events:
      * - [/HOST_1 : /HOST_2 : /HOST_3] --> HOST_1
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3
      * - [/HOST_1 : /HOST_2 : \HOST_3] --> HOST_1 vs HOST_2
@@ -735,7 +735,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_1
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_3 on connection error
+                // connects to HOST_3 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -755,14 +755,14 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
                 if (setQueriesBeforeRetrySource) {
-                    // connects to HOST_1 on connection error
+                    // connects to HOST_1 on net.financeiro.connection error
                     assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                     assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
                     assertConnectionsHistory(HOST_1_OK, HOST_2_FAIL, HOST_3_OK, HOST_1_OK);
 
                 } else {
-                    // connects to HOST_2 on connection error
+                    // connects to HOST_2 on net.financeiro.connection error
                     assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                     assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -781,7 +781,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests the property 'secondsBeforeRetrySource' in a failover connection using three hosts and the following sequence of events:
+     * Tests the property 'secondsBeforeRetrySource' in a failover net.financeiro.connection using three hosts and the following sequence of events:
      * - [/HOST_1 : /HOST_2 : /HOST_3] --> HOST_1
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3
      * - [/HOST_1 : /HOST_2 : \HOST_3] --> HOST_1 vs HOST_2
@@ -824,7 +824,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_1
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_3 on connection error
+                // connects to HOST_3 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -849,14 +849,14 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
                 if (setSecondsBeforeRetrySource) {
-                    // connects to HOST_1 on connection error
+                    // connects to HOST_1 on net.financeiro.connection error
                     assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                     assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
                     assertConnectionsHistory(HOST_1_OK, HOST_2_FAIL, HOST_3_OK, HOST_1_OK);
 
                 } else {
-                    // connects to HOST_2 on connection error
+                    // connects to HOST_2 on net.financeiro.connection error
                     assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                     assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -875,7 +875,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests the automatic fall back to primary host in a failover connection using three hosts and the following sequence of events:
+     * Tests the automatic fall back to primary host in a failover net.financeiro.connection using three hosts and the following sequence of events:
      * + 1.st part:
      * - [\HOST_1 : /HOST_2 : \HOST_3] --> HOST_2
      * - [/HOST_1 : /HOST_2 : /HOST_3] --> no_change vs HOST_1 (auto fall back)
@@ -960,7 +960,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                     // still connected to HOST_2
                     assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                    // connects to HOST_1 on connection error
+                    // connects to HOST_1 on net.financeiro.connection error
                     assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                     assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
                 }
@@ -1011,7 +1011,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_2
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_3 on connection error
+                // connects to HOST_3 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -1026,7 +1026,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_3
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_1 on connection error
+                // connects to HOST_1 on net.financeiro.connection error
                 assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -1044,7 +1044,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests the property 'autoReconnect' in a failover connection using three hosts and the following sequence of events:
+     * Tests the property 'autoReconnect' in a failover net.financeiro.connection using three hosts and the following sequence of events:
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3
      * - [\HOST_1 : /HOST_2 : \HOST_3] --> HOST_2
      * - [/HOST_1 : /HOST_2 : \HOST_3]
@@ -1092,7 +1092,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_3
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_2 on connection error
+                // connects to HOST_2 on net.financeiro.connection error
                 assertSQLException(testStmt1, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -1117,7 +1117,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_2
                 assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_1 on connection error
+                // connects to HOST_1 on net.financeiro.connection error
                 assertSQLException(testStmt2, "SELECT 2", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -1142,7 +1142,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
                 // still connected to HOST_1
                 assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-                // connects to HOST_3 on connection error
+                // connects to HOST_3 on net.financeiro.connection error
                 assertSQLException(testStmt1, "SELECT 1", COMM_LINK_ERR_PATTERN);
                 assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -1182,7 +1182,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection properties synchronization in a failover connection using three hosts and the following sequence of events:
+     * Tests net.financeiro.connection properties synchronization in a failover net.financeiro.connection using three hosts and the following sequence of events:
      * - [\HOST_1 : /HOST_2 : \HOST_3] --> HOST_2
      * - [/HOST_1 : \HOST_2 : \HOST_3] --> HOST_1
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3
@@ -1258,7 +1258,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
             // still connected to HOST_2
             assertEquals(HOST_2_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-            // connects to HOST_1 on connection error
+            // connects to HOST_1 on net.financeiro.connection error
             assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
             assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -1266,12 +1266,12 @@ public class MultiHostConnectionTest extends BaseTestCase {
             testStmt = testConn.createStatement();
             assertSingleValueQuery(testStmt, "SELECT 1", 1L);
 
-            // assert expected session values after connection synchronization
+            // assert expected session values after net.financeiro.connection synchronization
             assertFalse(testConn.getAutoCommit());
             assertEquals(newDb, dbMapsToSchema ? testConn.getSchema() : testConn.getCatalog());
             assertEquals(newTransactionIsolation, testConn.getTransactionIsolation());
             assertTrue(testConn.isReadOnly());
-            assertEquals(-1, testConn.getSessionMaxRows()); // this value is reset to default 'maxRows' when the new "internal" connection is created
+            assertEquals(-1, testConn.getSessionMaxRows()); // this value is reset to default 'maxRows' when the new "internal" net.financeiro.connection is created
 
             // change session values
             testConn.setAutoCommit(true);
@@ -1293,7 +1293,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
             // still connected to HOST_1
             assertEquals(HOST_1_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
-            // connects to HOST_3 on connection error (not time to come back to HOST_1 yet)
+            // connects to HOST_3 on net.financeiro.connection error (not time to come back to HOST_1 yet)
             assertSQLException(testStmt, "SELECT 1", COMM_LINK_ERR_PATTERN);
             assertEquals(HOST_3_OK, UnreliableSocketFactory.getHostFromLastConnection());
 
@@ -1301,12 +1301,12 @@ public class MultiHostConnectionTest extends BaseTestCase {
             testStmt = testConn.createStatement();
             assertSingleValueQuery(testStmt, "SELECT 1", 1L);
 
-            // assert expected session values after connection synchronization
+            // assert expected session values after net.financeiro.connection synchronization
             assertTrue(testConn.getAutoCommit());
             assertEquals(newDb, dbMapsToSchema ? testConn.getSchema() : testConn.getCatalog());
             assertEquals(newTransactionIsolation, testConn.getTransactionIsolation());
             assertFalse(testConn.isReadOnly());
-            assertEquals(-1, testConn.getSessionMaxRows()); // this value is reset to default 'maxRows' when the new "internal" connection is created
+            assertEquals(-1, testConn.getSessionMaxRows()); // this value is reset to default 'maxRows' when the new "internal" net.financeiro.connection is created
 
             assertConnectionsHistory(HOST_1_FAIL, HOST_2_OK, HOST_3_FAIL, HOST_2_FAIL, HOST_3_FAIL, HOST_1_OK, HOST_2_FAIL, HOST_3_OK);
 
@@ -1357,7 +1357,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
         testConn.setAutoCommit(false);
         assertConnectionsHistory(HOST_2_FAIL, HOST_2_FAIL, HOST_4_OK);
 
-        testConn.commit(); // Retries HOST2 but fails. Ends up reusing the active HOST4 connection.
+        testConn.commit(); // Retries HOST2 but fails. Ends up reusing the active HOST4 net.financeiro.connection.
         assertConnectionsHistory(HOST_2_FAIL, HOST_2_FAIL, HOST_4_OK, HOST_2_FAIL, HOST_2_FAIL);
         this.rs = testConn.createStatement().executeQuery("SELECT 1");
         assertTrue(this.rs.next());

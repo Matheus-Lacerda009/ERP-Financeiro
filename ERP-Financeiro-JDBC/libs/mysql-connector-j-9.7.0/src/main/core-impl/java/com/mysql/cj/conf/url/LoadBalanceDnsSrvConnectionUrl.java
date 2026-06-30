@@ -44,9 +44,9 @@ public class LoadBalanceDnsSrvConnectionUrl extends ConnectionUrl {
      * Constructs an instance of {@link LoadBalanceDnsSrvConnectionUrl}, performing all the required initializations and validations.
      *
      * @param connStrParser
-     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original connection string
+     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original net.financeiro.connection string
      * @param info
-     *            the connection arguments map
+     *            the net.financeiro.connection arguments map
      */
     public LoadBalanceDnsSrvConnectionUrl(ConnectionUrlParser connStrParser, Properties info) {
         super(connStrParser, info);
@@ -54,8 +54,8 @@ public class LoadBalanceDnsSrvConnectionUrl extends ConnectionUrl {
 
         /*
          * Validate the hosts list:
-         * 1. One host (SRV service name) must be provided.
-         * 2. No more than one host (SRV service name) can be provided.
+         * 1. One host (SRV net.financeiro.service name) must be provided.
+         * 2. No more than one host (SRV net.financeiro.service name) can be provided.
          * 3. No port can be provided, i.e., port number must be equals to DEFAULT_PORT.
          * 4. If property 'dnsSrv' is set then it cannot be "false".
          * 5. Property 'protocol' cannot be "PIPE".
@@ -88,11 +88,11 @@ public class LoadBalanceDnsSrvConnectionUrl extends ConnectionUrl {
     }
 
     /**
-     * Injects additional properties into the connection arguments while the connection arguments map
+     * Injects additional properties into the net.financeiro.connection arguments while the net.financeiro.connection arguments map
      * is being constructed.
      *
      * @param props
-     *            the properties already containing all known connection arguments
+     *            the properties already containing all known net.financeiro.connection arguments
      */
     @Override
     protected void injectPerTypeProperties(Map<String, String> props) {

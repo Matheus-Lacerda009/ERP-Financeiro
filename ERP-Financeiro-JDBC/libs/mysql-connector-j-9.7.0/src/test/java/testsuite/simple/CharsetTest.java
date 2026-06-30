@@ -407,7 +407,7 @@ public class CharsetTest extends BaseTestCase {
     }
 
     /**
-     * Tests the ability to set the connection collation via properties.
+     * Tests the ability to set the net.financeiro.connection collation via properties.
      *
      * @throws Exception
      */
@@ -714,7 +714,7 @@ public class CharsetTest extends BaseTestCase {
     }
 
     /**
-     * Tests if the driver configures character sets correctly for 4.1.x servers. Requires that the 'admin connection' is configured, as this test needs to
+     * Tests if the driver configures character sets correctly for 4.1.x servers. Requires that the 'admin net.financeiro.connection' is configured, as this test needs to
      * create/drop databases.
      *
      * @throws Exception
@@ -723,7 +723,7 @@ public class CharsetTest extends BaseTestCase {
     public void testCollation41() throws Exception {
         Map<String, String> charsetsAndCollations = getCharacterSetsAndCollations();
         charsetsAndCollations.remove("latin7"); // Maps to multiple Java charsets
-        charsetsAndCollations.remove("ucs2"); // can't be used as a connection charset
+        charsetsAndCollations.remove("ucs2"); // can't be used as a net.financeiro.connection charset
 
         for (String charsetName : charsetsAndCollations.keySet()) {
             String enc = ((MysqlConnection) this.conn).getSession().getServerSession().getCharsetSettings().getJavaEncodingForMysqlCharset(charsetName);

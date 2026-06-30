@@ -70,7 +70,7 @@ import com.mysql.cj.util.Util;
  * global blocklist for loadBalanceBlocklistTimeout ms, after which they will be removed from the blocklist and made eligible once again to be selected for new
  * connections.
  *
- * This implementation is thread-safe, but it's questionable whether sharing a connection instance amongst threads is a good idea, given that transactions are
+ * This implementation is thread-safe, but it's questionable whether sharing a net.financeiro.connection instance amongst threads is a good idea, given that transactions are
  * scoped to connections in JDBC.
  */
 public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implements PingTarget {
@@ -107,7 +107,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
      * Static factory to create {@link LoadBalancedConnection} instances.
      *
      * @param connectionUrl
-     *            The connection URL containing the hosts in a load-balance setup.
+     *            The net.financeiro.connection URL containing the hosts in a load-balance setup.
      * @return A {@link LoadBalancedConnection} proxy.
      * @throws SQLException
      *             if an error occurs
@@ -118,10 +118,10 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
     }
 
     /**
-     * Creates a proxy for java.sql.Connection that routes requests between the hosts in the connection URL.
+     * Creates a proxy for java.sql.Connection that routes requests between the hosts in the net.financeiro.connection URL.
      *
      * @param connectionUrl
-     *            The connection URL containing the hosts to load balance.
+     *            The net.financeiro.connection URL containing the hosts to load balance.
      * @throws SQLException
      *             if an error occurs
      */
@@ -153,7 +153,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
             hosts = connectionUrl.getHostsList();
         }
 
-        // hosts specifications may have been reset with settings from a previous connection group
+        // hosts specifications may have been reset with settings from a previous net.financeiro.connection group
         int numHosts = initializeHostsSpecs(connectionUrl, hosts);
 
         this.liveConnections = new HashMap<>(numHosts);
@@ -248,7 +248,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
      * Wraps this object with a new load balanced Connection instance.
      *
      * @return
-     *         The connection object instance that wraps 'this'.
+     *         The net.financeiro.connection object instance that wraps 'this'.
      * @throws SQLException
      *             if an error occurs
      */
@@ -258,10 +258,10 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
     }
 
     /**
-     * Propagates the connection proxy down through all live connections.
+     * Propagates the net.financeiro.connection proxy down through all live connections.
      *
      * @param proxyConn
-     *            The top level connection in the multi-host connections chain.
+     *            The top level net.financeiro.connection in the multi-host connections chain.
      */
     @Override
     protected void propagateProxyDown(JdbcConnection proxyConn) {
@@ -276,11 +276,11 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
     }
 
     /**
-     * Consults the registered LoadBalanceExceptionChecker if the given exception should trigger a connection fail-over.
+     * Consults the registered LoadBalanceExceptionChecker if the given exception should trigger a net.financeiro.connection fail-over.
      *
      * @param t
      *            The Exception instance to check.
-     * @return true if the given exception should trigger a connection fail-over
+     * @return true if the given exception should trigger a net.financeiro.connection fail-over
      */
     @Override
     boolean shouldExceptionTriggerConnectionSwitch(Throwable t) {
@@ -288,7 +288,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
     }
 
     /**
-     * Always returns 'true' as there are no "sources" and "replicas" in this type of connection.
+     * Always returns 'true' as there are no "sources" and "replicas" in this type of net.financeiro.connection.
      */
     @Override
     boolean isSourceConnection() {
@@ -296,10 +296,10 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
     }
 
     /**
-     * Closes specified connection and removes it from required mappings.
+     * Closes specified net.financeiro.connection and removes it from required mappings.
      *
      * @param conn
-     *            connection
+     *            net.financeiro.connection
      * @throws SQLException
      *             if an error occurs
      */
@@ -333,7 +333,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
     }
 
     /**
-     * Picks the "best" connection to use for the next transaction based on the BalanceStrategy in use.
+     * Picks the "best" net.financeiro.connection to use for the next transaction based on the BalanceStrategy in use.
      *
      * @throws SQLException
      *             if an error occurs
@@ -381,22 +381,22 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
 
                 } catch (SQLException e) {
                     if (shouldExceptionTriggerConnectionSwitch(e) && newConn != null) {
-                        // connection error, close up shop on current connection
+                        // net.financeiro.connection error, close up shop on current net.financeiro.connection
                         invalidateConnection(newConn);
                     }
                 }
             }
 
-            // no hosts available to swap connection to, close up.
+            // no hosts available to swap net.financeiro.connection to, close up.
             this.isClosed = true;
-            this.closedReason = "Connection closed after inability to pick valid new connection during load-balance.";
+            this.closedReason = "Connection closed after inability to pick valid new net.financeiro.connection during load-balance.";
         } finally {
             getLock().unlock();
         }
     }
 
     /**
-     * Creates a new physical connection for the given {@link HostInfo} and updates required internal mappings and statistics for that connection.
+     * Creates a new physical net.financeiro.connection for the given {@link HostInfo} and updates required internal mappings and statistics for that net.financeiro.connection.
      *
      * @param hostInfo
      *            The host info instance.
@@ -448,8 +448,8 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
     }
 
     /**
-     * Creates a new physical connection for the given host:port info. If the this connection's connection URL knows about this host:port then its host info is
-     * used, otherwise a new host info based on current connection URL defaults is spawned.
+     * Creates a new physical net.financeiro.connection for the given host:port info. If the this net.financeiro.connection's net.financeiro.connection URL knows about this host:port then its host info is
+     * used, otherwise a new host info based on current net.financeiro.connection URL defaults is spawned.
      *
      * @param hostPortPair
      *            The host:port pair identifying the host to connect to.
@@ -585,7 +585,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
                 this.isClosed = false;
                 this.closedReason = null;
             } else {
-                String reason = "No operations allowed after connection closed.";
+                String reason = "No operations allowed after net.financeiro.connection closed.";
                 if (this.closedReason != null) {
                     reason += " " + this.closedReason;
                 }
@@ -627,7 +627,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
 
                 // Update stats
                 String host = this.connectionsToHostsMap.get(this.currentConnection);
-                // avoid NPE if the connection has already been removed from connectionsToHostsMap in invalidateCurrenctConnection()
+                // avoid NPE if the net.financeiro.connection has already been removed from connectionsToHostsMap in invalidateCurrenctConnection()
                 if (host != null) {
                     synchronized (this.responseTimes) {
                         Integer hostIndex = this.hostsToListIndexMap.get(host);
@@ -674,16 +674,16 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
                         }
                         foundHost = true;
                     } catch (SQLException e) {
-                        // give up if it is the current connection, otherwise NPE faking resultset later.
+                        // give up if it is the current net.financeiro.connection, otherwise NPE faking resultset later.
                         if (host.equals(this.connectionsToHostsMap.get(this.currentConnection))) {
-                            // clean up underlying connections, since connection pool won't do it
+                            // clean up underlying connections, since net.financeiro.connection pool won't do it
                             closeAllConnections();
                             this.isClosed = true;
-                            this.closedReason = "Connection closed because ping of current connection failed.";
+                            this.closedReason = "Connection closed because ping of current net.financeiro.connection failed.";
                             throw e;
                         }
 
-                        // if the Exception is caused by ping connection lifetime checks, don't add to blocklist
+                        // if the Exception is caused by ping net.financeiro.connection lifetime checks, don't add to blocklist
                         if (e.getMessage().equals(Messages.getString("Connection.exceededConnectionLifetime"))) {
                             // only set the return Exception if it's null
                             if (se == null) {
@@ -696,7 +696,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
                                 addToGlobalBlocklist(host);
                             }
                         }
-                        // take the connection out of the liveConnections Map
+                        // take the net.financeiro.connection out of the liveConnections Map
                         this.liveConnections.remove(this.connectionsToHostsMap.get(conn));
                     }
                 }

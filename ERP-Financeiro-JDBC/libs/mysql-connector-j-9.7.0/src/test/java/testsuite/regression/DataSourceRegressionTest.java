@@ -94,7 +94,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
     public void setUp() throws Exception {
         /*
          * This code is separated from the rest of the test since you normally would NOT register a JDBC driver in your code. It would likely be configured into
-         * your naming and directory service using some GUI.
+         * your naming and directory net.financeiro.service using some GUI.
          */
         MysqlConnectionPoolDataSource ds;
         Hashtable<String, String> env = new Hashtable<>();
@@ -195,7 +195,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests that we can get a connection from the DataSource bound in JNDI during test setup
+     * Tests that we can get a net.financeiro.connection from the DataSource bound in JNDI during test setup
      *
      * @throws Exception
      */
@@ -411,7 +411,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#32101 - When using a connection from our ConnectionPoolDataSource, some Connection.prepareStatement() methods would return null instead
+     * Tests fix for BUG#32101 - When using a net.financeiro.connection from our ConnectionPoolDataSource, some Connection.prepareStatement() methods would return null instead
      * of a prepared statement.
      *
      * @throws Exception
@@ -496,7 +496,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
             xaRes.end(xid, XAResource.TMSUCCESS);
             assertEquals(XAResource.XA_OK, xaRes.prepare(xid));
 
-            // Simulate a connection hang and make sure the connection really dies.
+            // Simulate a net.financeiro.connection hang and make sure the net.financeiro.connection really dies.
             this.stmt.execute("KILL CONNECTION " + connId);
             int connAliveChecks = 4;
             while (connAliveChecks > 0) {
@@ -556,7 +556,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
     public void testBug72632() throws Exception {
         final MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setUrl("jdbc:mysql:nonsupported:");
-        assertThrows(SQLException.class, "Connector/J cannot handle a connection string 'jdbc:mysql:nonsupported:'.", () -> {
+        assertThrows(SQLException.class, "Connector/J cannot handle a net.financeiro.connection string 'jdbc:mysql:nonsupported:'.", () -> {
             dataSource.getConnection();
             return null;
         });

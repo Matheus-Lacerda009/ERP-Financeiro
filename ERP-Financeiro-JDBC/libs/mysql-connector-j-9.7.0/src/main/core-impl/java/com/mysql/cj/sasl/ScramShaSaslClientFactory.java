@@ -61,7 +61,7 @@ public class ScramShaSaslClientFactory implements SaslClientFactory {
     }
 
     /**
-     * Gets the authentication id, which is provided by a {@link CallbackHandler} to be implemented by the requester of this service.
+     * Gets the authentication id, which is provided by a {@link CallbackHandler} to be implemented by the requester of this net.financeiro.service.
      *
      * @param prefix
      *            the prefix to use in the prompt.
@@ -92,7 +92,7 @@ public class ScramShaSaslClientFactory implements SaslClientFactory {
     }
 
     /**
-     * Gets the password, which is provided by a {@link CallbackHandler} to be implemented by the requester of this service.
+     * Gets the password, which is provided by a {@link CallbackHandler} to be implemented by the requester of this net.financeiro.service.
      *
      * @param prefix
      *            the prefix to use in the prompt.

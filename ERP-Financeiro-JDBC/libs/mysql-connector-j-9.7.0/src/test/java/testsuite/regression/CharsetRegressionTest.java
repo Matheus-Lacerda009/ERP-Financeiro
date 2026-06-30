@@ -384,7 +384,7 @@ public class CharsetRegressionTest extends BaseTestCase {
         }
         props.remove(PropertyKey.cacheServerConfiguration.getKeyName());
 
-        // Error messages may also be received after the handshake but before connection initialization is complete. This tests the interpretation of
+        // Error messages may also be received after the handshake but before net.financeiro.connection initialization is complete. This tests the interpretation of
         // errors thrown during this time window using a SatementInterceptor that throws an Exception while setting the session variables.
         // Start by getting the Latin1 version of the error to compare later.
         String latin1ErrorMsg = "";

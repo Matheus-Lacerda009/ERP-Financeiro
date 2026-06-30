@@ -39,7 +39,7 @@ public interface RuntimeProperty<T> {
      * If extractFrom does not contain such property then this RuntimeProperty remains unchanged.
      *
      * @param extractFrom
-     *            {@link Properties} object containing key-value pairs usually passed from connection string.
+     *            {@link Properties} object containing key-value pairs usually passed from net.financeiro.connection string.
      * @param exceptionInterceptor
      *            exceptionInterceptor
      */
@@ -48,7 +48,7 @@ public interface RuntimeProperty<T> {
     void initializeFrom(Reference ref, ExceptionInterceptor exceptionInterceptor);
 
     /**
-     * Reset to initial value (default or defined in connection string/Properties)
+     * Reset to initial value (default or defined in net.financeiro.connection string/Properties)
      */
     void resetValue();
 
@@ -79,7 +79,7 @@ public interface RuntimeProperty<T> {
     T getValue();
 
     /**
-     * Get initial value (default or defined in connection string/Properties)
+     * Get initial value (default or defined in net.financeiro.connection string/Properties)
      *
      * @return value
      */

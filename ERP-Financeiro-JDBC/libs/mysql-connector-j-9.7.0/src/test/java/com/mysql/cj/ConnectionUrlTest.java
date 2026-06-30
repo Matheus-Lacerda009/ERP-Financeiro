@@ -102,7 +102,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Internal class for generating hundreds of thousands of connection strings.
+     * Internal class for generating hundreds of thousands of net.financeiro.connection strings.
      */
     private static class ConnectionStringGenerator implements Iterator<String>, Iterable<String> {
 
@@ -214,7 +214,7 @@ public class ConnectionUrlTest {
         }
 
         /**
-         * Increments the counter recursively for each connection string part.
+         * Increments the counter recursively for each net.financeiro.connection string part.
          *
          * @param i
          *            the part where to increment the counter
@@ -233,9 +233,9 @@ public class ConnectionUrlTest {
         }
 
         /**
-         * Builds a connection string with the parts corresponding to the current counter position.
+         * Builds a net.financeiro.connection string with the parts corresponding to the current counter position.
          *
-         * @return the connection string built from the current counter position
+         * @return the net.financeiro.connection string built from the current counter position
          */
         private String buildConnectionString() {
             StringBuilder sb = new StringBuilder();
@@ -347,9 +347,9 @@ public class ConnectionUrlTest {
         }
 
         /**
-         * Returns the connection parameters part for the current position.
+         * Returns the net.financeiro.connection parameters part for the current position.
          *
-         * @return the connection parameter part
+         * @return the net.financeiro.connection parameter part
          */
         public String getParams() {
             int counterIndex = 4; // params (single host)
@@ -398,7 +398,7 @@ public class ConnectionUrlTest {
         }
 
         /**
-         * Checks if the current connection properties contain the given key & value.
+         * Checks if the current net.financeiro.connection properties contain the given key & value.
          *
          * @param key
          *            the key to check
@@ -415,9 +415,9 @@ public class ConnectionUrlTest {
         }
 
         /**
-         * Returns the number of connection parameters existing the the current position.
+         * Returns the number of net.financeiro.connection parameters existing the the current position.
          *
-         * @return the number of connection parameters
+         * @return the number of net.financeiro.connection parameters
          */
         public int getParamsCount() {
             String params = getParams();
@@ -484,7 +484,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests the {@link ConnectionUrlParser} with close to one million of different connection string variations.
+     * Tests the {@link ConnectionUrlParser} with close to one million of different net.financeiro.connection string variations.
      */
     @Test
     public void testConnectionStringParser() {
@@ -628,7 +628,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests the {@link ConnectionUrl} with close to one million of different connection string variations.
+     * Tests the {@link ConnectionUrl} with close to one million of different net.financeiro.connection string variations.
      */
     @Test
     public void testConnectionUrl() {
@@ -661,7 +661,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests the {@link ConnectionUrlParser} and {@link ConnectionUrl} with non standard, but accepted, connection strings.
+     * Tests the {@link ConnectionUrlParser} and {@link ConnectionUrl} with non standard, but accepted, net.financeiro.connection strings.
      *
      * @throws Exception
      */
@@ -838,7 +838,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests the {@link ConnectionUrl} with a few wrong connection strings.
+     * Tests the {@link ConnectionUrl} with a few wrong net.financeiro.connection strings.
      */
     @Test
     public void testConnectionUrlWithWrongConnectionString() {
@@ -859,7 +859,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests the connection strings internal cache.
+     * Tests the net.financeiro.connection strings internal cache.
      */
     @Test
     public void testConnectionStringCache() {
@@ -927,7 +927,7 @@ public class ConnectionUrlTest {
             ConnectionUrl connUrl = ConnectionUrl.getConnectionUrlInstance(cs, props);
 
             if (cs.indexOf("address=") == -1) {
-                // Properties from file must be found simultaneously in per connection properties and per host.
+                // Properties from file must be found simultaneously in per net.financeiro.connection properties and per host.
                 Properties asProps = connUrl.getConnectionArgumentsAsProperties();
                 for (String key : propsFromFile.stringPropertyNames()) {
                     assertEquals(propsFromFile.getProperty(key), asProps.getProperty(key), cs + "#" + key);
@@ -1002,7 +1002,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests specifics for the X Plugin connection strings.
+     * Tests specifics for the X Plugin net.financeiro.connection strings.
      */
     @Test
     public void testMysqlxConnectionUrl() {
@@ -1218,7 +1218,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests jdbc:mysql+srv: connection strings.
+     * Tests jdbc:mysql+srv: net.financeiro.connection strings.
      */
     @Test
     public void testMysqlFailoverDnsSrvConnectionUrl() {
@@ -1297,7 +1297,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests jdbc:mysql+srv:loadbalance: connection strings.
+     * Tests jdbc:mysql+srv:loadbalance: net.financeiro.connection strings.
      */
     @Test
     public void testMysqlLoadBalanceDnsSrvConnectionUrl() {
@@ -1399,7 +1399,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests jdbc:mysql+srv:replication: connection strings.
+     * Tests jdbc:mysql+srv:replication: net.financeiro.connection strings.
      */
     @Test
     public void testMysqlLoadReplicationDnsSrvConnectionUrl() {
@@ -1549,7 +1549,7 @@ public class ConnectionUrlTest {
     }
 
     /**
-     * Tests mysqlx+srv: connection strings.
+     * Tests mysqlx+srv: net.financeiro.connection strings.
      */
     @Test
     public void testMysqlxDnsSrvConnectionUrl() {

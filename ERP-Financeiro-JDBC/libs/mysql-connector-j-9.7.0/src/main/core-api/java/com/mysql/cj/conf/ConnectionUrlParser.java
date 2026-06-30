@@ -44,27 +44,27 @@ import com.mysql.cj.util.SearchMode;
 import com.mysql.cj.util.StringUtils;
 
 /**
- * This class parses a connection string using the general URI structure defined in RFC 3986. Instead of using a URI instance to ensure the correct syntax of
- * the connection string, this implementation uses regular expressions which is faster but also less strict in terms of validations. This actually works better
+ * This class parses a net.financeiro.connection string using the general URI structure defined in RFC 3986. Instead of using a URI instance to ensure the correct syntax of
+ * the net.financeiro.connection string, this implementation uses regular expressions which is faster but also less strict in terms of validations. This actually works better
  * because database URLs don't exactly stick to the RFC 3986 rules.
  * <p>
  * <i>scheme://authority/path?query#fragment</i>
  * <p>
- * This results in splitting the connection string URL and processing its internal parts:
+ * This results in splitting the net.financeiro.connection string URL and processing its internal parts:
  * <dl>
  * <dt>scheme</dt>
  * <dd>The protocol and subprotocol identification. Usually "jdbc:mysql:" or "mysqlx:".</dd>
  * <dt>authority</dt>
  * <dd>Contains information about the user credentials and/or the host and port information. Unlike its definition in the RFC 3986 specification, there can be
- * multiple authority sections separated by a single comma (,) in a connection string. It is also possible to use an alternative syntax for the user and/or host
- * identification, that also allows setting per host connection properties, in the form of
+ * multiple authority sections separated by a single comma (,) in a net.financeiro.connection string. It is also possible to use an alternative syntax for the user and/or host
+ * identification, that also allows setting per host net.financeiro.connection properties, in the form of
  * "[user[:password]@]address=(key1=value)[(key2=value)]...[,address=(key3=value)[(key4=value)]...]...".</dd>
  * <dt>path</dt>
  * <dd>Corresponds to the database identification.</dd>
  * <dt>query</dt>
- * <dd>The connection properties, written as "propertyName1[=[propertyValue1]][&amp;propertyName2[=[propertyValue2]]]..."</dd>
+ * <dd>The net.financeiro.connection properties, written as "propertyName1[=[propertyValue1]][&amp;propertyName2[=[propertyValue2]]]..."</dd>
  * <dt>fragment</dt>
- * <dd>The fragment section is ignored in Connector/J connection strings.</dd>
+ * <dd>The fragment section is ignored in Connector/J net.financeiro.connection strings.</dd>
  * </dl>
  */
 public class ConnectionUrlParser implements DatabaseUrlContainer {
@@ -104,7 +104,7 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
      * Static factory method for constructing instances of this class.
      *
      * @param connString
-     *            The connection string to parse.
+     *            The net.financeiro.connection string to parse.
      * @return an instance of {@link ConnectionUrlParser}
      */
     public static ConnectionUrlParser parseConnectionString(String connString) {
@@ -112,10 +112,10 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
     }
 
     /**
-     * Constructs a connection string parser for the given connection string.
+     * Constructs a net.financeiro.connection string parser for the given net.financeiro.connection string.
      *
      * @param connString
-     *            the connection string to parse
+     *            the net.financeiro.connection string to parse
      */
     private ConnectionUrlParser(String connString) {
         if (connString == null) {
@@ -130,11 +130,11 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
     }
 
     /**
-     * Checks if the scheme part of given connection string matches one of the {@link Type}s supported by Connector/J.
+     * Checks if the scheme part of given net.financeiro.connection string matches one of the {@link Type}s supported by Connector/J.
      * Throws {@link WrongArgumentException} if connString is null.
      *
      * @param connString
-     *            connection string
+     *            net.financeiro.connection string
      * @return true if supported
      */
     public static boolean isConnectionStringSupported(String connString) {
@@ -146,7 +146,7 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
     }
 
     /**
-     * Splits the connection string in its main sections.
+     * Splits the net.financeiro.connection string in its main sections.
      */
     private void parseConnectionString() {
         String connString = this.baseConnectionString;
@@ -161,7 +161,7 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
     }
 
     /**
-     * Parses the authority section (user and/or host identification) of the connection string URI.
+     * Parses the authority section (user and/or host identification) of the net.financeiro.connection string URI.
      */
     private void parseAuthoritySection() {
         if (isNullOrEmpty(this.authority)) {
@@ -499,7 +499,7 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
     }
 
     /**
-     * Parses the connection properties section and stores the extracted key/value pairs into a local map.
+     * Parses the net.financeiro.connection properties section and stores the extracted key/value pairs into a local map.
      */
     private void parseQuerySection() {
         if (isNullOrEmpty(this.query)) {
@@ -587,7 +587,7 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the original database URL that produced this connection string parser.
+     * Returns the original database URL that produced this net.financeiro.connection string parser.
      *
      * @return the original database URL
      */
@@ -646,7 +646,7 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
     }
 
     /**
-     * Returns the properties map contained in this connection string.
+     * Returns the properties map contained in this net.financeiro.connection string.
      *
      * @return the properties map
      */

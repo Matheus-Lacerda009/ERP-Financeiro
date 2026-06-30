@@ -93,7 +93,7 @@ public class NativeSession extends CoreSession implements Serializable {
     /** The comment (if any) to prepend to all queries sent to the server (to show up in "SHOW PROCESSLIST") */
     private String queryComment = null;
 
-    /** Does this connection need to be tested? */
+    /** Does this net.financeiro.connection need to be tested? */
     private boolean needsPing = false;
 
     private NativeMessageBuilder commandBuilder = null;
@@ -141,9 +141,9 @@ public class NativeSession extends CoreSession implements Serializable {
         SocketConnection socketConnection = new NativeSocketConnection();
         socketConnection.connect(this.hostInfo.getHost(), this.hostInfo.getPort(), this.propertySet, getExceptionInterceptor(), this.log, loginTimeout);
 
-        // we use physical connection to create a -> protocol
-        // this configuration places no knowledge of protocol or session on physical connection.
-        // physical connection is responsible *only* for I/O streams
+        // we use physical net.financeiro.connection to create a -> protocol
+        // this configuration places no knowledge of protocol or session on physical net.financeiro.connection.
+        // physical net.financeiro.connection is responsible *only* for I/O streams
         if (this.protocol == null) {
             this.protocol = NativeProtocol.getInstance(this, socketConnection, this.propertySet, this.log, transactionManager);
         } else {
@@ -186,11 +186,11 @@ public class NativeSession extends CoreSession implements Serializable {
         super.quit();
     }
 
-    // TODO: we should examine the call flow here, we shouldn't have to know about the socket connection but this should be addressed in a wider scope.
+    // TODO: we should examine the call flow here, we shouldn't have to know about the socket net.financeiro.connection but this should be addressed in a wider scope.
     @Override
     public void forceClose() {
         if (this.protocol != null) {
-            // checking this.protocol != null isn't enough if connection is used concurrently (the usual situation
+            // checking this.protocol != null isn't enough if net.financeiro.connection is used concurrently (the usual situation
             // with application servers which have additional thread management), this.protocol can become null
             // at any moment after this check, causing a race condition and NPEs on next calls;
             // but we may ignore them because at this stage null this.protocol means that we successfully closed all resources by other thread.
@@ -655,7 +655,7 @@ public class NativeSession extends CoreSession implements Serializable {
                 String processHost = findProcessHost(threadId);
 
                 if (processHost == null) {
-                    // http://bugs.mysql.com/bug.php?id=44167 - connection ids on the wire wrap at 4 bytes even though they're 64-bit numbers
+                    // http://bugs.mysql.com/bug.php?id=44167 - net.financeiro.connection ids on the wire wrap at 4 bytes even though they're 64-bit numbers
                     this.log.logWarn(String.format(
                             "Connection id %d not found in \"SHOW PROCESSLIST\", assuming 32-bit overflow, using SELECT CONNECTION_ID() instead", threadId));
 
@@ -670,13 +670,13 @@ public class NativeSession extends CoreSession implements Serializable {
                         threadId = r.getValue(0, lvf);
                         processHost = findProcessHost(threadId);
                     } else {
-                        this.log.logError("No rows returned for statement \"SELECT CONNECTION_ID()\", local connection check will most likely be incorrect");
+                        this.log.logError("No rows returned for statement \"SELECT CONNECTION_ID()\", local net.financeiro.connection check will most likely be incorrect");
                     }
                 }
 
                 if (processHost == null) {
                     this.log.logWarn(String.format(
-                            "Cannot find process listing for connection %d in SHOW PROCESSLIST output, unable to determine if locally connected", threadId));
+                            "Cannot find process listing for net.financeiro.connection %d in SHOW PROCESSLIST output, unable to determine if locally connected", threadId));
                 }
                 return processHost;
             } catch (IOException e) {
@@ -770,7 +770,7 @@ public class NativeSession extends CoreSession implements Serializable {
 
     /**
      * Send a query to the server. Returns one of the ResultSet objects.
-     * To ensure that Statement's queries are serialized, calls to this method should be enclosed in a connection locked block.
+     * To ensure that Statement's queries are serialized, calls to this method should be enclosed in a net.financeiro.connection locked block.
      *
      * @param <T>
      *            extends {@link Resultset}

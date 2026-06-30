@@ -77,7 +77,7 @@ public class ServerPreparedStatement extends ClientPreparedStatement {
      * Creates a prepared statement instance
      *
      * @param conn
-     *            the connection creating us.
+     *            the net.financeiro.connection creating us.
      * @param sql
      *            the SQL containing the statement to prepare.
      * @param db
@@ -99,7 +99,7 @@ public class ServerPreparedStatement extends ClientPreparedStatement {
      * Creates a new ServerPreparedStatement object.
      *
      * @param conn
-     *            the connection creating us.
+     *            the net.financeiro.connection creating us.
      * @param sql
      *            the SQL containing the statement to prepare.
      * @param db

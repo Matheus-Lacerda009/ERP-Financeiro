@@ -83,7 +83,7 @@ public class XAuthenticationProvider implements AuthenticationProvider<XMessage>
                         if (overTLS) {
                             this.protocol.send(this.messageBuilder.buildPlainAuthStart(userName, password, database), 0);
                         } else {
-                            throw new XProtocolError("PLAIN authentication is not allowed via unencrypted connection.");
+                            throw new XProtocolError("PLAIN authentication is not allowed via unencrypted net.financeiro.connection.");
                         }
                         break;
                     case EXTERNAL:
@@ -119,7 +119,7 @@ public class XAuthenticationProvider implements AuthenticationProvider<XMessage>
             }
             // More than one authentication mechanism was tried.
             String errMsg = "Authentication failed using " + StringUtils.joinWithSerialComma(tryAuthMech)
-                    + ", check username and password or try a secure connection";
+                    + ", check username and password or try a secure net.financeiro.connection";
             XDevAPIError ex = new XDevAPIError(errMsg, capturedAuthErr);
             ex.setVendorCode(capturedAuthErr.getErrorCode());
             ex.setSQLState(capturedAuthErr.getSQLState());

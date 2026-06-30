@@ -142,7 +142,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Test authentication with a user that requires an SSL connection.
+     * Test authentication with a user that requires an SSL net.financeiro.connection.
      *
      * This test requires the CA truststore and the client keystore available in src/test/config/ssl-test-certs.
      * The server needs to be configured with the CA and server certificates from src/test/config/ssl-test-certs.
@@ -232,7 +232,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Test authentication with a user that requires an SSL connection and an authorized client certificate.
+     * Test authentication with a user that requires an SSL net.financeiro.connection and an authorized client certificate.
      *
      * This test requires the CA truststore and the client keystore available in src/test/config/ssl-test-certs.
      * The server needs to be configured with the CA and server certificates from src/test/config/ssl-test-certs.
@@ -318,7 +318,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests that given SSL/TLS related connection properties values are processed as expected.
+     * Tests that given SSL/TLS related net.financeiro.connection properties values are processed as expected.
      *
      * @throws Exception
      */
@@ -389,7 +389,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection property 'testFallbackToSystemTrustStore' behavior.
+     * Tests net.financeiro.connection property 'testFallbackToSystemTrustStore' behavior.
      *
      * @throws Exception
      */
@@ -411,7 +411,7 @@ public class SecureConnectionTest extends BaseTestCase {
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
         System.setProperty("javax.net.ssl.trustStorePassword", "password");
 
-        // No connection-local TrustStore.
+        // No net.financeiro.connection-local TrustStore.
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, "sslMode=REQUIRED");
         assertSecureConnection(testConn);
         testConn.close();
@@ -424,7 +424,7 @@ public class SecureConnectionTest extends BaseTestCase {
         assertThrows(SQLNonTransientConnectionException.class,
                 () -> getConnectionWithProps(this.sslFreeBaseUrl, "sslMode=VERIFY_CA,fallbackToSystemTrustStore=false"));
 
-        // Invalid connection-local TrustStore:
+        // Invalid net.financeiro.connection-local TrustStore:
         testConn = getConnectionWithProps(this.sslFreeBaseUrl,
                 "sslMode=REQUIRED,trustCertificateKeyStoreUrl=file:src/test/config/ssl-test-certs/ca-truststore-ext,"
                         + "trustCertificateKeyStoreType=JKS,trustCertificateKeyStorePassword=password");
@@ -450,7 +450,7 @@ public class SecureConnectionTest extends BaseTestCase {
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
         System.setProperty("javax.net.ssl.trustStorePassword", "password");
 
-        // No connection-local TrustStore.
+        // No net.financeiro.connection-local TrustStore.
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, "sslMode=REQUIRED");
         assertSecureConnection(testConn);
         testConn.close();
@@ -459,7 +459,7 @@ public class SecureConnectionTest extends BaseTestCase {
         assertThrows(SQLNonTransientConnectionException.class,
                 () -> getConnectionWithProps(this.sslFreeBaseUrl, "sslMode=VERIFY_CA,fallbackToSystemTrustStore=false"));
 
-        // Valid connection-local TrustStore:
+        // Valid net.financeiro.connection-local TrustStore:
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, "sslMode=REQUIRED,trustCertificateKeyStoreUrl=file:src/test/config/ssl-test-certs/ca-truststore,"
                 + "trustCertificateKeyStoreType=JKS,trustCertificateKeyStorePassword=password");
         assertSecureConnection(testConn);
@@ -482,7 +482,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection property 'testFallbackToSystemKeyStore' behavior.
+     * Tests net.financeiro.connection property 'testFallbackToSystemKeyStore' behavior.
      *
      * @throws Exception
      */
@@ -510,7 +510,7 @@ public class SecureConnectionTest extends BaseTestCase {
         System.setProperty("javax.net.ssl.keyStoreType", "JKS");
         System.setProperty("javax.net.ssl.keyStorePassword", "password");
 
-        // No connection-local KeyStore.
+        // No net.financeiro.connection-local KeyStore.
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, props);
         assertSecureConnection(testConn, user);
         testConn.close();
@@ -523,7 +523,7 @@ public class SecureConnectionTest extends BaseTestCase {
 
         props.remove(PropertyKey.fallbackToSystemKeyStore.getKeyName());
 
-        // Invalid connection-local KeyStore:
+        // Invalid net.financeiro.connection-local KeyStore:
         props.setProperty(PropertyKey.clientCertificateKeyStoreUrl.getKeyName(), "file:src/test/config/ssl-test-certs/client-keystore-ext");
         props.setProperty(PropertyKey.clientCertificateKeyStoreType.getKeyName(), "JKS");
         props.setProperty(PropertyKey.clientCertificateKeyStorePassword.getKeyName(), "password");
@@ -545,7 +545,7 @@ public class SecureConnectionTest extends BaseTestCase {
         System.setProperty("javax.net.ssl.keyStoreType", "JKS");
         System.setProperty("javax.net.ssl.keyStorePassword", "password");
 
-        // No connection-local KeyStore.
+        // No net.financeiro.connection-local KeyStore.
         assertThrows(CommunicationsException.class, () -> getConnectionWithProps(this.sslFreeBaseUrl, props));
         props.setProperty(PropertyKey.fallbackToSystemKeyStore.getKeyName(), "true");
         assertThrows(CommunicationsException.class, () -> getConnectionWithProps(this.sslFreeBaseUrl, props));
@@ -554,7 +554,7 @@ public class SecureConnectionTest extends BaseTestCase {
 
         props.remove(PropertyKey.fallbackToSystemKeyStore.getKeyName());
 
-        // Valid connection-local KeyStore:
+        // Valid net.financeiro.connection-local KeyStore:
         props.setProperty(PropertyKey.clientCertificateKeyStoreUrl.getKeyName(), "file:src/test/config/ssl-test-certs/client-keystore");
         props.setProperty(PropertyKey.clientCertificateKeyStoreType.getKeyName(), "JKS");
         props.setProperty(PropertyKey.clientCertificateKeyStorePassword.getKeyName(), "password");
@@ -584,93 +584,93 @@ public class SecureConnectionTest extends BaseTestCase {
         Connection testConn;
         String options;
 
-        // FR.1a.1 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and serverRSAPublicKeyFile=(path_to_valid_key).
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.1 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and serverRSAPublicKeyFile=(path_to_valid_key).
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=src/test/config/ssl-test-certs/mykey.pub", PropertyKey.sslMode.getKeyName(),
                 PropertyKey.serverRSAPublicKeyFile.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.2 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and allowPublicKeyRetrieval=true.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.2 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and allowPublicKeyRetrieval=true.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=true", PropertyKey.sslMode.getKeyName(), PropertyKey.allowPublicKeyRetrieval.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.3 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and trustCertificateKeyStoreUrl=foo.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.3 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and trustCertificateKeyStoreUrl=foo.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.trustCertificateKeyStoreUrl.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.4 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and trustCertificateKeyStoreType=foo.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.4 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and trustCertificateKeyStoreType=foo.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.trustCertificateKeyStoreType.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.5 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and trustCertificateKeyStorePassword=foo.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.5 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and trustCertificateKeyStorePassword=foo.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.trustCertificateKeyStorePassword.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.6 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and fallbackToSystemTrustStore=false.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.6 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and fallbackToSystemTrustStore=false.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=false", PropertyKey.sslMode.getKeyName(), PropertyKey.fallbackToSystemTrustStore.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.7 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and clientCertificateKeyStoreUrl=foo.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.7 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and clientCertificateKeyStoreUrl=foo.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.clientCertificateKeyStoreUrl.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.8 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and clientCertificateKeyStoreType=foo.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.8 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and clientCertificateKeyStoreType=foo.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.clientCertificateKeyStoreType.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.9 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and clientCertificateKeyStorePassword=foo.
-        //         Assess that the connection is established successfully and not using encryption.
+        // FR.1a.9 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and clientCertificateKeyStorePassword=foo.
+        //         Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.clientCertificateKeyStorePassword.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.10 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and fallbackToSystemKeyStore=false.
-        //          Assess that the connection is established successfully and not using encryption.
+        // FR.1a.10 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and fallbackToSystemKeyStore=false.
+        //          Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=false", PropertyKey.sslMode.getKeyName(), PropertyKey.fallbackToSystemKeyStore.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.11 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and tlsCiphersuites=foo.
-        //          Assess that the connection is established successfully and not using encryption.
+        // FR.1a.11 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and tlsCiphersuites=foo.
+        //          Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.tlsCiphersuites.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.1a.12 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and tlsVersions=foo.
-        //          Assess that the connection is established successfully and not using encryption.
+        // FR.1a.12 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and tlsVersions=foo.
+        //          Assess that the net.financeiro.connection is established successfully and not using encryption.
         options = String.format("%s=DISABLED,%s=foo", PropertyKey.sslMode.getKeyName(), PropertyKey.tlsVersions.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl, options);
         assertNonSecureConnection(testConn);
         testConn.close();
 
-        // FR.2.1 Create a JDBC connection to a MySQL server with the options sslMode=DISABLED and sslMode=REQUIRED by this order.
-        //        Assess that the connection is established successfully. It is acceptable that the connection is established over a secure or non secure
+        // FR.2.1 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=DISABLED and sslMode=REQUIRED by this order.
+        //        Assess that the net.financeiro.connection is established successfully. It is acceptable that the net.financeiro.connection is established over a secure or non secure
         //        channel, but it is usually expected that the next test delivers the opposite result.
         options = String.format("&%s=DISABLED&%s=REQUIRED", PropertyKey.sslMode.getKeyName(), PropertyKey.sslMode.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl + options, "");
@@ -678,8 +678,8 @@ public class SecureConnectionTest extends BaseTestCase {
         assertSecureConnection(testConn);
         testConn.close();
 
-        // FR.2.2 Create a JDBC connection to a MySQL server with the options sslMode=REQUIRED and sslMode=DISABLED by this order.
-        //        Assess that the connection is established successfully. It is acceptable that the connection is established over a secure or non secure
+        // FR.2.2 Create a JDBC net.financeiro.connection to a MySQL server with the options sslMode=REQUIRED and sslMode=DISABLED by this order.
+        //        Assess that the net.financeiro.connection is established successfully. It is acceptable that the net.financeiro.connection is established over a secure or non secure
         //        channel, but it is usually expected that the previous test delivers the opposite result.
         options = String.format("&%s=REQUIRED&%s=DISABLED", PropertyKey.sslMode.getKeyName(), PropertyKey.sslMode.getKeyName());
         testConn = getConnectionWithProps(this.sslFreeBaseUrl + options, "");
@@ -689,7 +689,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection property 'fipsCompliantJsse' behavior.
+     * Tests net.financeiro.connection property 'fipsCompliantJsse' behavior.
      *
      * @throws Exception
      */
@@ -702,7 +702,7 @@ public class SecureConnectionTest extends BaseTestCase {
         Properties props = new Properties();
 
         /*
-         * A. 'fipsCompliantJsse=true' & 'sslMode=DISABLED': creates non-secure connection.
+         * A. 'fipsCompliantJsse=true' & 'sslMode=DISABLED': creates non-secure net.financeiro.connection.
          */
         props.setProperty(PropertyKey.fipsCompliantJsse.getKeyName(), "true");
         props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name());
@@ -722,7 +722,7 @@ public class SecureConnectionTest extends BaseTestCase {
         // B2. 'fallbackToSystemTrustStore=false' fails due to missing trust store.
         props.setProperty(PropertyKey.fallbackToSystemTrustStore.getKeyName(), "false");
         assertThrows(SQLNonTransientConnectionException.class, () -> getConnectionWithProps(this.sslFreeBaseUrl, props));
-        // B3. B2 & trust store: creates secure connection.
+        // B3. B2 & trust store: creates secure net.financeiro.connection.
         props.setProperty(PropertyKey.trustCertificateKeyStoreUrl.getKeyName(), "file:src/test/config/ssl-test-certs/ca-truststore");
         props.setProperty(PropertyKey.trustCertificateKeyStoreType.getKeyName(), "JKS");
         props.setProperty(PropertyKey.trustCertificateKeyStorePassword.getKeyName(), "password");
@@ -742,7 +742,7 @@ public class SecureConnectionTest extends BaseTestCase {
         // B2. 'fallbackToSystemTrustStore=false' fails due to missing trust store.
         props.setProperty(PropertyKey.fallbackToSystemTrustStore.getKeyName(), "false");
         assertThrows(SQLNonTransientConnectionException.class, () -> getConnectionWithProps(this.sslFreeBaseUrl, props));
-        // B3. B2 & trust store: creates secure connection.
+        // B3. B2 & trust store: creates secure net.financeiro.connection.
         props.setProperty(PropertyKey.trustCertificateKeyStoreUrl.getKeyName(), "file:src/test/config/ssl-test-certs/ca-truststore");
         props.setProperty(PropertyKey.trustCertificateKeyStoreType.getKeyName(), "JKS");
         props.setProperty(PropertyKey.trustCertificateKeyStorePassword.getKeyName(), "password");
@@ -762,7 +762,7 @@ public class SecureConnectionTest extends BaseTestCase {
         // B2. 'fallbackToSystemTrustStore=false' fails due to missing trust store.
         props.setProperty(PropertyKey.fallbackToSystemTrustStore.getKeyName(), "false");
         assertThrows(SQLNonTransientConnectionException.class, () -> getConnectionWithProps(this.sslFreeBaseUrl, props));
-        // B3. B2 & trust store: creates secure connection.
+        // B3. B2 & trust store: creates secure net.financeiro.connection.
         props.setProperty(PropertyKey.trustCertificateKeyStoreUrl.getKeyName(), "file:src/test/config/ssl-test-certs/ca-truststore");
         props.setProperty(PropertyKey.trustCertificateKeyStoreType.getKeyName(), "JKS");
         props.setProperty(PropertyKey.trustCertificateKeyStorePassword.getKeyName(), "password");
@@ -791,7 +791,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection property 'keyManagerFactoryProvider' behavior.
+     * Tests net.financeiro.connection property 'keyManagerFactoryProvider' behavior.
      *
      * @throws Exception
      */
@@ -814,7 +814,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection property 'trustManagerFactoryProvider' behavior.
+     * Tests net.financeiro.connection property 'trustManagerFactoryProvider' behavior.
      *
      * @throws Exception
      */
@@ -837,7 +837,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection property 'keyStoreProvider' behavior.
+     * Tests net.financeiro.connection property 'keyStoreProvider' behavior.
      *
      * @throws Exception
      */
@@ -862,7 +862,7 @@ public class SecureConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests connection property 'sslContextProvider' behavior.
+     * Tests net.financeiro.connection property 'sslContextProvider' behavior.
      *
      * @throws Exception
      */

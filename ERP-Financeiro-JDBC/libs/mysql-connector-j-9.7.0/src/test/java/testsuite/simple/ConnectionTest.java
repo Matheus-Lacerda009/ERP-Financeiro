@@ -138,7 +138,7 @@ public class ConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests a cluster connection for failover, requires a two-node cluster URL specified in com.mysql.jdbc.testsuite.ClusterUrl system property.
+     * Tests a cluster net.financeiro.connection for failover, requires a two-node cluster URL specified in com.mysql.jdbc.testsuite.ClusterUrl system property.
      *
      * @throws Exception
      */
@@ -168,7 +168,7 @@ public class ConnectionTest extends BaseTestCase {
                 clusterStmt.execute("SELECT * FROM testClusterConn");
                 clusterStmt.executeUpdate("UPDATE testClusterConn SET field1=4");
 
-                // Kill the connection
+                // Kill the net.financeiro.connection
                 @SuppressWarnings("unused")
                 String connectionId = getSingleValueWithQuery("SELECT CONNECTION_ID()").toString();
 
@@ -188,7 +188,7 @@ public class ConnectionTest extends BaseTestCase {
                 }
 
                 //
-                // Test that this 'new' connection is not read-only
+                // Test that this 'new' net.financeiro.connection is not read-only
                 //
                 clusterStmt.executeUpdate("UPDATE testClusterConn SET field1=5");
 
@@ -615,7 +615,7 @@ public class ConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests whether re-connect with non-read-only connection can happen.
+     * Tests whether re-connect with non-read-only net.financeiro.connection can happen.
      *
      * @throws Exception
      */
@@ -638,7 +638,7 @@ public class ConnectionTest extends BaseTestCase {
 
                 assertTrue(!failoverConnection.isReadOnly(), "Connection should not be in READ_ONLY state");
 
-                // Kill the connection
+                // Kill the net.financeiro.connection
                 this.stmt.executeUpdate("KILL " + originalConnectionId);
 
                 // This takes a bit to occur
@@ -646,7 +646,7 @@ public class ConnectionTest extends BaseTestCase {
                 Thread.sleep(3000);
 
                 Connection localFailoverConnection = failoverConnection;
-                assertThrows("We expect an exception here, because the connection should be gone until the reconnect code picks it up again",
+                assertThrows("We expect an exception here, because the net.financeiro.connection should be gone until the reconnect code picks it up again",
                         SQLException.class, () -> {
                             localFailoverConnection.createStatement().execute("SELECT 1");
                             return null;
@@ -659,7 +659,7 @@ public class ConnectionTest extends BaseTestCase {
                 String newConnectionId = getSingleIndexedValueWithQuery(failoverConnection, 1, "SELECT connection_id()").toString();
                 System.out.println("new Connection Id = " + newConnectionId);
 
-                assertTrue(!newConnectionId.equals(originalConnectionId), "We should have a new connection to the server in this case");
+                assertTrue(!newConnectionId.equals(originalConnectionId), "We should have a new net.financeiro.connection to the server in this case");
                 assertTrue(!failoverConnection.isReadOnly(), "Connection should not be read-only");
             } finally {
                 if (failoverConnection != null) {
@@ -778,7 +778,7 @@ public class ConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests setting profileSQL on/off in the span of one connection.
+     * Tests setting profileSQL on/off in the span of one net.financeiro.connection.
      *
      * @throws Exception
      */
@@ -936,7 +936,7 @@ public class ConnectionTest extends BaseTestCase {
      * threads.
      *
      * @throws Exception
-     *             if the test can't use at least one of the local machine's interfaces to make an outgoing connection to the server.
+     *             if the test can't use at least one of the local machine's interfaces to make an outgoing net.financeiro.connection to the server.
      */
     @Test
     public void testLocalSocketAddress() throws Exception {
@@ -983,7 +983,7 @@ public class ConnectionTest extends BaseTestCase {
             }
         }
 
-        assertTrue(didOneWork, "At least one connection was made with the localSocketAddress set");
+        assertTrue(didOneWork, "At least one net.financeiro.connection was made with the localSocketAddress set");
     }
 
     class SpawnedWorkerCounter {
@@ -1555,7 +1555,7 @@ public class ConnectionTest extends BaseTestCase {
     @Test
     public void testDriverConnectNullArgument() throws Exception {
         assertThrows(SQLException.class,
-                "Cannot load connection class because of underlying exception: com.mysql.cj.exceptions.WrongArgumentException: The database URL cannot be null.",
+                "Cannot load net.financeiro.connection class because of underlying exception: com.mysql.cj.exceptions.WrongArgumentException: The database URL cannot be null.",
                 () -> {
                     Driver mysqlDriver = new Driver();
                     mysqlDriver.connect(null, null);
@@ -1583,7 +1583,7 @@ public class ConnectionTest extends BaseTestCase {
             return null;
         });
 
-        // make sure the connection string doesn't contain 'maxRows'
+        // make sure the net.financeiro.connection string doesn't contain 'maxRows'
         String testUrl = BaseTestCase.dbUrl;
         int b = testUrl.indexOf("maxRows");
         if (b != -1) {
@@ -1637,18 +1637,18 @@ public class ConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Test the new connection property 'enableEscapeProcessing', as well as the old connection property 'processEscapeCodesForPrepStmts' and interrelation
+     * Test the new net.financeiro.connection property 'enableEscapeProcessing', as well as the old net.financeiro.connection property 'processEscapeCodesForPrepStmts' and interrelation
      * between them.
      *
      * This test uses a QueryInterceptor to capture the query sent to the server and assert whether escape processing has been done in the client side or if
-     * the query is sent untouched and escape processing will be done at server side, according to provided connection properties and type of Statement objects
+     * the query is sent untouched and escape processing will be done at server side, according to provided net.financeiro.connection properties and type of Statement objects
      * in use.
      *
      * @throws Exception
      */
     @Test
     public void testEnableEscapeProcessing() throws Exception {
-        // make sure the connection string doesn't contain 'enableEscapeProcessing'
+        // make sure the net.financeiro.connection string doesn't contain 'enableEscapeProcessing'
         String testUrl = BaseTestCase.dbUrl;
         int b = testUrl.indexOf("enableEscapeProcessing");
         if (b != -1) {
@@ -1875,7 +1875,7 @@ public class ConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Tests "LOAD DATA LOCAL INFILE" statements when enabled but restricted to a specific path, by specifying a path in the connection property
+     * Tests "LOAD DATA LOCAL INFILE" statements when enabled but restricted to a specific path, by specifying a path in the net.financeiro.connection property
      * 'allowLoadLocalInfileInPath'.
      *
      * @throws Exception
@@ -2201,13 +2201,13 @@ public class ConnectionTest extends BaseTestCase {
         Connection timeoutConn = getConnectionWithProps(props);
         Thread.sleep(1500 * seconds);
         if (versionMeetsMinimum(8, 0, 24) && !(isServerRunningOnWindows() && System.getProperty("os.name").contains("Windows"))) { // server reports timeout
-            // TS.1.1 Create a connection to a MySQL configured with a short session timeout value.
+            // TS.1.1 Create a net.financeiro.connection to a MySQL configured with a short session timeout value.
             // Sleep for a time longer than the specified timeout and assess that the error message obtained is the new one.
             assertThrows(CommunicationsException.class,
                     "The client was disconnected by the server because of inactivity. See wait_timeout and interactive_timeout for configuring this behavior.",
                     () -> timeoutConn.createStatement().executeQuery("SELECT 1"));
         } else {
-            // TS.2.1 Create a connection to a MySQL configured with a short session timeout value.
+            // TS.2.1 Create a net.financeiro.connection to a MySQL configured with a short session timeout value.
             // Sleep for a time longer than the specified timeout and assess that the error message obtained is the old one.
             assertThrows(CommunicationsException.class,
                     "The last packet successfully received from the server was .+ milliseconds ago.+"
@@ -2216,8 +2216,8 @@ public class ConnectionTest extends BaseTestCase {
                     () -> timeoutConn.createStatement().executeQuery("SELECT 1"));
         }
 
-        // TS.1.2 & TS.2.2 Create a connection to a MySQL configured with a short session timeout value.
-        // Before the timeout runs out, use a second connection to kill the previous session.
+        // TS.1.2 & TS.2.2 Create a net.financeiro.connection to a MySQL configured with a short session timeout value.
+        // Before the timeout runs out, use a second net.financeiro.connection to kill the previous session.
         // Assess that the error message obtained is the old one.
         final Connection toBeKilledConn = getConnectionWithProps(props);
         long connId = ((MysqlConnection) toBeKilledConn).getSession().getThreadId();
@@ -2256,7 +2256,7 @@ public class ConnectionTest extends BaseTestCase {
         props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.REQUIRED.name());
         props.setProperty(PropertyKey.allowPublicKeyRetrieval.getKeyName(), "true");
 
-        // TS.FR.1_1. Create a Connection with the connection property tlsVersions=TLSv1.2/TLSv1.3. Assess that the connection is created successfully and it is
+        // TS.FR.1_1. Create a Connection with the net.financeiro.connection property tlsVersions=TLSv1.2/TLSv1.3. Assess that the net.financeiro.connection is created successfully and it is
         //            using TLSv1.2/TLSv1.3.
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), testTlsVersion);
         con = getConnectionWithProps(props);
@@ -2264,7 +2264,7 @@ public class ConnectionTest extends BaseTestCase {
         assertSessionStatusEquals(con.createStatement(), "ssl_version", testTlsVersion);
         con.close();
 
-        // TS.FR.1_2. Create a Connection with the connection property enabledTLSProtocols=TLSv1.2/TLSv1.3. Assess that the connection is created successfully
+        // TS.FR.1_2. Create a Connection with the net.financeiro.connection property enabledTLSProtocols=TLSv1.2/TLSv1.3. Assess that the net.financeiro.connection is created successfully
         //            and it is using TLSv1.2.
         props.remove(PropertyKey.tlsVersions.getKeyName());
         props.setProperty("enabledTLSProtocols", testTlsVersion);
@@ -2274,7 +2274,7 @@ public class ConnectionTest extends BaseTestCase {
         con.close();
         props.remove("enabledTLSProtocols");
 
-        // TS.FR.2_1. Create a Connection with the connection property tlsCiphersuites=[valid-cipher-suite]. Assess that the connection is created successfully
+        // TS.FR.2_1. Create a Connection with the net.financeiro.connection property tlsCiphersuites=[valid-cipher-suite]. Assess that the net.financeiro.connection is created successfully
         //            and it is using the cipher suite specified.
         props.setProperty(PropertyKey.tlsCiphersuites.getKeyName(), testCipher);
         con = getConnectionWithProps(props);
@@ -2282,7 +2282,7 @@ public class ConnectionTest extends BaseTestCase {
         assertSessionStatusEquals(con.createStatement(), "ssl_cipher", expectedCipher);
         con.close();
 
-        // TS.FR.2_2. Create a Connection with the connection property enabledSSLCipherSuites=[valid-cipher-suite] . Assess that the connection is created
+        // TS.FR.2_2. Create a Connection with the net.financeiro.connection property enabledSSLCipherSuites=[valid-cipher-suite] . Assess that the net.financeiro.connection is created
         //            successfully and it is using the cipher suite specified.
         props.remove(PropertyKey.tlsCiphersuites.getKeyName());
         props.setProperty("enabledSSLCipherSuites", testCipher);
@@ -2292,29 +2292,29 @@ public class ConnectionTest extends BaseTestCase {
         con.close();
         props.remove("enabledSSLCipherSuites");
 
-        // TS.FR.3_1. Create a Connection with the connection property tlsVersions=TLSv1. Assess that the connection fails.
+        // TS.FR.3_1. Create a Connection with the net.financeiro.connection property tlsVersions=TLSv1. Assess that the net.financeiro.connection fails.
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "TLSv1");
         assertThrows(SQLException.class, "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
-        // TS.FR.3_2. Create a Connection with the connection property tlsVersions=TLSv1.1. Assess that the connection fails.
+        // TS.FR.3_2. Create a Connection with the net.financeiro.connection property tlsVersions=TLSv1.1. Assess that the net.financeiro.connection fails.
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "TLSv1.1");
         assertThrows(SQLException.class, "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
-        // TS.FR.3_3. Create a Connection with the connection property enabledTLSProtocols=TLSv1. Assess that the connection fails.
+        // TS.FR.3_3. Create a Connection with the net.financeiro.connection property enabledTLSProtocols=TLSv1. Assess that the net.financeiro.connection fails.
         props.setProperty("enabledTLSProtocols", "TLSv1");
         assertThrows(SQLException.class, "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
-        // TS.FR.3_4. Create a Connection with the connection property enabledTLSProtocols=TLSv1.1. Assess that the connection fails.
+        // TS.FR.3_4. Create a Connection with the net.financeiro.connection property enabledTLSProtocols=TLSv1.1. Assess that the net.financeiro.connection fails.
         props.setProperty("enabledTLSProtocols", "TLSv1.1");
         assertThrows(SQLException.class, "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
         props.remove("enabledTLSProtocols");
 
-        // TS.FR.4. Create a Connection with the connection property tlsVersions=TLSv1 and sslMode=DISABLED. Assess that the connection is created successfully
+        // TS.FR.4. Create a Connection with the net.financeiro.connection property tlsVersions=TLSv1 and sslMode=DISABLED. Assess that the net.financeiro.connection is created successfully
         //          and it is not using encryption.
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "TLSv1");
         props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name());
@@ -2323,8 +2323,8 @@ public class ConnectionTest extends BaseTestCase {
         con.close();
         props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.REQUIRED.name());
 
-        // TS.FR.5_1. Create a Connection with the connection property tlsVersions=FOO,BAR.
-        //            Assess that the connection fails with the error message "Specified list of TLS versions only contains non valid TLS protocols. Accepted
+        // TS.FR.5_1. Create a Connection with the net.financeiro.connection property tlsVersions=FOO,BAR.
+        //            Assess that the net.financeiro.connection fails with the error message "Specified list of TLS versions only contains non valid TLS protocols. Accepted
         //            values are TLSv1.2 and TLSv1.3."
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "FOO,BAR");
         assertThrows(SQLException.class, "Specified list of TLS versions only contains non valid TLS protocols. Accepted values are TLSv1.2 and TLSv1.3.+",
@@ -2334,22 +2334,22 @@ public class ConnectionTest extends BaseTestCase {
         assertThrows(SQLException.class, "Specified list of TLS versions only contains non valid TLS protocols. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
-        // TS.FR.5_2. Create a Connection with the connection property tlsVersions=FOO,TLSv1.1.
-        //            Assess that the connection fails with the error message "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2
+        // TS.FR.5_2. Create a Connection with the net.financeiro.connection property tlsVersions=FOO,TLSv1.1.
+        //            Assess that the net.financeiro.connection fails with the error message "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2
         //            and TLSv1.3."
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "FOO,TLSv1.1");
         assertThrows(SQLException.class, "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
-        // TS.FR.5_3. Create a Connection with the connection property tlsVersions=TLSv1,TLSv1.1.
-        //            Assess that the connection fails with the error message "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2
+        // TS.FR.5_3. Create a Connection with the net.financeiro.connection property tlsVersions=TLSv1,TLSv1.1.
+        //            Assess that the net.financeiro.connection fails with the error message "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2
         //            and TLSv1.3."
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "TLSv1,TLSv1.1");
         assertThrows(SQLException.class, "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
-        // TS.FR.6. Create a Connection with the connection property tlsVersions= (empty value).
-        //          Assess that the connection fails with the error message "Specified list of TLS versions is empty. Accepted values are TLSv1.2 and TLSv13."
+        // TS.FR.6. Create a Connection with the net.financeiro.connection property tlsVersions= (empty value).
+        //          Assess that the net.financeiro.connection fails with the error message "Specified list of TLS versions is empty. Accepted values are TLSv1.2 and TLSv13."
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "");
         assertThrows(SQLException.class, "Specified list of TLS versions is empty. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
@@ -2366,8 +2366,8 @@ public class ConnectionTest extends BaseTestCase {
         assertThrows(SQLException.class, "Specified list of TLS versions is empty. Accepted values are TLSv1.2 and TLSv1.3.+",
                 () -> getConnectionWithProps(props));
 
-        // TS.FR.7. Create a Connection with the connection property tlsVersions=FOO,TLSv1,TLSv1.1,TLSv1.2.
-        //          Assess that the connection is created successfully and it is using TLSv1.2.
+        // TS.FR.7. Create a Connection with the net.financeiro.connection property tlsVersions=FOO,TLSv1,TLSv1.1,TLSv1.2.
+        //          Assess that the net.financeiro.connection is created successfully and it is using TLSv1.2.
         props.setProperty(PropertyKey.tlsVersions.getKeyName(), "FOO,TLSv1,TLSv1.1,TLSv1.2");
         con = getConnectionWithProps(props);
         assertTrue(((MysqlConnection) con).getSession().isSSLEstablished());

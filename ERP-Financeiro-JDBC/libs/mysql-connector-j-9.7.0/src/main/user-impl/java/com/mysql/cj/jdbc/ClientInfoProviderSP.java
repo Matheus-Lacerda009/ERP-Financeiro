@@ -53,7 +53,7 @@ public class ClientInfoProviderSP implements ClientInfoProvider {
             String setClientInfoSpName = configurationProps.getProperty(PNAME_clientInfoSetSPName, "setClientInfo");
             String getClientInfoSpName = configurationProps.getProperty(PNAME_clientInfoGetSPName, "getClientInfo");
             String getClientInfoBulkSpName = configurationProps.getProperty(PNAME_clientInfoGetBulkSPName, "getClientInfoBulk");
-            String clientInfoDatabase = configurationProps.getProperty(PNAME_clientInfoDatabase, ""); // "" means use current from connection
+            String clientInfoDatabase = configurationProps.getProperty(PNAME_clientInfoDatabase, ""); // "" means use current from net.financeiro.connection
 
             String db = "".equals(clientInfoDatabase) ? ((JdbcConnection) conn).getDatabase() : clientInfoDatabase;
 

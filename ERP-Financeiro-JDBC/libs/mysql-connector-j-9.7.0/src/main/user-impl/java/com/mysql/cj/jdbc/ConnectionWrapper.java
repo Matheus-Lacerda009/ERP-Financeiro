@@ -55,13 +55,13 @@ import com.mysql.cj.jdbc.result.ResultSetInternalMethods;
 import com.mysql.cj.protocol.ServerSessionStateController;
 
 /**
- * This class serves as a wrapper for the connection object. It is returned to the application server which may wrap it again and then return it to the
+ * This class serves as a wrapper for the net.financeiro.connection object. It is returned to the application server which may wrap it again and then return it to the
  * application client in response to dataSource.getConnection().
  *
- * All method invocations are forwarded to underlying connection unless the close method was previously called, in which case a SQLException is thrown. The
- * close method performs a 'logical close' on the connection.
+ * All method invocations are forwarded to underlying net.financeiro.connection unless the close method was previously called, in which case a SQLException is thrown. The
+ * close method performs a 'logical close' on the net.financeiro.connection.
  *
- * All SQL exceptions thrown by the physical connection are intercepted and sent to connectionEvent listeners before being thrown to client.
+ * All SQL exceptions thrown by the physical net.financeiro.connection are intercepted and sent to connectionEvent listeners before being thrown to client.
  */
 public class ConnectionWrapper extends WrapperBase implements JdbcConnection {
 
@@ -90,9 +90,9 @@ public class ConnectionWrapper extends WrapperBase implements JdbcConnection {
      * @param mysqlPooledConnection
      *            reference to object that instantiated this object
      * @param mysqlConnection
-     *            physical connection to db
+     *            physical net.financeiro.connection to db
      * @param forXa
-     *            is it for XA connection?
+     *            is it for XA net.financeiro.connection?
      *
      * @throws SQLException
      *             if an error occurs.
@@ -318,8 +318,8 @@ public class ConnectionWrapper extends WrapperBase implements JdbcConnection {
     }
 
     /**
-     * The physical connection is not actually closed. the physical connection is closed when the application server calls mysqlPooledConnection.close(). this
-     * object is de-referenced by the pooled connection each time mysqlPooledConnection.getConnection() is called by app server.
+     * The physical net.financeiro.connection is not actually closed. the physical net.financeiro.connection is closed when the application server calls mysqlPooledConnection.close(). this
+     * object is de-referenced by the pooled net.financeiro.connection each time mysqlPooledConnection.getConnection() is called by app server.
      *
      * @throws SQLException
      *             if an error occurs
@@ -572,8 +572,8 @@ public class ConnectionWrapper extends WrapperBase implements JdbcConnection {
                 this.pooledConnection.callConnectionEventListeners(MysqlPooledConnection.CONNECTION_CLOSED_EVENT, null);
             }
 
-            // set closed status to true so that if application client tries to make additional calls a sqlException will be thrown. The physical connection is
-            // re-used by the pooled connection each time getConnection is called.
+            // set closed status to true so that if application client tries to make additional calls a sqlException will be thrown. The physical net.financeiro.connection is
+            // re-used by the pooled net.financeiro.connection each time getConnection is called.
             this.closed = true;
         } finally {
             pooledConnectionLock.unlock();

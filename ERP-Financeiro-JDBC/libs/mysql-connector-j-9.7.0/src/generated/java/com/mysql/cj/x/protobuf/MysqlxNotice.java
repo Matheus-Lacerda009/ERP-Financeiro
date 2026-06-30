@@ -5106,7 +5106,7 @@ public final class MysqlxNotice {
   /**
    * <pre>
    * *
-   * Notify clients about connection to X Protocol server
+   * Notify clients about net.financeiro.connection to X Protocol server
    *
    * | &#64;ref Mysqlx::Notice::Frame Field  | Value      |
    * |-----------------------------------|------------|
@@ -5299,7 +5299,7 @@ public final class MysqlxNotice {
     /**
      * <pre>
      * *
-     * Notify clients about connection to X Protocol server
+     * Notify clients about net.financeiro.connection to X Protocol server
      *
      * | &#64;ref Mysqlx::Notice::Frame Field  | Value      |
      * |-----------------------------------|------------|

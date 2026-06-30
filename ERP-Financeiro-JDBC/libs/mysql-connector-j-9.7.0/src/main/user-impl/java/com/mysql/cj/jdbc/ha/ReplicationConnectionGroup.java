@@ -28,7 +28,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
- * Group of connection objects that can be configured as a group. This is used for promotion/demotion of replicas and sources in a replication configuration,
+ * Group of net.financeiro.connection objects that can be configured as a group. This is used for promotion/demotion of replicas and sources in a replication configuration,
  * and for exposing metrics around replication-aware connections.
  */
 public class ReplicationConnectionGroup {

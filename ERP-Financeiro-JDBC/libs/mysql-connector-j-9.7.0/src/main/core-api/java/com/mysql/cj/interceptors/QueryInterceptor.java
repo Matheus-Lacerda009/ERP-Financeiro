@@ -39,15 +39,15 @@ import com.mysql.cj.protocol.ServerSession;
 public interface QueryInterceptor {
 
     /**
-     * Called once per connection that wants to use the interceptor
+     * Called once per net.financeiro.connection that wants to use the interceptor
      *
      * The properties are the same ones passed in in the URL or arguments to
      * Driver.connect() or DriverManager.getConnection().
      *
      * @param conn
-     *            the connection for which this interceptor is being created
+     *            the net.financeiro.connection for which this interceptor is being created
      * @param props
-     *            configuration values as passed to the connection. Note that
+     *            configuration values as passed to the net.financeiro.connection. Note that
      *            in order to support javax.sql.DataSources, configuration properties specific
      *            to an interceptor <strong>must</strong> be passed via setURL() on the
      *            DataSource. QueryInterceptor properties are not exposed via
@@ -66,7 +66,7 @@ public interface QueryInterceptor {
      * the server will not execute the query, and the given result set will be
      * returned to the application instead.
      *
-     * This method will be called while the connection-level mutex is held, so
+     * This method will be called while the net.financeiro.connection-level mutex is held, so
      * it will only be called from one thread at a time.
      *
      * @param sql
@@ -89,7 +89,7 @@ public interface QueryInterceptor {
      * the server will not execute the query, and the given PacketPayload will be
      * returned to the application instead.
      *
-     * This method will be called while the connection-level mutex is held, so
+     * This method will be called while the net.financeiro.connection-level mutex is held, so
      * it will only be called from one thread at a time.
      *
      * @param queryPacket
@@ -107,7 +107,7 @@ public interface QueryInterceptor {
      * "original" top-level query, and not put it in the execution
      * path for queries that may be executed from other interceptors?
      *
-     * If an interceptor issues queries using the connection it was created for,
+     * If an interceptor issues queries using the net.financeiro.connection it was created for,
      * and does not return <code>true</code> for this method, it must ensure
      * that it does not cause infinite recursion.
      *
@@ -118,7 +118,7 @@ public interface QueryInterceptor {
 
     /**
      * Called by the driver when this extension should release any resources
-     * it is holding and cleanup internally before the connection is
+     * it is holding and cleanup internally before the net.financeiro.connection is
      * closed.
      */
     void destroy();
@@ -130,7 +130,7 @@ public interface QueryInterceptor {
      * different result set is returned by the interceptor, it is used in place
      * of the "original" result set.
      *
-     * This method will be called while the connection-level mutex is held, so
+     * This method will be called while the net.financeiro.connection-level mutex is held, so
      * it will only be called from one thread at a time.
      *
      * @param sql
@@ -155,7 +155,7 @@ public interface QueryInterceptor {
      *
      * Interceptors are free to return either a different PacketPayload than the originalResponsePacket or null.
      *
-     * This method will be called while the connection-level mutex is held, so
+     * This method will be called while the net.financeiro.connection-level mutex is held, so
      * it will only be called from one thread at a time.
      *
      * @param queryPacket

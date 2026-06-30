@@ -25,7 +25,7 @@ import java.util.Properties;
 /**
  * ClientFactory is used for creation of {@link Client} instances.
  *
- * {@link Client} objects provide the means of creating {@link Session}s that use an internally managed connection pool.
+ * {@link Client} objects provide the means of creating {@link Session}s that use an internally managed net.financeiro.connection pool.
  *
  * <pre>
  * ClientFactory xClientFactory = new ClientFactory();
@@ -43,7 +43,7 @@ public class ClientFactory {
      * @param url
      *            the session URL.
      * @param clientPropsJson
-     *            JSON string representing a document that defines connection properties in a special format.
+     *            JSON string representing a document that defines net.financeiro.connection properties in a special format.
      *            For pooling configuration, it should contain an embedded document after the "pooling" key:
      *
      *            <pre>
@@ -67,7 +67,7 @@ public class ClientFactory {
      * @param url
      *            the session URL.
      * @param clientProps
-     *            the {@link Properties} instance that contains the connection properties. The keys in this {@link Properties} match with the path of each value
+     *            the {@link Properties} instance that contains the net.financeiro.connection properties. The keys in this {@link Properties} match with the path of each value
      *            in the JSON document from {@link #getClient(String, String)} (for example, <code>pooling.enabled</code> or <code>pooling.maxSize</code>).
      * @return a {@link Client} instance.
      */

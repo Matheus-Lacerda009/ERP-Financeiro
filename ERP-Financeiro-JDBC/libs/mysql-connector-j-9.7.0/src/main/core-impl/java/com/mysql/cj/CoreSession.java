@@ -55,7 +55,7 @@ public abstract class CoreSession implements Session {
     protected transient Protocol<? extends Message> protocol;
     protected MessageBuilder<? extends Message> messageBuilder;
 
-    /** The point in time when this connection was created */
+    /** The point in time when this net.financeiro.connection was created */
     protected long connectionCreationTimeMillis = 0;
     protected HostInfo hostInfo = null;
 

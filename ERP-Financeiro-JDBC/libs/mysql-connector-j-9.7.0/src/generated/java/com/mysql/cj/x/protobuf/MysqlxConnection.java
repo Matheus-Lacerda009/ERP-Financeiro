@@ -1600,7 +1600,7 @@ public final class MysqlxConnection {
   /**
    * <pre>
    * *
-   * Get supported connection capabilities and their current state.
+   * Get supported net.financeiro.connection capabilities and their current state.
    *
    * &#64;returns &#64;ref Mysqlx::Connection::Capabilities or &#64;ref Mysqlx::Error
    * </pre>
@@ -1790,7 +1790,7 @@ public final class MysqlxConnection {
     /**
      * <pre>
      * *
-     * Get supported connection capabilities and their current state.
+     * Get supported net.financeiro.connection capabilities and their current state.
      *
      * &#64;returns &#64;ref Mysqlx::Connection::Capabilities or &#64;ref Mysqlx::Error
      * </pre>
@@ -1984,7 +1984,7 @@ public final class MysqlxConnection {
   /**
    * <pre>
    * *
-   * Set connection capabilities atomically.
+   * Set net.financeiro.connection capabilities atomically.
    * Only provided values are changed; other values are left
    * unchanged. If any of the changes fails, all changes are
    * discarded.
@@ -2230,7 +2230,7 @@ public final class MysqlxConnection {
     /**
      * <pre>
      * *
-     * Set connection capabilities atomically.
+     * Set net.financeiro.connection capabilities atomically.
      * Only provided values are changed; other values are left
      * unchanged. If any of the changes fails, all changes are
      * discarded.
@@ -2577,7 +2577,7 @@ public final class MysqlxConnection {
   /**
    * <pre>
    * *
-   * Announce to the server that the client wants to close the connection.
+   * Announce to the server that the client wants to close the net.financeiro.connection.
    *
    * It discards any session state of the server.
    *
@@ -2769,7 +2769,7 @@ public final class MysqlxConnection {
     /**
      * <pre>
      * *
-     * Announce to the server that the client wants to close the connection.
+     * Announce to the server that the client wants to close the net.financeiro.connection.
      *
      * It discards any session state of the server.
      *

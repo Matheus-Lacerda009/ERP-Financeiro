@@ -713,7 +713,7 @@ public class StatementRegressionTest extends BaseTestCase {
             try {
                 reconnectStmt.executeBatch();
             } catch (SQLException sqlEx) {
-                // We expect this...we killed the connection
+                // We expect this...we killed the net.financeiro.connection
             }
 
             assertEquals(2, getRowCount("testBug13255"));
@@ -741,7 +741,7 @@ public class StatementRegressionTest extends BaseTestCase {
             try {
                 reconnectPStmt.executeBatch();
             } catch (SQLException sqlEx) {
-                // We expect this...we killed the connection
+                // We expect this...we killed the net.financeiro.connection
             }
 
             assertEquals(2, getRowCount("testBug13255"));
@@ -2863,7 +2863,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#20650 - Statement.cancel() causes NullPointerException if underlying connection has been closed due to server failure.
+     * Tests fix for BUG#20650 - Statement.cancel() causes NullPointerException if underlying net.financeiro.connection has been closed due to server failure.
      *
      * @throws Exception
      */
@@ -3323,7 +3323,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#28256 - When connection is in read-only mode, queries that are parentheized incorrectly identified as DML.
+     * Tests fix for BUG#28256 - When net.financeiro.connection is in read-only mode, queries that are parentheized incorrectly identified as DML.
      *
      * @throws Exception
      */
@@ -6245,7 +6245,7 @@ public class StatementRegressionTest extends BaseTestCase {
     /**
      * WL#4897 - Add EXPLAIN INSERT/UPDATE/DELETE
      *
-     * Added support for EXPLAIN INSERT/REPLACE/UPDATE/DELETE. Connector/J must issue a warning containing the execution plan for slow queries when connection
+     * Added support for EXPLAIN INSERT/REPLACE/UPDATE/DELETE. Connector/J must issue a warning containing the execution plan for slow queries when net.financeiro.connection
      * properties logSlowQueries=true and explainSlowQueries=true are used.
      *
      * @throws Exception
@@ -6460,7 +6460,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertEquals(this.stmt.executeUpdate("INSERT INTO testBug55340 (col1, col2) VALUES (1, 'one'), (2, 'two'), (3, 'three')"), 3);
 
         for (Connection testConn : new Connection[] { this.conn, testConnCacheRSMD }) {
-            String testDesc = testConn == testConnCacheRSMD ? "Conn. with 'cacheResultSetMetadata=true'" : "Default connection";
+            String testDesc = testConn == testConnCacheRSMD ? "Conn. with 'cacheResultSetMetadata=true'" : "Default net.financeiro.connection";
 
             // bug occurs in 2nd call only
             for (int i = 1; i <= 2; i++) {
@@ -6675,7 +6675,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testConn.close();
 
         /*
-         * Case 7: Multiple combinations between maxRows connection prop, Statement.setMaxRows() and LIMIT clause.
+         * Case 7: Multiple combinations between maxRows net.financeiro.connection prop, Statement.setMaxRows() and LIMIT clause.
          * Covers some cases not tested previously.
          */
         props.clear();
@@ -7095,16 +7095,16 @@ public class StatementRegressionTest extends BaseTestCase {
         createProcedure("testBug68916_proc", "() BEGIN SELECT 1; SELECT 2; SELECT 3; END");
         createTable("testBug68916_tbl", "(fld1 INT NOT NULL AUTO_INCREMENT, fld2 INT, PRIMARY KEY(fld1))");
 
-        // STEP 1: Test using standard connection (no properties)
+        // STEP 1: Test using standard net.financeiro.connection (no properties)
         subTestBug68916ForStandardConnection();
 
-        // STEP 2: Test using connection property holdResultsOpenOverStatementClose=true
+        // STEP 2: Test using net.financeiro.connection property holdResultsOpenOverStatementClose=true
         subTestBug68916ForHoldResultsOpenOverStatementClose();
 
-        // STEP 3: Test using connection property dontTrackOpenResources=true
+        // STEP 3: Test using net.financeiro.connection property dontTrackOpenResources=true
         subTestBug68916ForDontTrackOpenResources();
 
-        // STEP 4: Test using connection property allowMultiQueries=true
+        // STEP 4: Test using net.financeiro.connection property allowMultiQueries=true
         subTestBug68916ForAllowMultiQueries();
 
         // STEP 5: Test concurrent Statement/ResultSet sharing same Connection
@@ -7121,12 +7121,12 @@ public class StatementRegressionTest extends BaseTestCase {
         CallableStatement testCallStatement = null;
 
         /*
-         * Testing with standard connection (no properties)
+         * Testing with standard net.financeiro.connection (no properties)
          */
         testStep = "Standard Connection";
 
         /*
-         * SUB-STEP 0: The basics (connection without properties)
+         * SUB-STEP 0: The basics (net.financeiro.connection without properties)
          */
         // **testing Statement**
         // ResultSets should be closed when owning Statement is closed
@@ -7186,7 +7186,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(testPrepStatement.isClosed(), testStep + ".PS:0. PreparedStatement.isClosed(): true after PreparedStatement.close().");
 
         /*
-         * SUB-STEP 1: One ResultSet (connection without properties)
+         * SUB-STEP 1: One ResultSet (net.financeiro.connection without properties)
          */
         // **testing Statement**
         // Statement using closeOnCompletion should be closed when last ResultSet is closed
@@ -7264,7 +7264,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(testPrepStatement.isClosed(), testStep + ".PS:1. PreparedStatement.isClosed(): true when last ResultSet is closed.");
 
         /*
-         * SUB-STEP 2: Multiple ResultSets, sequentially (connection without properties)
+         * SUB-STEP 2: Multiple ResultSets, sequentially (net.financeiro.connection without properties)
          */
         testStatement = testConnection.createStatement();
         testStatement.closeOnCompletion();
@@ -7298,7 +7298,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(testStatement.isClosed(), testStep + ".ST:2. Statement.isClosed(): true when last ResultSet is closed.");
 
         /*
-         * SUB-STEP 3: Multiple ResultSets, returned at once (connection without properties)
+         * SUB-STEP 3: Multiple ResultSets, returned at once (net.financeiro.connection without properties)
          */
         // **testing Statement**
         // Statement using closeOnCompletion should be closed when last ResultSet is closed
@@ -7369,7 +7369,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(testCallStatement.isClosed(), testStep + ".CS:3. CallableStatement.isClosed(): true when last ResultSet is closed.");
 
         /*
-         * SUB-STEP 4: Generated Keys ResultSet (connection without properties)
+         * SUB-STEP 4: Generated Keys ResultSet (net.financeiro.connection without properties)
          */
         testStatement = testConnection.createStatement();
         testStatement.closeOnCompletion();
@@ -7419,7 +7419,7 @@ public class StatementRegressionTest extends BaseTestCase {
         CallableStatement testCallStatement = null;
 
         /*
-         * Testing with connection property holdResultsOpenOverStatementClose=true
+         * Testing with net.financeiro.connection property holdResultsOpenOverStatementClose=true
          */
         testStep = "Conn. Prop. 'holdResultsOpenOverStatementClose'";
         testConnection = getConnectionWithProps("holdResultsOpenOverStatementClose=true");
@@ -7734,7 +7734,7 @@ public class StatementRegressionTest extends BaseTestCase {
         CallableStatement testCallStatement = null;
 
         /*
-         * Testing with connection property dontTrackOpenResources=true
+         * Testing with net.financeiro.connection property dontTrackOpenResources=true
          */
         testStep = "Conn. Prop. 'dontTrackOpenResources'";
         testConnection = getConnectionWithProps("dontTrackOpenResources=true");
@@ -8069,7 +8069,7 @@ public class StatementRegressionTest extends BaseTestCase {
         CallableStatement testCallStatement = null;
 
         /*
-         * Testing with connection property allowMultiQueries=true
+         * Testing with net.financeiro.connection property allowMultiQueries=true
          */
         testStep = "Conn. Prop. 'allowMultiQueries'";
         testConnection = getConnectionWithProps("allowMultiQueries=true");
@@ -8514,7 +8514,7 @@ public class StatementRegressionTest extends BaseTestCase {
         final int[] expectedGenKeysForBatchPStmtNoChkODKU = new int[] { 1, 2, 3, 4, 2, 3, 3, 4, 7, 8, 4, 5, 8, 9, 11 };
         final int[] expectedGenKeysForBatchPStmtRW = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
-        // Test multiple connection props
+        // Test multiple net.financeiro.connection props
         Properties props = new Properties();
         do {
             props.clear();
@@ -8638,7 +8638,7 @@ public class StatementRegressionTest extends BaseTestCase {
             testConn.close();
         } while (!lastTest);
 
-        // Test connection prop allowMultiQueries=true
+        // Test net.financeiro.connection prop allowMultiQueries=true
         // (behaves as if only first query has been executed)
         lastTest = false;
         String allQueries = "";
@@ -9664,7 +9664,7 @@ public class StatementRegressionTest extends BaseTestCase {
         try {
             future1.get(5, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
-            // The connection hung, forcibly closing it releases resources.
+            // The net.financeiro.connection hung, forcibly closing it releases resources.
             this.stmt.execute("KILL CONNECTION " + testConn.getSession().getThreadId());
             fail("Connection hung after executeUpdate().");
         }
@@ -9678,7 +9678,7 @@ public class StatementRegressionTest extends BaseTestCase {
         try {
             this.rs = future2.get(5, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
-            // The connection hung, forcibly closing it releases resources.
+            // The net.financeiro.connection hung, forcibly closing it releases resources.
             this.stmt.execute("KILL CONNECTION " + testConn.getSession().getThreadId());
             fail("Connection hung after executeQuery().");
         }
@@ -9765,7 +9765,7 @@ public class StatementRegressionTest extends BaseTestCase {
             try {
                 future.get(10, TimeUnit.SECONDS);
             } catch (TimeoutException e) {
-                // The connection hung, forcibly closing it releases resources.
+                // The net.financeiro.connection hung, forcibly closing it releases resources.
                 this.stmt.executeQuery("KILL CONNECTION " + testConn.getSession().getThreadId());
                 fail(testCase + ": Connection hung!");
             }
@@ -9793,14 +9793,14 @@ public class StatementRegressionTest extends BaseTestCase {
      * 1. Call .close() on a server prepared statement. This promotes a prepared statement for caching if prepared statements cache is enabled.
      * 2. cachePrepStmts=true|false. Turns on/off the prepared statements cache.
      * 3. Call .setPoolable(true|false) on the prepared statement. This allows canceling the prepared statement caching, on a per statement basis. It has no
-     * effect if the prepared statements cache if turned off for the current connection.
+     * effect if the prepared statements cache if turned off for the current net.financeiro.connection.
      *
      * Expected behavior:
      * - If .close() is not called on server prepared statements then they also can't be promoted for caching. This causes a server prepared statements leak in
      * all remaining combinations.
-     * - If .close() is called on server prepared statements and the prepared statements cache is disabled by any form (either per connection or per statement),
+     * - If .close() is called on server prepared statements and the prepared statements cache is disabled by any form (either per net.financeiro.connection or per statement),
      * then the statements is immediately closed on server side too.
-     * - If .close() is called on server prepared statements and the prepared statements cache is enabled (both in the connection and in the statement) then the
+     * - If .close() is called on server prepared statements and the prepared statements cache is enabled (both in the net.financeiro.connection and in the statement) then the
      * statement is cached and only effectively closed in the server side if and when removed from the cache.
      *
      * @throws Exception
@@ -10056,7 +10056,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for Bug#66430 - setCatalog on connection leaves ServerPreparedStatement cache for old catalog.
+     * Tests fix for Bug#66430 - setCatalog on net.financeiro.connection leaves ServerPreparedStatement cache for old catalog.
      *
      * @throws Exception
      */
@@ -10147,7 +10147,7 @@ public class StatementRegressionTest extends BaseTestCase {
      */
     @Test
     public void testBug84783() throws Exception {
-        // Test using a standard connection.
+        // Test using a standard net.financeiro.connection.
         final Statement testStmt = this.conn.createStatement();
         testStmt.setQueryTimeout(1);
         assertThrows(SQLException.class, "Statement cancelled due to timeout or client request", () -> {
@@ -10167,7 +10167,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
             Connection testConn;
 
-            // Test using a failover connection.
+            // Test using a failover net.financeiro.connection.
             testConn = getUnreliableFailoverConnection(new String[] { "host1", "host2" }, props);
             final Statement testStmtFO = testConn.createStatement();
             testStmtFO.setQueryTimeout(1);
@@ -10183,7 +10183,7 @@ public class StatementRegressionTest extends BaseTestCase {
             });
             testConn.close();
 
-            // Test using a load-balanced connection.
+            // Test using a load-balanced net.financeiro.connection.
             testConn = getUnreliableLoadBalancedConnection(new String[] { "host1", "host2" }, props);
             final Statement testStmtLB = testConn.createStatement();
             testStmtLB.setQueryTimeout(1);
@@ -10199,7 +10199,7 @@ public class StatementRegressionTest extends BaseTestCase {
             });
             testConn.close();
 
-            // Test using a replication connection.
+            // Test using a replication net.financeiro.connection.
             testConn = getUnreliableReplicationConnection(new String[] { "host1", "host2" }, props);
             final Statement testStmtR = testConn.createStatement();
             testStmtR.setQueryTimeout(1);
@@ -10305,7 +10305,7 @@ public class StatementRegressionTest extends BaseTestCase {
     public void testBug78313() throws Exception {
         Connection testConn;
 
-        // Plain connection.
+        // Plain net.financeiro.connection.
         Properties props = new Properties();
         props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name());
         props.setProperty(PropertyKey.allowPublicKeyRetrieval.getKeyName(), "true");
@@ -10325,7 +10325,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(this.rs.equals(this.rs));
         testConn.close();
 
-        // Plain connection with proxied result sets.
+        // Plain net.financeiro.connection with proxied result sets.
         props.setProperty(PropertyKey.queryInterceptors.getKeyName(), ResultSetScannerInterceptor.class.getName());
         props.setProperty(ResultSetScannerInterceptor.PNAME_resultSetScannerRegex, ".*");
         testConn = getConnectionWithProps(props);
@@ -10345,7 +10345,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(this.rs.equals(this.rs));
         testConn.close();
 
-        // Fail-over connection; all JDBC objects are proxied.
+        // Fail-over net.financeiro.connection; all JDBC objects are proxied.
         props.clear();
         props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name());
         props.setProperty(PropertyKey.allowPublicKeyRetrieval.getKeyName(), "true");
@@ -10366,7 +10366,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(this.rs.equals(this.rs));
         testConn.close();
 
-        // Load-balanced connection; all JDBC objects are proxied.
+        // Load-balanced net.financeiro.connection; all JDBC objects are proxied.
         testConn = getLoadBalancedConnection(props);
         assertTrue(testConn.getClass().getName().matches("^(?:com\\.sun\\.proxy\\.)?\\$Proxy\\d*"));
         assertTrue(testConn.equals(testConn));
@@ -10384,7 +10384,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertTrue(this.rs.equals(this.rs));
         testConn.close();
 
-        // Replication connection; all JDBC objects are proxied.
+        // Replication net.financeiro.connection; all JDBC objects are proxied.
         testConn = getSourceReplicaReplicationConnection(props);
         assertTrue(testConn.getClass().getName().matches("^(?:com\\.sun\\.proxy\\.)?\\$Proxy\\d*"));
         assertTrue(testConn.equals(testConn));
@@ -10786,7 +10786,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for Bug#87534 - UNION ALL query fails when useServerPrepStmts=true on database connection.
+     * Tests fix for Bug#87534 - UNION ALL query fails when useServerPrepStmts=true on database net.financeiro.connection.
      * Base Bug#27422376 - NEWDATE TYPE IS LEAKING OUT, fixed in MySQL 5.7.22.
      *
      * @throws Exception
@@ -11627,7 +11627,7 @@ public class StatementRegressionTest extends BaseTestCase {
             PreparedStatement ps = con.prepareStatement("update testBug20391550 set c2=? where c1=?");
             assertThrows(SQLException.class, "Statement cancelled due to timeout or client request", () -> st.executeQuery("select sleep(180)"));
 
-            TimeUnit.SECONDS.sleep(2); // Make sure the connection gets time to be closed since the cancellation is happening on another thread.
+            TimeUnit.SECONDS.sleep(2); // Make sure the net.financeiro.connection gets time to be closed since the cancellation is happening on another thread.
 
             assertThrows(SQLException.class, "No operations allowed after statement closed.", () -> {
                 ps.setInt(2, 100);
@@ -12125,7 +12125,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for Bug#99260 (31189960), statement.setQueryTimeout,creates a database connection and does not close.
+     * Tests fix for Bug#99260 (31189960), statement.setQueryTimeout,creates a database net.financeiro.connection and does not close.
      *
      * @throws Exception
      */
@@ -14205,7 +14205,7 @@ public class StatementRegressionTest extends BaseTestCase {
                 this.rs.close();
             } else if (dontTrOpRes) {
                 assertThrows(testCase, SQLException.class,
-                        ".*No statements may be issued when any streaming result sets are open and in use on a given connection.*", () -> {
+                        ".*No statements may be issued when any streaming result sets are open and in use on a given net.financeiro.connection.*", () -> {
                             testStmt3.executeQuery("SELECT 1");
                             return null;
                         });

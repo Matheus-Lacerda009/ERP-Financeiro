@@ -603,7 +603,7 @@ public class QueryInfo {
      * Does this query info represent a query that contains an ON DUPLICATE KEY UPDATE clause? This operation does not take into consideration the multiplicity
      * of queries in the original SQL.
      *
-     * Checking whether the original query contains an ON DUPLICATE KEY UPDATE clause is conditional to how the connection properties
+     * Checking whether the original query contains an ON DUPLICATE KEY UPDATE clause is conditional to how the net.financeiro.connection properties
      * 'dontCheckOnDuplicateKeyUpdateInSQL' and 'rewriteBatchedStatements' are set, with 'rewriteBatchedStatements=true' implicitly disabling
      * 'dontCheckOnDuplicateKeyUpdateInSQL'.
      *

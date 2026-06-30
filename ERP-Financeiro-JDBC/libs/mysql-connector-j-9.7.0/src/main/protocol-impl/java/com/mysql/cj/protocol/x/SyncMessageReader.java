@@ -274,7 +274,7 @@ public class SyncMessageReader implements MessageReader<XMessageHeader, XMessage
          * On the other hand, a bigger timeout value allows us to keep dispatcher thread running while multiple concurrent asynchronous read operations are
          * pending, thus avoiding the delays for new dispatching threads creation.
          */
-        private static final long POLL_TIMEOUT = 100; // TODO expose via connection property
+        private static final long POLL_TIMEOUT = 100; // TODO expose via net.financeiro.connection property
         boolean started = false;
 
         public ListenersDispatcher() {

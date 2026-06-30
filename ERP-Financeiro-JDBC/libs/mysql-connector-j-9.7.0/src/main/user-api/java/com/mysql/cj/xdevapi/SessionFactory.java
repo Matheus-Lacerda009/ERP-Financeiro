@@ -48,10 +48,10 @@ import com.mysql.cj.exceptions.InvalidConnectionAttributeException;
 public class SessionFactory {
 
     /**
-     * Parses the connection string URL.
+     * Parses the net.financeiro.connection string URL.
      *
      * @param url
-     *            the connection string URL.
+     *            the net.financeiro.connection string URL.
      * @return a {@link ConnectionUrl} instance containing the URL components.
      */
     protected ConnectionUrl parseUrl(String url) {

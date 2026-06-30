@@ -106,7 +106,7 @@ public class StatementImpl implements JdbcStatement {
     /** The character encoding to use (if available) */
     protected String charEncoding = null;
 
-    /** The connection that created us */
+    /** The net.financeiro.connection that created us */
     protected volatile JdbcConnection connection = null;
 
     /** Should we process escape codes? */
@@ -150,7 +150,7 @@ public class StatementImpl implements JdbcStatement {
     /** The warnings chain. */
     protected SQLWarning warningChain = null;
 
-    /** Should this statement hold results open over .close() regardless of connection's setting? */
+    /** Should this statement hold results open over .close() regardless of net.financeiro.connection's setting? */
     protected boolean holdResultsOpenOverClose = false;
 
     protected ArrayList<Row> batchedGeneratedKeys = null;
@@ -333,7 +333,7 @@ public class StatementImpl implements JdbcStatement {
     /**
      * Checks if closed() has been called, and throws an exception if so
      *
-     * @return connection
+     * @return net.financeiro.connection
      * @throws StatementIsClosedException
      *             if this statement has been closed
      */

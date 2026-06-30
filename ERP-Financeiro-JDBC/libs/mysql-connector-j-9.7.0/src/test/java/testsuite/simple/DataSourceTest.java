@@ -74,7 +74,7 @@ public class DataSourceTest extends BaseTestCase {
     public void setUp() throws Exception {
         /*
          * This code is separated from the rest of the test since you normally would NOT register a JDBC driver in your code. It would likely be configured into
-         * your naming and directory service using some GUI.
+         * your naming and directory net.financeiro.service using some GUI.
          */
         MysqlDataSource ds;
         Hashtable<String, String> env = new Hashtable<>();
@@ -98,7 +98,7 @@ public class DataSourceTest extends BaseTestCase {
     }
 
     /**
-     * Tests that we can get a connection from the DataSource bound in JNDI during test setup
+     * Tests that we can get a net.financeiro.connection from the DataSource bound in JNDI during test setup
      *
      * @throws Exception
      */

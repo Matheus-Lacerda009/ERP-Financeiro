@@ -4300,7 +4300,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
                 }
             }
 
-            assertNotNull(ei, "TestBug67318ExceptionInterceptor is not found on connection");
+            assertNotNull(ei, "TestBug67318ExceptionInterceptor is not found on net.financeiro.connection");
 
             Statement st1 = c.createStatement();
             ResultSet rs1 = st1.executeQuery("select 1");
@@ -4490,7 +4490,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
             testRs2.close();
         } catch (SQLException ex) {
             if (ex.getMessage().startsWith("Streaming result set")) {
-                fail("There is a Streaming result set still active. No other statements can be issued on this connection.");
+                fail("There is a Streaming result set still active. No other statements can be issued on this net.financeiro.connection.");
             } else {
                 ex.printStackTrace();
                 fail(ex.getMessage());

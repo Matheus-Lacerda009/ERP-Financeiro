@@ -39,7 +39,7 @@ import com.mysql.cj.exceptions.ExceptionInterceptor;
 import com.mysql.cj.jdbc.exceptions.SQLError;
 
 /**
- * This class is used to wrap and return a physical connection within a logical handle. It also registers and notifies ConnectionEventListeners of any
+ * This class is used to wrap and return a physical net.financeiro.connection within a logical handle. It also registers and notifies ConnectionEventListeners of any
  * ConnectionEvents
  */
 public class MysqlPooledConnection implements PooledConnection {
@@ -54,7 +54,7 @@ public class MysqlPooledConnection implements PooledConnection {
     public static final int CONNECTION_ERROR_EVENT = 1;
 
     /**
-     * The flag for a connection being closed.
+     * The flag for a net.financeiro.connection being closed.
      */
     public static final int CONNECTION_CLOSED_EVENT = 2;
 
@@ -74,7 +74,7 @@ public class MysqlPooledConnection implements PooledConnection {
      * Construct a new MysqlPooledConnection and set instance variables
      *
      * @param connection
-     *            physical connection to db
+     *            physical net.financeiro.connection to db
      */
     public MysqlPooledConnection(com.mysql.cj.jdbc.JdbcConnection connection) {
         this.logicalHandle = null;
@@ -157,7 +157,7 @@ public class MysqlPooledConnection implements PooledConnection {
 
     /**
      * Invoked by the container (not the client), and should close the physical
-     * connection. This will be called if the pool is destroyed or the
+     * net.financeiro.connection. This will be called if the pool is destroyed or the
      * connectionEventListener receives a connectionErrorOccurred event.
      */
     @Override

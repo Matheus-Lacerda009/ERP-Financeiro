@@ -66,7 +66,7 @@ public interface AuthenticationPlugin<M extends Message> {
     }
 
     /**
-     * Called by the driver when this extension should release any resources it is holding and cleanup internally before the connection is closed.
+     * Called by the driver when this extension should release any resources it is holding and cleanup internally before the net.financeiro.connection is closed.
      */
     default void destroy() {
     }
@@ -79,10 +79,10 @@ public interface AuthenticationPlugin<M extends Message> {
     String getProtocolPluginName();
 
     /**
-     * Does this plugin require the connection itself to be confidential (i.e. tls/ssl)...Highly recommended to return "true" for plugins that return the
+     * Does this plugin require the net.financeiro.connection itself to be confidential (i.e. tls/ssl)...Highly recommended to return "true" for plugins that return the
      * credentials in the clear.
      *
-     * @return true if secure connection is required
+     * @return true if secure net.financeiro.connection is required
      */
     boolean requiresConfidentiality();
 
@@ -95,8 +95,8 @@ public interface AuthenticationPlugin<M extends Message> {
      * This method called from Connector/J before first nextAuthenticationStep call. Values of user and password parameters are passed from those in
      * NativeAuthenticationProvider#changeUser() or NativeAuthenticationProvider#connect().
      *
-     * Plugin should use these values instead of values from connection properties because parent method may be a changeUser call which saves user and password
-     * into connection only after successful handshake.
+     * Plugin should use these values instead of values from net.financeiro.connection properties because parent method may be a changeUser call which saves user and password
+     * into net.financeiro.connection only after successful handshake.
      *
      * @param user
      *            user name
@@ -124,7 +124,7 @@ public interface AuthenticationPlugin<M extends Message> {
      * Process authentication handshake data from server and optionally produce data to be sent back to the server.
      * The driver will keep calling this method on each new server packet arrival until either an Exception is thrown
      * (authentication failure, please use appropriate SQLStates) or the number of exchange iterations exceeded max
-     * limit or an OK packet is sent by server indicating that the connection has been approved.
+     * limit or an OK packet is sent by server indicating that the net.financeiro.connection has been approved.
      *
      * If, on return from this method, toServer is a non-empty list of buffers, then these buffers will be sent to
      * the server in the same order and without any reads in between them. If toServer is an empty list, no

@@ -49,7 +49,7 @@ public class ProfilerEventImpl implements ProfilerEvent {
      * @param db
      *            the database in use
      * @param connectionId
-     *            the connection id (-1 if N/A)
+     *            the net.financeiro.connection id (-1 if N/A)
      * @param statementId
      *            the statement id (-1 if N/A)
      * @param resultSetId
@@ -183,7 +183,7 @@ public class ProfilerEventImpl implements ProfilerEvent {
         buf.append(new Date(this.eventCreationTime));
         buf.append(", duration: ");
         buf.append(this.eventDuration);
-        buf.append(", connection-id: ");
+        buf.append(", net.financeiro.connection-id: ");
         buf.append(this.connectionId);
         buf.append(", statement-id: ");
         buf.append(this.statementId);

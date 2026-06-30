@@ -42,7 +42,7 @@ public interface MysqlConnection {
     long getId();
 
     /**
-     * Returns the parsed and passed in properties for this connection.
+     * Returns the parsed and passed in properties for this net.financeiro.connection.
      *
      * @return {@link Properties}
      */
@@ -61,10 +61,10 @@ public interface MysqlConnection {
     void checkClosed();
 
     /**
-     * Destroys this connection and any underlying resources.
+     * Destroys this net.financeiro.connection and any underlying resources.
      *
      * @param whyCleanedUp
-     *            exception caused the connection clean up
+     *            exception caused the net.financeiro.connection clean up
      */
     void cleanup(Throwable whyCleanedUp);
 

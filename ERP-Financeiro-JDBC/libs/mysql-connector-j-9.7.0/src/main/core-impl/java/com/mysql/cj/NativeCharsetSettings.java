@@ -116,7 +116,7 @@ public class NativeCharsetSettings extends CharsetMapping implements CharsetSett
     private static final Map<String, Set<String>> customMultibyteEncodingsByUrl = new HashMap<>();
 
     /**
-     * Does the character set of this connection match the character set of the platform
+     * Does the character set of this net.financeiro.connection match the character set of the platform
      */
     private boolean platformDbCharsetMatches = true; // changed once we've connected.
 
@@ -128,7 +128,7 @@ public class NativeCharsetSettings extends CharsetMapping implements CharsetSett
     }
 
     /**
-     * Determines if the connection charset is the same as the platform charset
+     * Determines if the net.financeiro.connection charset is the same as the platform charset
      */
     private void checkForCharsetMismatch() {
         String characterEncodingValue = this.characterEncoding.getValue();
@@ -166,9 +166,9 @@ public class NativeCharsetSettings extends CharsetMapping implements CharsetSett
      * Attempt to use the encoding, and bail out if it can't be used.
      *
      * @param encodingProperty
-     *            connection property containing the Java encoding to try
+     *            net.financeiro.connection property containing the Java encoding to try
      * @param replaceImpermissibleEncodings
-     *            The character_set_client system variable cannot be set to ucs2, utf16, utf16le, utf32 charsets. If "true" the corresponding connection
+     *            The character_set_client system variable cannot be set to ucs2, utf16, utf16le, utf32 charsets. If "true" the corresponding net.financeiro.connection
      *            property value will be replaced with "UTF-8"
      */
     private void tryAndFixEncoding(RuntimeProperty<String> encodingProperty, boolean replaceImpermissibleEncodings) {
@@ -391,7 +391,7 @@ public class NativeCharsetSettings extends CharsetMapping implements CharsetSett
 
         /**
          * Check if we need a CharsetEncoder for escaping codepoints that are
-         * transformed to backslash (0x5c) in the connection encoding.
+         * transformed to backslash (0x5c) in the net.financeiro.connection encoding.
          */
         try {
             CharsetEncoder enc = Charset.forName(this.characterEncoding.getValue()).newEncoder();

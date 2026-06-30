@@ -51,9 +51,9 @@ public class ReplicationDnsSrvConnectionUrl extends ConnectionUrl {
      * Constructs an instance of {@link ReplicationDnsSrvConnectionUrl}, performing all the required initializations.
      *
      * @param connStrParser
-     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original connection string
+     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original net.financeiro.connection string
      * @param info
-     *            the connection arguments map
+     *            the net.financeiro.connection arguments map
      */
     public ReplicationDnsSrvConnectionUrl(ConnectionUrlParser connStrParser, Properties info) {
         super(connStrParser, info);
@@ -84,8 +84,8 @@ public class ReplicationDnsSrvConnectionUrl extends ConnectionUrl {
 
         /*
          * Validate the hosts list:
-         * 1. Exactly two hosts (SRV service name) must be provided.
-         * 2. No more than one host (SRV service name) per type can be provided.
+         * 1. Exactly two hosts (SRV net.financeiro.service name) must be provided.
+         * 2. No more than one host (SRV net.financeiro.service name) per type can be provided.
          * 3. No port can be provided, i.e., port number must be equals to DEFAULT_PORT.
          * 4. If property 'dnsSrv' is set then it cannot be "false".
          * 5. Property 'protocol' cannot be "PIPE".

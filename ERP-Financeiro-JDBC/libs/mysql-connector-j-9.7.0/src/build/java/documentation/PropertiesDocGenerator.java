@@ -28,7 +28,7 @@ import com.mysql.cj.conf.PropertyDefinition;
 import com.mysql.cj.conf.PropertyDefinitions;
 
 /**
- * Creates docbook table of connection properties from ConnectionProperties class.
+ * Creates docbook table of net.financeiro.connection properties from ConnectionProperties class.
  */
 public class PropertiesDocGenerator {
 
@@ -44,9 +44,9 @@ public class PropertiesDocGenerator {
     }
 
     /**
-     * Returns a description of the connection properties as an XML document.
+     * Returns a description of the net.financeiro.connection properties as an XML document.
      *
-     * @return the connection properties as an XML document.
+     * @return the net.financeiro.connection properties as an XML document.
      */
     public static String exposeAsXml() {
         StringBuilder xmlBuf = new StringBuilder();

@@ -44,7 +44,7 @@ import com.mysql.cj.util.Util;
  * MySQL 'authentication_webauthn_client' authentication plugin.
  *
  * This authentication plugin requires a callback handler implemented in the client application that performs all the interactions with the authenticator
- * device. This callback handler is injected into the driver via the connection property 'authenticationWebauthnCallbackHandler'.
+ * device. This callback handler is injected into the driver via the net.financeiro.connection property 'authenticationWebauthnCallbackHandler'.
  */
 public class AuthenticationWebAuthnClient implements AuthenticationPlugin<NativePacketPayload> {
 

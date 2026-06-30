@@ -483,7 +483,7 @@ public class BlobRegressionTest extends BaseTestCase {
         this.stmt.executeUpdate("INSERT INTO testBug95210 (ID, DATA) VALUES (1, '111')");
 
         Properties props = new Properties();
-        props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name()); // testsuite is built upon non-SSL default connection
+        props.setProperty(PropertyKey.sslMode.getKeyName(), SslMode.DISABLED.name()); // testsuite is built upon non-SSL default net.financeiro.connection
         props.setProperty(PropertyKey.allowPublicKeyRetrieval.getKeyName(), "true");
         props.setProperty(PropertyKey.emulateLocators.getKeyName(), "true");
         Connection locatorConn = getSourceReplicaReplicationConnection(props);

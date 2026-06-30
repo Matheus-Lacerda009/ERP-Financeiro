@@ -51,7 +51,7 @@ public class NativeResultset implements Resultset {
     protected long updateId = -1;
 
     /**
-     * Any info message from the server that was created while generating this result set (if 'info parsing' is enabled for the connection).
+     * Any info message from the server that was created while generating this result set (if 'info parsing' is enabled for the net.financeiro.connection).
      */
     protected String serverInfo = null;
 

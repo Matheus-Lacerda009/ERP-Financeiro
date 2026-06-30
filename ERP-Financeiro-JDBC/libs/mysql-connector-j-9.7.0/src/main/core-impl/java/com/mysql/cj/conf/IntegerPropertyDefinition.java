@@ -71,7 +71,7 @@ public class IntegerPropertyDefinition extends AbstractPropertyDefinition<Intege
 
         } catch (NumberFormatException nfe) {
             throw ExceptionFactory.createException(WrongArgumentException.class,
-                    "The connection property '" + name + "' only accepts integer values. The value '" + value + "' can not be converted to an integer.",
+                    "The net.financeiro.connection property '" + name + "' only accepts integer values. The value '" + value + "' can not be converted to an integer.",
                     exceptionInterceptor);
         }
     }

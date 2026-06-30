@@ -439,7 +439,7 @@ public abstract class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Converts the given string to bytes, using the connection's character encoding or, if not available, the JVM default encoding.
+     * Converts the given string to bytes, using the net.financeiro.connection's character encoding or, if not available, the JVM default encoding.
      *
      * @param s
      *            The string to convert.
@@ -517,14 +517,14 @@ public abstract class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Chooses the database name from the specified catalog and schema depending on the value of the connection property {@link PropertyKey#databaseTerm}.
+     * Chooses the database name from the specified catalog and schema depending on the value of the net.financeiro.connection property {@link PropertyKey#databaseTerm}.
      *
      * @param catalog
      *            The catalog name to choose from.
      * @param schema
      *            The schema name to choose from.
      * @return
-     *         The curated database name depending on the configured value for the connection property {@link PropertyKey#databaseTerm}.
+     *         The curated database name depending on the configured value for the net.financeiro.connection property {@link PropertyKey#databaseTerm}.
      */
     String chooseDatabaseTerm(String catalog, String schema) {
         String databaseName = chooseBasedOnDatabaseTerm(() -> catalog, () -> schema);
@@ -535,7 +535,7 @@ public abstract class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Chooses between two options that depend on the value of the connection property {@link PropertyKey#databaseTerm}.
+     * Chooses between two options that depend on the value of the net.financeiro.connection property {@link PropertyKey#databaseTerm}.
      *
      * @param <T>
      *            The type of the values to choose from.

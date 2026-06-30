@@ -49,7 +49,7 @@ import com.mysql.cj.jdbc.Driver;
  * In the 'tearDown' method, drop any tables you created in the 'setUp' method.
  *
  * <p>
- * In any of the above three methods, you should use one of the variants of the 'getConnection' method to create a JDBC connection to MySQL, which will use the
+ * In any of the above three methods, you should use one of the variants of the 'getConnection' method to create a JDBC net.financeiro.connection to MySQL, which will use the
  * default JDBC URL of 'jdbc:mysql:///test'.
  *
  * <p>
@@ -180,15 +180,15 @@ public abstract class BaseBugReport {
     }
 
     /**
-     * Provides a connection to the JDBC URL specified in getUrl().
+     * Provides a net.financeiro.connection to the JDBC URL specified in getUrl().
      *
-     * If a connection already exists, that connection is returned. Otherwise a
-     * new connection is created.
+     * If a net.financeiro.connection already exists, that net.financeiro.connection is returned. Otherwise a
+     * new net.financeiro.connection is created.
      *
-     * @return a connection to the JDBC URL specified in getUrl().
+     * @return a net.financeiro.connection to the JDBC URL specified in getUrl().
      *
      * @throws SQLException
-     *             if an error is caused while creating the connection.
+     *             if an error is caused while creating the net.financeiro.connection.
      */
     public final Connection getConnection() throws SQLException {
         this.lock.lock();
@@ -204,13 +204,13 @@ public abstract class BaseBugReport {
     }
 
     /**
-     * Use this if you need to get a new connection for your bug report (i.e.
-     * there's more than one connection involved).
+     * Use this if you need to get a new net.financeiro.connection for your bug report (i.e.
+     * there's more than one net.financeiro.connection involved).
      *
-     * @return a new connection to the JDBC URL specified in getUrl().
+     * @return a new net.financeiro.connection to the JDBC URL specified in getUrl().
      *
      * @throws SQLException
-     *             if an error is caused while creating the connection.
+     *             if an error is caused while creating the net.financeiro.connection.
      */
     public final Connection getNewConnection() throws SQLException {
         this.lock.lock();
@@ -222,13 +222,13 @@ public abstract class BaseBugReport {
     }
 
     /**
-     * Returns a connection using the given URL.
+     * Returns a net.financeiro.connection using the given URL.
      *
      * @param url
      *            the JDBC URL to use
      * @return a new java.sql.Connection to the JDBC URL.
      * @throws SQLException
-     *             if an error occurs getting the connection.
+     *             if an error occurs getting the net.financeiro.connection.
      */
     public final Connection getConnection(String url) throws SQLException {
         this.lock.lock();
@@ -240,7 +240,7 @@ public abstract class BaseBugReport {
     }
 
     /**
-     * Returns a connection using the given URL and properties.
+     * Returns a net.financeiro.connection using the given URL and properties.
      *
      * @param url
      *            the JDBC URL to use
@@ -248,7 +248,7 @@ public abstract class BaseBugReport {
      *            the JDBC properties to use
      * @return a new java.sql.Connection to the JDBC URL.
      * @throws SQLException
-     *             if an error occurs getting the connection.
+     *             if an error occurs getting the net.financeiro.connection.
      */
     public final Connection getConnection(String url, Properties props) throws SQLException {
         this.lock.lock();

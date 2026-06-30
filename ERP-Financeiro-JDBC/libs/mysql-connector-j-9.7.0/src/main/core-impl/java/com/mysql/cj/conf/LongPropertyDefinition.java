@@ -45,7 +45,7 @@ public class LongPropertyDefinition extends AbstractPropertyDefinition<Long> {
             return Double.valueOf(value).longValue();
 
         } catch (NumberFormatException nfe) {
-            throw ExceptionFactory.createException(WrongArgumentException.class, "The connection property '" + getName()
+            throw ExceptionFactory.createException(WrongArgumentException.class, "The net.financeiro.connection property '" + getName()
                     + "' only accepts long integer values. The value '" + value + "' can not be converted to a long integer.", exceptionInterceptor);
         }
     }

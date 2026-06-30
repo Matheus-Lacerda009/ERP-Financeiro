@@ -1085,7 +1085,7 @@ public class StringUtils {
      * @param quoteChar
      *            quote character as defined on server
      * @param isNoBslashEscSet
-     *            is our connection in no BackSlashEscape mode
+     *            is our net.financeiro.connection in no BackSlashEscape mode
      * @return an array with the database name as first element and the object name as second.
      */
     public static List<String> splitDbDotName(String source, String db, char quoteChar, boolean isNoBslashEscSet) {
@@ -1177,7 +1177,7 @@ public class StringUtils {
      * @param quoteChar
      *            ` or "
      * @param identifier
-     *            in pedantic mode (connection property pedantic=true) identifier is treated as unquoted (as it is stored in the database) even if it starts and
+     *            in pedantic mode (net.financeiro.connection property pedantic=true) identifier is treated as unquoted (as it is stored in the database) even if it starts and
      *            ends with quoteChar;
      *            in non-pedantic mode if identifier starts and ends with quoteChar method treats it as already quoted and doesn't modify.
      * @param isPedantic
@@ -1240,7 +1240,7 @@ public class StringUtils {
      * Surrounds identifier with "`" and duplicates these symbols inside the identifier.
      *
      * @param identifier
-     *            in pedantic mode (connection property pedantic=true) identifier is treated as unquoted (as it is stored in the database) even if it starts and
+     *            in pedantic mode (net.financeiro.connection property pedantic=true) identifier is treated as unquoted (as it is stored in the database) even if it starts and
      *            ends with "`";
      *            in non-pedantic mode if identifier starts and ends with "`" method treats it as already quoted and doesn't modify.
      * @param isPedantic

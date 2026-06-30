@@ -286,7 +286,7 @@ public class AuthenticationKerberosClient implements AuthenticationPlugin<Native
             };
         }
 
-        // Login into Kerberos service and obtain the user subject/credentials.
+        // Login into Kerberos net.financeiro.service and obtain the user subject/credentials.
         LoginContext loginContext;
         try {
             loginContext = new LoginContext(LOGIN_CONFIG_ENTRY, null, this.credentialsCallbackHandler, loginConfig);

@@ -55,9 +55,9 @@ public class XDevApiConnectionUrl extends ConnectionUrl {
      * Constructs an instance of {@link XDevApiConnectionUrl}, performing all the required initializations.
      *
      * @param connStrParser
-     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original connection string
+     *            a {@link ConnectionUrlParser} instance containing the parsed version of the original net.financeiro.connection string
      * @param info
-     *            the connection arguments map
+     *            the net.financeiro.connection arguments map
      */
     public XDevApiConnectionUrl(ConnectionUrlParser connStrParser, Properties info) {
         super(connStrParser, info);

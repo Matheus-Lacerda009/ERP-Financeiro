@@ -32,7 +32,7 @@ import com.mysql.cj.jdbc.JdbcConnection;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
 /**
- * ConnectionTester for C3P0 connection pool that uses the more efficient COM_PING method of testing connection 'liveness' for MySQL, and 'sorts' exceptions
+ * ConnectionTester for C3P0 net.financeiro.connection pool that uses the more efficient COM_PING method of testing net.financeiro.connection 'liveness' for MySQL, and 'sorts' exceptions
  * based on SQLState or class of 'CommunicationsException' for handling exceptions.
  */
 public final class MysqlConnectionTester implements QueryConnectionTester {
@@ -47,7 +47,7 @@ public final class MysqlConnectionTester implements QueryConnectionTester {
         try {
             this.pingMethod = JdbcConnection.class.getMethod("ping", (Class[]) null);
         } catch (Exception ex) {
-            // punt, we have no way to recover, other than we now use 'SELECT 1' for handling the connection testing.
+            // punt, we have no way to recover, other than we now use 'SELECT 1' for handling the net.financeiro.connection testing.
         }
     }
 
@@ -56,10 +56,10 @@ public final class MysqlConnectionTester implements QueryConnectionTester {
         try {
             if (this.pingMethod != null) {
                 if (con instanceof JdbcConnection) {
-                    // We've been passed an instance of a MySQL connection -- no need for reflection
+                    // We've been passed an instance of a MySQL net.financeiro.connection -- no need for reflection
                     ((JdbcConnection) con).ping();
                 } else {
-                    // Assume the connection is a C3P0 proxy
+                    // Assume the net.financeiro.connection is a C3P0 proxy
                     C3P0ProxyConnection castCon = (C3P0ProxyConnection) con;
                     castCon.rawConnectionOperation(this.pingMethod, C3P0ProxyConnection.RAW_CONNECTION, NO_ARGS_ARRAY);
                 }

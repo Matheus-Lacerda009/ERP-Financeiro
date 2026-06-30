@@ -141,7 +141,7 @@ public class SimplePacketReaderTest {
             assertTrue(connection.forceClosed, "Connection should be force closed when payload read fails");
         }
 
-        // any IO errors during read should hang up the connection
+        // any IO errors during read should hang up the net.financeiro.connection
         connection = new MockSocketConnection() {
 
             @Override

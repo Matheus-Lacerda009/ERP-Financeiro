@@ -79,7 +79,7 @@ public class NativeServerSession implements ServerSession {
     private long clientParam = 0;
     private NativeServerSessionStateController serverSessionStateController;
 
-    /** The map of server variables that we retrieve at connection init. */
+    /** The map of server variables that we retrieve at net.financeiro.connection init. */
     private Map<String, String> serverVariables = new HashMap<>();
 
     private CharsetSettings charsetSettings;

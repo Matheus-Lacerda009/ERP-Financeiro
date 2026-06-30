@@ -99,7 +99,7 @@ public class CompressionTest extends DevApiBaseTestCase {
                     MYSQLX_BYTES_SENT_COMPRESSED_PAYLOAD, MYSQLX_BYTES_SENT_UNCOMPRESSED_FRAME).stream().peek(e -> this.countersMap.put(e, 0L))
                     .forEach(e -> this.deltasMap.put(e, 0L));
 
-            // Counters must be consulted using a classic connection due to Bug#30121765.
+            // Counters must be consulted using a classic net.financeiro.connection due to Bug#30121765.
             String classicUrl = System.getProperty(PropertyDefinitions.SYSP_testsuite_url);
             Driver driver = null;
             try {
@@ -425,7 +425,7 @@ public class CompressionTest extends DevApiBaseTestCase {
     }
 
     /**
-     * Tests compression disabled by connection option.
+     * Tests compression disabled by net.financeiro.connection option.
      */
     @Test
     public void compressionDisabled() {
@@ -605,13 +605,13 @@ public class CompressionTest extends DevApiBaseTestCase {
         assumeTrue(this.compressionSettings.serverSupportsCompression(), "Server variable mysqlx_compression_algorithms must be configured to run this test.");
 
         assertThrows(WrongArgumentException.class,
-                "The connection property 'xdevapi.compression' acceptable values are: 'DISABLED', 'PREFERRED' or 'REQUIRED'\\. The value 'true' is not acceptable\\.",
+                "The net.financeiro.connection property 'xdevapi.compression' acceptable values are: 'DISABLED', 'PREFERRED' or 'REQUIRED'\\. The value 'true' is not acceptable\\.",
                 () -> this.fact.getSession(this.compressFreeBaseUrl + makeParam(PropertyKey.xdevapiCompression, "true")));
         assertThrows(WrongArgumentException.class,
-                "The connection property 'xdevapi.compression' acceptable values are: 'DISABLED', 'PREFERRED' or 'REQUIRED'\\. The value 'false' is not acceptable\\.",
+                "The net.financeiro.connection property 'xdevapi.compression' acceptable values are: 'DISABLED', 'PREFERRED' or 'REQUIRED'\\. The value 'false' is not acceptable\\.",
                 () -> this.fact.getSession(this.compressFreeBaseUrl + makeParam(PropertyKey.xdevapiCompression, "false")));
         assertThrows(WrongArgumentException.class,
-                "The connection property 'xdevapi.compression' acceptable values are: 'DISABLED', 'PREFERRED' or 'REQUIRED'\\. The value '' is not acceptable\\.",
+                "The net.financeiro.connection property 'xdevapi.compression' acceptable values are: 'DISABLED', 'PREFERRED' or 'REQUIRED'\\. The value '' is not acceptable\\.",
                 () -> this.fact.getSession(this.compressFreeBaseUrl + makeParam(PropertyKey.xdevapiCompression, "")));
 
         assertThrows(WrongArgumentException.class,

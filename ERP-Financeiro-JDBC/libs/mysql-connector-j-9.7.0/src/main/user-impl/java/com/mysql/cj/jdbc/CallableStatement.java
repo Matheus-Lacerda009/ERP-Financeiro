@@ -437,7 +437,7 @@ public class CallableStatement extends ClientPreparedStatement implements java.s
      * Creates a new CallableStatement
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param paramInfo
      *            the SQL to prepare
      *
@@ -463,7 +463,7 @@ public class CallableStatement extends ClientPreparedStatement implements java.s
      * Creates a callable statement instance
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param sql
      *            the SQL to prepare
      * @param db
@@ -483,7 +483,7 @@ public class CallableStatement extends ClientPreparedStatement implements java.s
      * Creates a callable statement instance
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param paramInfo
      *            the SQL to prepare
      * @return CallableStatement
@@ -572,7 +572,7 @@ public class CallableStatement extends ClientPreparedStatement implements java.s
      * Creates a new CallableStatement
      *
      * @param conn
-     *            the connection creating this statement
+     *            the net.financeiro.connection creating this statement
      * @param sql
      *            the SQL to prepare
      * @param db
@@ -1498,7 +1498,7 @@ public class CallableStatement extends ClientPreparedStatement implements java.s
         connectionLock.lock();
         try {
             if (this.noAccessToProcedureBodies) {
-                throw SQLError.createSQLException("No access to parameters by name when connection has been configured not to access procedure bodies",
+                throw SQLError.createSQLException("No access to parameters by name when net.financeiro.connection has been configured not to access procedure bodies",
                         MysqlErrorNumbers.SQLSTATE_CONNJ_ILLEGAL_ARGUMENT, getExceptionInterceptor());
             }
 
@@ -2785,7 +2785,7 @@ public class CallableStatement extends ClientPreparedStatement implements java.s
     }
 
     /**
-     * Converts the given string to bytes, using the connection's character
+     * Converts the given string to bytes, using the net.financeiro.connection's character
      * encoding.
      *
      * @param s

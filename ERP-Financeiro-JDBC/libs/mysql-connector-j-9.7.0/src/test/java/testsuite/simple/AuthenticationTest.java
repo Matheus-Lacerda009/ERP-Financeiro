@@ -867,21 +867,21 @@ public class AuthenticationTest extends BaseTestCase {
             props.clear();
             props.setProperty(PropertyKey.USER.getKeyName(), "testWl16490_1fa");
             assertThrows(SQLException.class,
-                    "A path to a file containing an OpenID Identity Token must be specified in the connection property 'idTokenFile'\\.",
+                    "A path to a file containing an OpenID Identity Token must be specified in the net.financeiro.connection property 'idTokenFile'\\.",
                     () -> getConnectionWithProps(url, props));
 
             // TS.4.3: Wrong location for the Identity Token file.
             props.clear();
             props.setProperty(PropertyKey.USER.getKeyName(), "testWl16490_1fa");
             props.setProperty(PropertyKey.idTokenFile.getKeyName(), "/foobar/jwt.txt");
-            assertThrows(SQLException.class, "Failed reading the OpenID Identity Token file specified in the connection property 'idTokenFile'\\.",
+            assertThrows(SQLException.class, "Failed reading the OpenID Identity Token file specified in the net.financeiro.connection property 'idTokenFile'\\.",
                     () -> getConnectionWithProps(url, props));
 
             // TS.4.4: Identity Token too big.
             props.clear();
             props.setProperty(PropertyKey.USER.getKeyName(), "testWl16490_1fa");
             props.setProperty(PropertyKey.idTokenFile.getKeyName(), badIdTokenFile.toString());
-            assertThrows(SQLException.class, "The file specified in the connection property 'idTokenFile' contains an invalid OpenID Identity Token\\.",
+            assertThrows(SQLException.class, "The file specified in the net.financeiro.connection property 'idTokenFile' contains an invalid OpenID Identity Token\\.",
                     () -> getConnectionWithProps(url, props));
 
             // TS.4 SSL disabled.

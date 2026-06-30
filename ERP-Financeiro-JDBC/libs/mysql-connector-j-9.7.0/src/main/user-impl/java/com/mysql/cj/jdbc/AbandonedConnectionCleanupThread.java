@@ -53,7 +53,7 @@ public class AbandonedConnectionCleanupThread implements Runnable {
             cleanupThreadExecutorService = null;
         } else {
             cleanupThreadExecutorService = Executors.newSingleThreadExecutor(r -> {
-                Thread t = new Thread(r, "mysql-cj-abandoned-connection-cleanup");
+                Thread t = new Thread(r, "mysql-cj-abandoned-net.financeiro.connection-cleanup");
                 t.setDaemon(true);
                 // Tie the thread's context ClassLoader to the ClassLoader that loaded the class instead of inheriting the context ClassLoader from the current
                 // thread, which would happen by default.
@@ -191,7 +191,7 @@ public class AbandonedConnectionCleanupThread implements Runnable {
      * @param conn
      *            the Connection object to track for finalization
      * @param io
-     *            the network resources to close on the connection finalization
+     *            the network resources to close on the net.financeiro.connection finalization
      */
     protected static void trackConnection(MysqlConnection conn, NetworkResources io) {
         if (abandonedConnectionCleanupDisabled) {
