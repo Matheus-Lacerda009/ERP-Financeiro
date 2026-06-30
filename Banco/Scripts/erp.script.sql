@@ -1,3 +1,4 @@
+-- Active: 1782855798917@@erp-financeiro-estudante-0530.a.aivencloud.com@26374@ERP_Financeiro
 create database ERP_Financeiro;
 use ERP_Financeiro;
 
@@ -78,10 +79,13 @@ create table Fluxo_Caixa(
     parcelas int not null,
     id_caixa int not null,
     foreign key(id_caixa) references Conta_Bancaria(id_caixa),
+
     id_forma_pagamento int not null,
     foreign key(id_forma_pagamento) references Forma_Pagamento(id_forma_pagamento),
+
     id_operacao int not null,
     foreign key(id_operacao) references Operacao(id_operacao),
+
     id_folha_pagamento int not null,
     foreign key(id_folha_pagamento) references Folha_Pagamento(id_folha_pagamento)
 );
