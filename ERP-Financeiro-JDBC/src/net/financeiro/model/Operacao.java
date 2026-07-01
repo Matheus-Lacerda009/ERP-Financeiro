@@ -13,4 +13,28 @@ public class Operacao {
         this.data_operacao = data_operacao;
         this.status_operacao = status_operacao;
     }
+
+    public Long getId_operacao() {
+        return id_operacao;
+    }
+
+    public Long getId_fornecedor_cliente() {
+        return id_fornecedor_cliente;
+    }
+
+    public Long getId_funcionario() {
+        return id_funcionario;
+    }
+
+    public LocalDateTime getData_operacao() {
+        return data_operacao;
+    }
+
+    public String getStatus_operacao() {
+        return status_operacao;
+    }
+
+    public void setId_operacao(Long id_operacao) {
+        this.id_operacao = id_operacao;
+    }
 }

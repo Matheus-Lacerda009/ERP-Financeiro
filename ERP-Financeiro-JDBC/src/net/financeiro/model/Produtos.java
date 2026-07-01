@@ -13,4 +13,32 @@ public class Produtos {
         this.valor = valor;
         this.quantidade_estoque = quantidade_estoque;
     }
+
+    public Long getId_produto() {
+        return id_produto;
+    }
+
+    public Long getId_categoria_item() {
+        return id_categoria_item;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public int getQuantidade_estoque() {
+        return quantidade_estoque;
+    }
+
+    public void setId_produto(Long id_produto) {
+        this.id_produto = id_produto;
+    }
 }

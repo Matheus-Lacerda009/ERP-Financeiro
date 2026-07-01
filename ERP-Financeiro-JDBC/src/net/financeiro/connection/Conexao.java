@@ -18,6 +18,7 @@ public class Conexao {
         try{
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch(SQLException e){
+            System.out.println("Erro ao conectar!");
             return null;
         }
     }

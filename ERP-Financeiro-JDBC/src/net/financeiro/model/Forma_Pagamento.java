@@ -7,4 +7,16 @@ public class Forma_Pagamento {
     public Forma_Pagamento(String nome) {
         this.nome = nome;
     }
+
+    public Long getId_forma_pagamento() {
+        return id_forma_pagamento;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setId_forma_pagamento(Long id_forma_pagamento) {
+        this.id_forma_pagamento = id_forma_pagamento;
+    }
 }

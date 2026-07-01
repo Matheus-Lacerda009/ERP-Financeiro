@@ -9,4 +9,20 @@ public class Conta_Bancaria {
         this.nome_banco = nome_banco;
         this.numero_conta = numero_conta;
     }
+
+    public int getNumero_conta() {
+        return numero_conta;
+    }
+
+    public String getNome_banco() {
+        return nome_banco;
+    }
+
+    public Long getId_caixa() {
+        return id_caixa;
+    }
+
+    public void setId_caixa(Long id_caixa) {
+        this.id_caixa = id_caixa;
+    }
 }

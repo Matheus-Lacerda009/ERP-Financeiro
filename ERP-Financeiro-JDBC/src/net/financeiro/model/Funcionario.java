@@ -10,4 +10,28 @@ public class Funcionario {
         this.telefone = telefone;
         this.email = email;
     }
+
+    public Long getId_funcionario() {
+        return id_funcionario;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setId_funcionario(Long id_funcionario) {
+        this.id_funcionario = id_funcionario;
+    }
 }

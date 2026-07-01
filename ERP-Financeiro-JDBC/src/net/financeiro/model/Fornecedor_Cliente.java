@@ -10,4 +10,28 @@ public class Fornecedor_Cliente {
         this.telefone = telefone;
         this.email = email;
     }
+
+    public Long getId_fornecedor_cliente() {
+        return id_fornecedor_cliente;
+    }
+
+    public String getRazao_social_nome() {
+        return razao_social_nome;
+    }
+
+    public String getCnpj_cpf() {
+        return cnpj_cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setId_fornecedor_cliente(Long id_fornecedor_cliente) {
+        this.id_fornecedor_cliente = id_fornecedor_cliente;
+    }
 }

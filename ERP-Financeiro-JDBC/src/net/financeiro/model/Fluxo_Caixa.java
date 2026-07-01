@@ -11,4 +11,28 @@ public class Fluxo_Caixa {
         this.tipo_operacao = tipo_operacao;
         this.parcelas = parcelas;
     }
+
+    public Long getId_fluxo_caixa() {
+        return id_fluxo_caixa;
+    }
+
+    public Long getId_caixa() {
+        return id_caixa;
+    }
+
+    public Long getId_forma_pagamento() {
+        return id_forma_pagamento;
+    }
+
+    public String getTipo_operacao() {
+        return tipo_operacao;
+    }
+
+    public int getParcelas() {
+        return parcelas;
+    }
+
+    public void setId_fluxo_caixa(Long id_fluxo_caixa) {
+        this.id_fluxo_caixa = id_fluxo_caixa;
+    }
 }
