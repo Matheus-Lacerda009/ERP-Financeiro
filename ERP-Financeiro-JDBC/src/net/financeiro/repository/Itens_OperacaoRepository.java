@@ -59,4 +59,20 @@ public class Itens_OperacaoRepository {
             return false;
         }
     }
+
+    public Itens_Operacao buscarPorId(Long id) {
+        String sql = "SELECT * FROM Itens_Operacao WHERE id_itens_operacao = ?";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id);
+            ResultSet rs = pr.executeQuery();
+
+            return new Itens_Operacao(id, rs.getLong("id_produto"), rs.getLong("id_operacao"), rs.getInt("quantidade_produtos"));
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar por ID: " + e.getMessage());
+            return null;
+        }
+    }
+
+
 }
