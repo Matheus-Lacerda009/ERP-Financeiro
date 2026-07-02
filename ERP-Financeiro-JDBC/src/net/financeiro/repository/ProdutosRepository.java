@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProdutosRepository {
@@ -59,7 +60,7 @@ public class ProdutosRepository {
         }
     }
 
-    public List<Produto> listar(){
+    public List<Produto> listarInfo(){
         String sql = "SELECT * FROM Produto";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Produto> lista = new ArrayList<>();
@@ -70,6 +71,112 @@ public class ProdutosRepository {
             return lista;
         } catch(SQLException e){
             System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public HashMap<String, List<String>> maiorVenda(){
+        String sql = "SELECT sum(\n" +
+                "        p.valor * i.quantidade_produtos\n" +
+                "    ) as 'Venda por produto', p.nome as 'Nome produto'\n" +
+                "from\n" +
+                "    Produto as p\n" +
+                "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
+                "GROUP BY\n" +
+                "    p.id_produto\n" +
+                "ORDER BY sum(\n" +
+                "        p.valor * i.quantidade_produtos\n" +
+                "    ) desc";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeProduto", nomeCategoria);
+            lista.put("VendaProduto", vendaCategoria);
+            while(rs.next()){
+                lista.get("NomeProduto").add(rs.getString("Nome produto"));
+                lista.get("VendaProduto").add(rs.getString("Venda por produto"));
+            }
+            return lista;
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public HashMap<String, List<String>> menorVenda(){
+        String sql = "SELECT sum(\n" +
+                "        p.valor * i.quantidade_produtos\n" +
+                "    ) as 'Venda por produto', p.nome as 'Nome produto'\n" +
+                "from\n" +
+                "    Produto as p\n" +
+                "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
+                "GROUP BY\n" +
+                "    p.id_produto\n" +
+                "ORDER BY sum(\n" +
+                "        p.valor * i.quantidade_produtos\n" +
+                "    ) asc";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeProduto", nomeCategoria);
+            lista.put("VendaProduto", vendaCategoria);
+            while(rs.next()){
+                lista.get("NomeProduto").add(rs.getString("Nome produto"));
+                lista.get("VendaProduto").add(rs.getString("Venda por produto"));
+            }
+            return lista;
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public HashMap<String, List<String>> mediaVendas(){
+        String sql = "SELECT avg(\n" +
+                "        p.valor * i.quantidade_produtos\n" +
+                "    ) as 'Média Venda por produto', p.nome as 'Nome produto'\n" +
+                "from\n" +
+                "    Produto as p\n" +
+                "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
+                "GROUP BY\n" +
+                "    p.id_produto\n" +
+                "ORDER BY sum(\n" +
+                "        p.valor * i.quantidade_produtos\n" +
+                "    ) asc";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeProduto", nomeCategoria);
+            lista.put("VendaProduto", vendaCategoria);
+            while(rs.next()){
+                lista.get("NomeProduto").add(rs.getString("Nome produto"));
+                lista.get("VendaProduto").add(rs.getString("Média Venda por produto"));
+            }
+            return lista;
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Produto buscarPorId(Long id){
+        String sql = "select * from Produto where id = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id);
+            ResultSet rs = pr.executeQuery();
+            if(rs.next()){
+                return new Produto(rs.getLong("id_produto"), rs.getLong("id_categoria_item"), rs.getString("nome"), rs.getString("descricao"), rs.getDouble("valor"), rs.getInt("quantidade_estoque"));
+            } else {
+                return null;
+            }
+        } catch(SQLException e){
+            System.out.println("Erro na busca por ID: " + e.getMessage());
             return null;
         }
     }
