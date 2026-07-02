@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Categoria_ItemRepository {
     public Categoria_Item inserir(Categoria_Item ins){
@@ -38,7 +40,7 @@ public class Categoria_ItemRepository {
     }
 
     public boolean deletar(Long id){
-        String sql = "";
+        String sql = "DELETE FROM Categoria_Item WHERE id_categoria_item = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -46,6 +48,34 @@ public class Categoria_ItemRepository {
         } catch(SQLException e){
             System.out.println("Erro ao deletar: " + e.getMessage());
             return false;
+        }
+    }
+
+    public List<Categoria_Item> listarInfo(){
+        String sql = "SELECT * FROM Categoria_Item";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            List<Categoria_Item> lista = new ArrayList<>();
+            ResultSet rs = pr.executeQuery();
+            while(rs.next()){
+                lista.add(new Categoria_Item(rs.getLong("id_categoria_item"), rs.getString("nome")));
+            }
+            return lista;
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Categoria_Item buscarPorId(Long id_categoria_item){
+        String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id_categoria_item);
+            ResultSet rs = pr.executeQuery();
+            rs.next();
+            return new Categoria_Item(id_categoria_item, rs.getString("nome"));
+        } catch(SQLException e){
+            System.out.println("Erro ao buscar por ID: " + e.getMessage());
+            return null;
         }
     }
 }

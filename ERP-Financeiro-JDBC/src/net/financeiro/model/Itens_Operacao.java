@@ -10,6 +10,13 @@ public class Itens_Operacao {
         this.quantidade_produtos = quantidade_produtos;
     }
 
+    public Itens_Operacao(Long id_itens_operacao, Long id_produto, Long id_operacao, int quantidade_produtos) {
+        this.id_itens_operacao = id_itens_operacao;
+        this.id_produto = id_produto;
+        this.id_operacao = id_operacao;
+        this.quantidade_produtos = quantidade_produtos;
+    }
+
     public Long getId_itens_operacao() {
         return id_itens_operacao;
     }
@@ -28,5 +35,13 @@ public class Itens_Operacao {
 
     public void setId_itens_operacao(Long id_itens_operacao) {
         this.id_itens_operacao = id_itens_operacao;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id_itens_operacao
+                + "\nQuantidade de produtos: " + quantidade_produtos
+                + "\nID do produto: " + id_produto
+                + "\nID da operação: " + id_operacao;
     }
 }

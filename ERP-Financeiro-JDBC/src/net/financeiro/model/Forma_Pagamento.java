@@ -8,6 +8,11 @@ public class Forma_Pagamento {
         this.nome = nome;
     }
 
+    public Forma_Pagamento(Long id_forma_pagamento, String nome) {
+        this.id_forma_pagamento = id_forma_pagamento;
+        this.nome = nome;
+    }
+
     public Long getId_forma_pagamento() {
         return id_forma_pagamento;
     }
@@ -18,5 +23,10 @@ public class Forma_Pagamento {
 
     public void setId_forma_pagamento(Long id_forma_pagamento) {
         this.id_forma_pagamento = id_forma_pagamento;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id_forma_pagamento + "\nNome: " + nome;
     }
 }

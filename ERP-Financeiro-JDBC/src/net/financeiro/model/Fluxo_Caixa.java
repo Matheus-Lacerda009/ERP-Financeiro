@@ -12,6 +12,14 @@ public class Fluxo_Caixa {
         this.parcelas = parcelas;
     }
 
+    public Fluxo_Caixa(Long id_fluxo_caixa, Long id_caixa, Long id_forma_pagamento, String tipo_operacao, int parcelas) {
+        this.id_fluxo_caixa = id_fluxo_caixa;
+        this.id_caixa = id_caixa;
+        this.id_forma_pagamento = id_forma_pagamento;
+        this.tipo_operacao = tipo_operacao;
+        this.parcelas = parcelas;
+    }
+
     public Long getId_fluxo_caixa() {
         return id_fluxo_caixa;
     }
@@ -34,5 +42,14 @@ public class Fluxo_Caixa {
 
     public void setId_fluxo_caixa(Long id_fluxo_caixa) {
         this.id_fluxo_caixa = id_fluxo_caixa;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id_fluxo_caixa
+                + "\nTipo de operação: " + tipo_operacao
+                + "\nParcelas: " + parcelas
+                + "\nID da conta bancária: " + id_caixa
+                + "\nID da forma de pagamento: " + id_forma_pagamento;
     }
 }

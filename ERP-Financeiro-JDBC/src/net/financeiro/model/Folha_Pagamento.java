@@ -16,6 +16,15 @@ public class Folha_Pagamento {
         this.data_entrada = data_entrada;
     }
 
+    public Folha_Pagamento(Long id_folha_pagamento, Long id_funcionario, double descontos, double valor_hora, int horas_trabalhadas, LocalDateTime data_entrada) {
+        this.id_folha_pagamento = id_folha_pagamento;
+        this.id_funcionario = id_funcionario;
+        this.descontos = descontos;
+        this.valor_hora = valor_hora;
+        this.horas_trabalhadas = horas_trabalhadas;
+        this.data_entrada = data_entrada;
+    }
+
     public Long getId_folha_pagamento() {
         return id_folha_pagamento;
     }
@@ -42,5 +51,15 @@ public class Folha_Pagamento {
 
     public void setId_folha_pagamento(Long id_folha_pagamento) {
         this.id_folha_pagamento = id_folha_pagamento;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id_folha_pagamento
+                + "\nDescontos: " + descontos
+                + "\nValor da hora: " + valor_hora
+                + "\nHoras trabalhadas: " + horas_trabalhadas
+                + "\nData entrada: " + data_entrada
+                + "\nID do funcionário: " + id_funcionario;
     }
 }

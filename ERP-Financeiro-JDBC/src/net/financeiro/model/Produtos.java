@@ -14,6 +14,15 @@ public class Produtos {
         this.quantidade_estoque = quantidade_estoque;
     }
 
+    public Produtos(Long id_produto, Long id_categoria_item, String nome, String descricao, double valor, int quantidade_estoque) {
+        this.id_produto = id_produto;
+        this.id_categoria_item = id_categoria_item;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.quantidade_estoque = quantidade_estoque;
+    }
+
     public Long getId_produto() {
         return id_produto;
     }
@@ -40,5 +49,15 @@ public class Produtos {
 
     public void setId_produto(Long id_produto) {
         this.id_produto = id_produto;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id_produto
+                + "\nNome: " + nome
+                + "\nDescrição: " + descricao
+                + "\nValor: " + valor
+                + "\nQuantidade em estoque: " + quantidade_estoque
+                + "\nID da categoria do item: " + id_categoria_item;
     }
 }

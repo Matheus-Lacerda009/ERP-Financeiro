@@ -10,6 +10,12 @@ public class Conta_Bancaria {
         this.numero_conta = numero_conta;
     }
 
+    public Conta_Bancaria(Long id_caixa, String nome_banco, int numero_conta) {
+        this.id_caixa = id_caixa;
+        this.nome_banco = nome_banco;
+        this.numero_conta = numero_conta;
+    }
+
     public int getNumero_conta() {
         return numero_conta;
     }
@@ -24,5 +30,12 @@ public class Conta_Bancaria {
 
     public void setId_caixa(Long id_caixa) {
         this.id_caixa = id_caixa;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id_caixa
+                + "\nNome do banco: " + nome_banco
+                + "\nNúmero da conta: " + numero_conta;
     }
 }

@@ -11,6 +11,14 @@ public class Fornecedor_Cliente {
         this.email = email;
     }
 
+    public Fornecedor_Cliente(Long id_fornecedor_cliente, String razao_social_nome, String cnpj_cpf, String telefone, String email) {
+        this.id_fornecedor_cliente = id_fornecedor_cliente;
+        this.razao_social_nome = razao_social_nome;
+        this.cnpj_cpf = cnpj_cpf;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
     public Long getId_fornecedor_cliente() {
         return id_fornecedor_cliente;
     }
@@ -33,5 +41,14 @@ public class Fornecedor_Cliente {
 
     public void setId_fornecedor_cliente(Long id_fornecedor_cliente) {
         this.id_fornecedor_cliente = id_fornecedor_cliente;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id_fornecedor_cliente
+                + "\nNome: " + razao_social_nome
+                + "\nCNPJ/CPF: " + cnpj_cpf
+                + "\nTelefone: " + telefone
+                + "\nEmail: " + email;
     }
 }
