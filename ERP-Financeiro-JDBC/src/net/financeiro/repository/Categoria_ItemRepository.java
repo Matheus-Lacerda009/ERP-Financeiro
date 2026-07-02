@@ -66,6 +66,81 @@ public class Categoria_ItemRepository {
         }
     }
 
+    public List<String> maiorVenda(){
+        String sql = "select sum(\n" +
+                "        p.valor * io.quantidade_produtos\n" +
+                "    ) as 'Venda por categoria', ci.nome as 'Nome categoria'\n" +
+                "from\n" +
+                "    Produto as p\n" +
+                "    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+                "    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+                "group by\n" +
+                "    ci.id_categoria_item\n" +
+                "ORDER BY sum(\n" +
+                "        p.valor * io.quantidade_produtos\n" +
+                "    ) desc";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            List<String> lista = new ArrayList<>();
+            ResultSet rs = pr.executeQuery();
+            while(rs.next()){
+                lista.add("Nome: " + rs.getString("Nome Categoria") + "\nValor: " + rs.getDouble("Venda por categoria"));
+            }
+            return lista;
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public List<String> menorVenda(){
+        String sql = "select sum(\n" +
+                "        p.valor * io.quantidade_produtos\n" +
+                "    ) as 'Venda por categoria', ci.nome as 'Nome categoria'\n" +
+                "from\n" +
+                "    Produto as p\n" +
+                "    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+                "    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+                "group by\n" +
+                "    ci.id_categoria_item\n" +
+                "ORDER BY sum(\n" +
+                "        p.valor * io.quantidade_produtos\n" +
+                "    ) asc";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            List<String> lista = new ArrayList<>();
+            ResultSet rs = pr.executeQuery();
+            while(rs.next()){
+                lista.add("Nome: " + rs.getString("Nome Categoria") + "\nValor: " + rs.getDouble("Venda por categoria"));
+            }
+            return lista;
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public String mediaVendas(){
+        String sql = "select avg(\n" +
+                "        p.valor * io.quantidade_produtos\n" +
+                "    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria'\n" +
+                "from\n" +
+                "    Produto as p\n" +
+                "    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+                "    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+                "group by\n" +
+                "    ci.id_categoria_item\n" +
+                "ORDER BY sum(\n" +
+                "        p.valor * io.quantidade_produtos\n" +
+                "    ) asc";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            ResultSet rs = pr.executeQuery();
+            rs.next();
+            return "Nome: " + rs.getString("Nome categoria") + "Valor: " + rs.getDouble("Média Venda por categoria");
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
+
     public Categoria_Item buscarPorId(Long id_categoria_item){
         String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){

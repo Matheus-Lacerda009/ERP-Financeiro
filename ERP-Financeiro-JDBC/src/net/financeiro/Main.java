@@ -51,6 +51,7 @@ public class Main {
                     System.out.println("Saindo...");
                     break;
                 default:
+                    System.out.println("Opção não encontrada!");
             }
         } while(opc != 0);
     }

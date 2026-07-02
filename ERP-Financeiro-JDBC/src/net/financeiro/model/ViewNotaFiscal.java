@@ -113,17 +113,12 @@ public class ViewNotaFiscal {
         return "Número da nota fiscal:" + numero_nota_fiscal
                 + "\nID do fluxo de caixa:" + id_fluxo_caixa
                 + "\nID do parceiro:" + id_parceiro
-                + "\nID do produto:" + id_produto
                 + "\nData de emissão:" + data_emissao
                 + "\nNome do parceiro:" + nome_parceiro
                 + "\nDocumentação do parceiro:" + documento_parceiro
                 + "\nEmail do parceiro:" + email_parceiro
-                + "\nNome do produto:" + nome_produto
                 + "\nForma de pagamento:" + forma_pagamento
                 + "\nNome do banco:" + banco_recebimento
-                + "\nValor unitário:" + valor_unitario
-                + "\nValor total do item:" + valor_total_item
-                + "\nQuantidade de produtos:" + quantidade
                 + "\nNúmero de parcelas:" + parcelas;
     }
 }

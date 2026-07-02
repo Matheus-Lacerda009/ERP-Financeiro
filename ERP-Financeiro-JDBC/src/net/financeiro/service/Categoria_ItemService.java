@@ -54,7 +54,7 @@ public class Categoria_ItemService {
         }
     }
 
-    public boolean deletar(Long id){
+    public void deletar(Long id){
         try {
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
@@ -62,14 +62,13 @@ public class Categoria_ItemService {
             if (repository.listarInfo().isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            repository.deletar(id);
-            return true;
+            if(repository.deletar(id)){
+                System.out.println("Deletado com sucesso!");
+            }
         } catch(IdNaoEncontradoException e){
             System.out.println(e.getMessage());
-            return false;
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
-            return false;
         }
     }
 }
