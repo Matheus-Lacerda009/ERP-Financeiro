@@ -66,13 +66,11 @@ public class Itens_OperacaoRepository {
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id);
             ResultSet rs = pr.executeQuery();
-
+            rs.next();
             return new Itens_Operacao(id, rs.getLong("id_produto"), rs.getLong("id_operacao"), rs.getInt("quantidade_produtos"));
         } catch (SQLException e) {
             System.out.println("Erro ao buscar por ID: " + e.getMessage());
             return null;
         }
     }
-
-
 }

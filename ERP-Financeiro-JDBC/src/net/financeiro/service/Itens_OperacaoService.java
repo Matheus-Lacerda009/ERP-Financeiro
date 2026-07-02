@@ -9,6 +9,7 @@ public class Itens_OperacaoService {
 
     public Itens_Operacao inserir(Itens_Operacao ins) {
         try {
+            //todo Finalizar verificação regras de negócio
             return repository.inserir(ins);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -18,9 +19,11 @@ public class Itens_OperacaoService {
 
     public Itens_Operacao atualizar(Itens_Operacao atl) {
         try {
+            //todo Finalizar verificação regras de negócio
             if(repository.buscarPorId(atl.getId_itens_operacao()) == null) {
                 throw new IdNaoEncontradoException("Erro: ID não encontrado!");
             }
+
             return repository.atualizar(atl);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -37,6 +40,20 @@ public class Itens_OperacaoService {
         } catch(IdNaoEncontradoException e) {
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+
+    public Itens_Operacao buscarPorId(Long id) {
+        try {
+            Itens_Operacao io = repository.buscarPorId(id);
+
+            if(io == null) {
+                throw new IdNaoEncontradoException("ERRO: ID não encontrado!");
+            }
+            return io;
+        } catch(IdNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 }
