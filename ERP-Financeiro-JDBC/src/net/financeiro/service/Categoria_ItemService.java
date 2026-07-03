@@ -21,10 +21,11 @@ public class Categoria_ItemService {
         this.conn = conn;
         repository = new Categoria_ItemRepository(conn);
         produtosRepository = new ProdutosRepository(conn);
+        itensOperacaoRepository = new Itens_OperacaoRepository(conn);
     }
 
     private final Categoria_ItemRepository repository;
-    private final Itens_OperacaoRepository itensOperacaoRepository = new Itens_OperacaoRepository();
+    private final Itens_OperacaoRepository itensOperacaoRepository;
     private final ProdutosRepository produtosRepository;
 
     public Categoria_Item inserir(Categoria_Item ins) throws NomeInvalidoException{
