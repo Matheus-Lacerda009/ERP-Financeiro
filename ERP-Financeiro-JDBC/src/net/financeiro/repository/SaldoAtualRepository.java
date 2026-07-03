@@ -13,8 +13,10 @@ public class SaldoAtualRepository {
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
-
-            return new SaldoAtual(rs.getDouble("Saldo_Total"));
+            if(rs.next())
+                return new SaldoAtual(rs.getDouble("Saldo_Total"));
+            else
+                return null;
         } catch(SQLException e) {
             System.out.println("Erro ao visualizar dados: " + e.getMessage());
             return null;
