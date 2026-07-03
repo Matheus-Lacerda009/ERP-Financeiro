@@ -1,5 +1,6 @@
 package net.financeiro.service;
 
+import net.financeiro.connection.Conexao;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.exceptions.NomeInvalidoException;
@@ -7,6 +8,9 @@ import net.financeiro.model.Categoria_Item;
 import net.financeiro.model.Conta_Bancaria;
 import net.financeiro.repository.Conta_BancariaRepository;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Conta_BancariaService {
@@ -22,6 +26,7 @@ public class Conta_BancariaService {
             if(ins.getNumero_conta() < 0){
                 throw new NadaInseridoException("Erro: número banco vazio!");
             }
+
 
             return repository.inserir(ins);
         } catch(NomeInvalidoException e){
@@ -91,9 +96,4 @@ public class Conta_BancariaService {
             return false;
         }
     }
-
-
-
-
-
 }

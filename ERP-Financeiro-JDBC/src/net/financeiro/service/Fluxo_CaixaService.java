@@ -5,22 +5,25 @@ import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.exceptions.NomeInvalidoException;
 import net.financeiro.model.Categoria_Item;
 import net.financeiro.model.Fluxo_Caixa;
-import net.financeiro.repository.Categoria_ItemRepository;
-import net.financeiro.repository.Fluxo_CaixaRepository;
+import net.financeiro.repository.*;
 
 import java.util.List;
 
 public class Fluxo_CaixaService {
 
     private final Fluxo_CaixaRepository repository = new Fluxo_CaixaRepository();
+    private final Conta_BancariaRepository repositoryA = new Conta_BancariaRepository();
+    private final Forma_PagamentoRepository repositoryB = new Forma_PagamentoRepository();
+    private final Folha_PagamentoRepository repositoryC = new Folha_PagamentoRepository();
+    private final OperacaoRepository repositoryD = new OperacaoRepository();
 
     public Fluxo_Caixa inserir(Fluxo_Caixa ins) throws NomeInvalidoException, IdNaoEncontradoException, NadaInseridoException {
         try{
 
-            if(repository.buscarPorId(ins.getId_caixa()) == null){
+            if(repositoryA.buscarPorId(ins.getId_caixa()) == null){
                 throw new IdNaoEncontradoException("Erro: id caixa não encontrado!");
             }
-            if(repository.buscarPorId(ins.getId_forma_pagamento()) == null){
+            if(repositoryB.buscarPorId(ins.getId_forma_pagamento()) == null){
                 throw new IdNaoEncontradoException("Erro: id forma_pagamento não encontrado!");
             }
             if(ins.getTipo_operacao().trim().isEmpty()){
@@ -29,10 +32,10 @@ public class Fluxo_CaixaService {
             if(ins.getParcelas() < 0){
                 throw new NadaInseridoException("Erro: parcelas nulo!");
             }
-            if(repository.buscarPorId(ins.getId_folha_pagamento()) == null){
+            if(repositoryC.buscarPorId(ins.getId_folha_pagamento()) == null){
                 throw new IdNaoEncontradoException("Erro: id folha_pagamento não encontrado!");
             }
-            if(repository.buscarPorId(ins.getId_operacao()) == null){
+            if(repositoryD.buscarPorId(ins.getId_operacao()) == null){
                 throw new IdNaoEncontradoException("Erro: id operação não encontrado!");
             }
             return repository.inserir(ins);
@@ -56,10 +59,10 @@ public class Fluxo_CaixaService {
 
         try{
 
-            if(repository.buscarPorId(atl.getId_caixa()) == null){
+            if(repositoryA.buscarPorId(atl.getId_caixa()) == null){
                 throw new IdNaoEncontradoException("Erro: id caixa não encontrado!");
             }
-            if(repository.buscarPorId(atl.getId_forma_pagamento()) == null){
+            if(repositoryB.buscarPorId(atl.getId_forma_pagamento()) == null){
                 throw new IdNaoEncontradoException("Erro: id forma_pagamento não encontrado!");
             }
             if(atl.getTipo_operacao().trim().isEmpty()){
@@ -68,10 +71,13 @@ public class Fluxo_CaixaService {
             if(atl.getParcelas() < 0){
                 throw new NadaInseridoException("Erro: parcelas nulo!");
             }
-            if(repository.buscarPorId(atl.getId_folha_pagamento()) == null){
+            if(repositoryC.buscarPorId(atl.getId_folha_pagamento()) == null){
                 throw new IdNaoEncontradoException("Erro: id folha_pagamento não encontrado!");
             }
-            if(repository.buscarPorId(atl.getId_operacao()) == null){
+            if(repositoryD.buscarPorId(atl.getId_operacao()) == null){
+                throw new IdNaoEncontradoException("Erro: id operação não encontrado!");
+            }
+            if(repository.buscarPorId(atl.getId_fluxo_caixa()) == null){
                 throw new IdNaoEncontradoException("Erro: id operação não encontrado!");
             }
             return repository.inserir(atl);
@@ -86,8 +92,6 @@ public class Fluxo_CaixaService {
             System.out.println(e.getMessage());
             return null;
         }
-
-
 
 
     }
