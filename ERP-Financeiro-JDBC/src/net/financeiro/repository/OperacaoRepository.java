@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OperacaoRepository {
     public Operacao inserir(Operacao op){
@@ -46,7 +48,33 @@ public class OperacaoRepository {
         }
     }
 
-    public Operacao deletar(Long id_digitado){
-        String sql = "DELETE FROM operacao WHERE "
+    public boolean deletar(Long id_digitado){
+        String sql = "DELETE FROM Operacao WHERE id_operacao = ?";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id_digitado);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("Erro ao deletar: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public List<Operacao> listarInfo(){
+        String sql = "SELECT * FROM Operacao";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            List<Operacao> lista = new ArrayList<>();
+
+            ResultSet rs = pr.executeQuery();
+            while(rs.next()){
+                lista.add(new Operacao(rs.getLong("id_operacao"), rs.getLong("id_fornecedor_cliente"), rs.getLong("id_funcionario"), rs.getString("data_operacao"), rs.getString("status_operacao")));
+            }
+            return lista;
+        }catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
     }
 }
