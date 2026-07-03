@@ -45,4 +45,8 @@ public class OperacaoRepository {
             return null;
         }
     }
+
+    public Operacao deletar(Long id_digitado){
+        String sql = "DELETE FROM operacao WHERE "
+    }
 }
