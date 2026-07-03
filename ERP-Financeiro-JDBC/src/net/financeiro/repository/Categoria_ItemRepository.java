@@ -13,6 +13,7 @@ import java.util.List;
 public class Categoria_ItemRepository {
     public Categoria_Item inserir(Categoria_Item ins){
         String sql = "INSERT INTO Categoria_Item (nome) VALUES (?)";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getNome());
             pr.executeUpdate();
