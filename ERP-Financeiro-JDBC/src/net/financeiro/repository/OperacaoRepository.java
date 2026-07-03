@@ -77,4 +77,18 @@ public class OperacaoRepository {
             return null;
         }
     }
+
+    public Operacao buscarPorId(Long id_digitado){
+        String sql = "SELECT * FROM Operacao WHERE id_Operacao = ?";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id_digitado);
+            ResultSet rs = pr.executeQuery();
+            rs.next();
+            return new Operacao(id_digitado, rs.getLong("id_fornecedor_cliente"), rs.getLong("id_funcionario"), rs.getString("data_operacao"), rs.getString("status_operacao"));
+        }catch(SQLException e){
+            System.out.println("Erro ao buscar por ID: " + e.getMessage());
+            return null;
+        }
+    }
 }
