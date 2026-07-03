@@ -1,5 +1,7 @@
 package net.financeiro.model;
 
+import java.util.List;
+
 public class Categoria_Item {
     private Long id_categoria_item;
     private String nome;
@@ -31,3 +33,4 @@ public class Categoria_Item {
                 + "\nNome: " + nome;
     }
 }
+
