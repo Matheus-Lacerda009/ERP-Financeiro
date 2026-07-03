@@ -6,9 +6,9 @@ public class Folha_Pagamento {
     private Long id_folha_pagamento, id_funcionario;
     private double descontos, valor_hora;
     private int horas_trabalhadas;
-    private LocalDateTime data_entrada;
+    private String data_entrada;
 
-    public Folha_Pagamento(Long id_funcionario, double descontos, double valor_hora, int horas_trabalhadas, LocalDateTime data_entrada) {
+    public Folha_Pagamento(Long id_funcionario, double descontos, double valor_hora, int horas_trabalhadas, String data_entrada) {
         this.id_funcionario = id_funcionario;
         this.descontos = descontos;
         this.valor_hora = valor_hora;
@@ -16,7 +16,7 @@ public class Folha_Pagamento {
         this.data_entrada = data_entrada;
     }
 
-    public Folha_Pagamento(Long id_folha_pagamento, Long id_funcionario, double descontos, double valor_hora, int horas_trabalhadas, LocalDateTime data_entrada) {
+    public Folha_Pagamento(Long id_folha_pagamento, Long id_funcionario, double descontos, double valor_hora, int horas_trabalhadas, String data_entrada) {
         this.id_folha_pagamento = id_folha_pagamento;
         this.id_funcionario = id_funcionario;
         this.descontos = descontos;
@@ -45,7 +45,7 @@ public class Folha_Pagamento {
         return horas_trabalhadas;
     }
 
-    public LocalDateTime getData_entrada() {
+    public String getData_entrada() {
         return data_entrada;
     }
 

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Fluxo_CaixaRepository {
@@ -43,6 +44,7 @@ public class Fluxo_CaixaRepository {
             pr.setInt(4, atl.getParcelas());
             pr.setLong(5, atl.getId_folha_pagamento());
             pr.setLong(6, atl.getId_operacao());
+            pr.setLong(7, atl.getId_fluxo_caixa());
             pr.executeUpdate();
             return atl;
         } catch(SQLException e){
@@ -93,6 +95,37 @@ public class Fluxo_CaixaRepository {
             return new Fluxo_Caixa(id_fluxo_caixa , rs.getLong("id_caixa"), rs.getLong("id_forma_pagamento"), rs.getString("tipo_operacao"), rs.getInt("parcelas"), rs.getLong("id_folha_pagamento"), rs.getLong("id_operacao"));
         } catch(SQLException e){
             System.out.println("Erro ao buscar por ID: " + e.getMessage());
+            return null;
+        }
+    }
+
+
+    /*MÉTODOS QUERIES8*/
+
+    public HashMap<String, List<String>> entradas(int dias){
+        String sql = "SELECT o.data_operacao AS Data, vv.valor_total AS ValorVenda\n" +
+                "FROM Fluxo_Caixa fc\n" +
+                "JOIN Operacao o ON o.id_operacao = fc.id_operacao\n" +
+                "JOIN Valor_pVenda vv ON o.id_operacao = vv.id_operacao\n" +
+                "\n" +
+                "WHERE fc.tipo_operacao = 'Venda'\n" +
+                "  AND o.status_operacao = 'Concluída'\n" +
+                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY;\n";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setInt(1, dias);
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> data = new ArrayList<>();
+            List<String> valorVenda = new ArrayList<>();
+            lista.put("Data", data);
+            lista.put("ValorVenda", valorVenda);
+            ResultSet rs = pr.executeQuery();
+            while(rs.next()){
+                lista.get("Data").add(rs.getString("Data"));
+                lista.get("ValorVenda").add(rs.getString("ValorVenda"));
+            }
+            return lista;
+        } catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
             return null;
         }
     }

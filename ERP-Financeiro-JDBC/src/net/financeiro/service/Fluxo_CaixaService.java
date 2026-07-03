@@ -55,8 +55,6 @@ public class Fluxo_CaixaService {
 
     public Fluxo_Caixa atualizar(Fluxo_Caixa atl){
 
-
-
         try{
 
             if(repositoryA.buscarPorId(atl.getId_caixa()) == null){
@@ -127,6 +125,4 @@ public class Fluxo_CaixaService {
             return false;
         }
     }
-
-
 }

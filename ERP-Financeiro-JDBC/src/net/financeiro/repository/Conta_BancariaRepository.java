@@ -35,6 +35,7 @@ public class Conta_BancariaRepository {
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, atl.getNome_banco());
             pr.setInt(2, atl.getNumero_conta());
+            pr.setLong(3, atl.getId_caixa());
             pr.executeUpdate();
             return atl;
         } catch(SQLException e){
