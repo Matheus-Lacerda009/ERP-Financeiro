@@ -1,7 +1,5 @@
 package net.financeiro.service;
 
-import net.financeiro.connection.ConexaoDados;
-import net.financeiro.exceptions.FkNaoEncontradaException;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.exceptions.NomeInvalidoException;
@@ -15,18 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Categoria_ItemService {
-    private Connection conn;
 
-    public Categoria_ItemService(Connection conn) {
-        this.conn = conn;
-        repository = new Categoria_ItemRepository(conn);
-        produtosRepository = new ProdutosRepository(conn);
-        itensOperacaoRepository = new Itens_OperacaoRepository(conn);
-    }
-
-    private final Categoria_ItemRepository repository;
-    private final Itens_OperacaoRepository itensOperacaoRepository;
-    private final ProdutosRepository produtosRepository;
+    private final Categoria_ItemRepository repository = new Categoria_ItemRepository();
+    private final Itens_OperacaoRepository itensOperacaoRepository = new Itens_OperacaoRepository();
+    private final ProdutosRepository produtosRepository = new ProdutosRepository();
 
     public Categoria_Item inserir(Categoria_Item ins) throws NomeInvalidoException{
         try{

@@ -1,24 +1,18 @@
 package net.financeiro.repository;
 
-import net.financeiro.connection.Conexao;
-import net.financeiro.connection.ConexaoDados;
 import net.financeiro.model.Produto;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import net.financeiro.connection.Conexao;
 
 public class ProdutosRepository {
-    private Connection conn;
-
-    public ProdutosRepository(Connection conn) {
-        this.conn = conn;
-    }
     
     public Produto inserir(Produto ins){
         String sql = "INSERT INTO Produto (nome, valor, descricao, quantidade_estoque, id_categoria_item) VALUES (?, ?, ?, ?, ?)";
-        try(PreparedStatement pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getNome());
             pr.setDouble(2, ins.getValor());
             pr.setString(3, ins.getDescricao());
@@ -37,7 +31,7 @@ public class ProdutosRepository {
 
     public Produto atualizar(Produto atl){
         String sql = "UPDATE Produto SET nome = ?, valor = ?, descricao = ?, quantidade_estoque = ?, id_categoria_item = ? WHERE id_produto = ?";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, atl.getNome());
             pr.setDouble(2, atl.getValor());
             pr.setString(3, atl.getDescricao());
@@ -54,7 +48,7 @@ public class ProdutosRepository {
 
     public boolean deletar(Long id){
         String sql = "DELETE FROM Produto WHERE id_produto = ?";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
             return true;
@@ -66,7 +60,7 @@ public class ProdutosRepository {
 
     public List<Produto> listarInfo(){
         String sql = "SELECT * FROM Produto";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Produto> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
             while(rs.next()){
@@ -91,7 +85,7 @@ public class ProdutosRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) desc";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeCategoria = new ArrayList<>();
@@ -121,7 +115,7 @@ public class ProdutosRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) asc";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeCategoria = new ArrayList<>();
@@ -151,7 +145,7 @@ public class ProdutosRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) asc";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeCategoria = new ArrayList<>();
@@ -171,7 +165,7 @@ public class ProdutosRepository {
 
     public Produto buscarPorId(Long id){
         String sql = "select * from Produto where id = ?";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             ResultSet rs = pr.executeQuery();
             if(rs.next()){
