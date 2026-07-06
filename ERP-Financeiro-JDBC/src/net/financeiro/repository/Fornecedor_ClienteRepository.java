@@ -102,7 +102,7 @@ public class Fornecedor_ClienteRepository {
     public HashMap<String, List<String>> maiorVenda(){
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente '\n" +
+                "    ) as 'Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente'\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +

@@ -21,8 +21,9 @@ public class FuncionarioRepository {
             pr.setString(4, ins.getEmail());
             pr.executeUpdate();
             ResultSet rs = pr.getGeneratedKeys();
-            rs.next();
-            ins.setId_funcionario(rs.getLong("GENERATED_KEY"));
+            if(rs.next()){
+                ins.setId_funcionario(rs.getLong(1));
+            }
             return ins;
         } catch(SQLException e){
             System.out.println("ERRO ao inserir : " + e.getMessage());
@@ -84,19 +85,19 @@ public class FuncionarioRepository {
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_funcionario);
             ResultSet rs = pr.executeQuery();
-            rs.next();
-            return new Funcionario(
-                    id_funcionario,
-                    rs.getString("nome"),
-                    rs.getString("cpf"),
-                    rs.getString("telefone"),
-                    rs.getString("email")
-            );
+            if(rs.next()){
+                return new Funcionario(
+                        id_funcionario,
+                        rs.getString("nome"),
+                        rs.getString("cpf"),
+                        rs.getString("telefone"),
+                        rs.getString("email")
+                );
+            }
+            return null;
         } catch(SQLException e){
             System.out.println("ERRO de busca : " + e.getMessage());
             return null;
         }
     }
-
-    public
 }
