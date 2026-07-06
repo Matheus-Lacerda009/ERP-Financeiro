@@ -3,7 +3,6 @@ package net.financeiro.repository;
 import net.financeiro.model.Forma_Pagamento;
 import net.financeiro.connection.Conexao;
 
-import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +18,9 @@ public class Forma_PagamentoRepository {
             pr.setString(1, ins.getNome());
             pr.executeUpdate();
             ResultSet rs = pr.getGeneratedKeys();
-            rs.next();
-            ins.setId_forma_pagamento(rs.getLong("GENERATED_KEY"));
+            if(rs.next()){
+                ins.setId_forma_pagamento(rs.getLong(1));
+            }
             return  ins;
         }catch (SQLException e){
             System.out.println("ERRO ao inserir : " + e.getMessage());
@@ -42,7 +42,7 @@ public class Forma_PagamentoRepository {
     }
 
     public  boolean deletar(Long id){
-        String sql = "DELETE FROM Forma_Pagamento WHERE = id_forma_pagamento = ?";
+        String sql = "DELETE FROM Forma_Pagamento WHERE id_forma_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -70,15 +70,17 @@ public class Forma_PagamentoRepository {
     }
 
     public Forma_Pagamento buscarPorId(Long id_Forma_Pagamento){
-        String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ?";
+        String sql = "SELECT * FROM Forma_Pagamento where id_forma_pagamento = ?";
         try (PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_Forma_Pagamento);
             ResultSet rs = pr.executeQuery();
-            rs.next();
-            return  new Forma_Pagamento(id_Forma_Pagamento , rs.getString("nome"));
-        }catch (SQLException e){
+            if(rs.next()){
+                return new Forma_Pagamento(id_Forma_Pagamento, rs.getString("nome"));
+            }
+            return null;
+        } catch (SQLException e){
             System.out.println("ERRO de busca : " + e.getMessage());
-            return  null;
+            return null;
         }
     }
 }
