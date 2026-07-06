@@ -1,29 +1,17 @@
 package net.financeiro.service;
 
-import net.financeiro.connection.Conexao;
-import net.financeiro.connection.ConexaoDados;
 import net.financeiro.exceptions.FkNaoEncontradaException;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.exceptions.NomeInvalidoException;
-import net.financeiro.model.Categoria_Item;
 import net.financeiro.model.Produto;
 import net.financeiro.repository.Categoria_ItemRepository;
 import net.financeiro.repository.ProdutosRepository;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
 public class ProdutosService {
-
-    private Connection conn;
-
-    public ProdutosService(Connection conn) {
-        this.conn = conn;
-        repository = new ProdutosRepository(this.conn);
-        categoriaItemRepository = new Categoria_ItemRepository(this.conn);
-    }
 
     private ProdutosRepository repository;
     private Categoria_ItemRepository categoriaItemRepository;

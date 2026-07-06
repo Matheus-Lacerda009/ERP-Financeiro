@@ -1,7 +1,6 @@
 package net.financeiro.repository;
 
 import net.financeiro.connection.Conexao;
-import net.financeiro.connection.ConexaoDados;
 import net.financeiro.model.Categoria_Item;
 
 import java.sql.*;
@@ -10,16 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Categoria_ItemRepository {
-
-    private Connection conn;
-
-    public Categoria_ItemRepository(Connection conn) {
-        this.conn = conn;
-    }
-
     public Categoria_Item inserir(Categoria_Item ins){
         String sql = "INSERT INTO Categoria_Item (nome) VALUES (?)";
-        try(PreparedStatement pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getNome());
             pr.executeUpdate();
             ResultSet rs = pr.getGeneratedKeys();
@@ -34,7 +26,7 @@ public class Categoria_ItemRepository {
 
     public Categoria_Item atualizar(Categoria_Item atl){
         String sql = "UPDATE Categoria_Item SET nome = ? WHERE id_categoria_item = ?";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, atl.getNome());
             pr.setLong(2, atl.getId_categoria_item());
             pr.executeUpdate();
@@ -47,7 +39,7 @@ public class Categoria_ItemRepository {
 
     public boolean deletar(Long id){
         String sql = "DELETE FROM Categoria_Item WHERE id_categoria_item = ?";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
             return true;
@@ -59,7 +51,7 @@ public class Categoria_ItemRepository {
 
     public List<Categoria_Item> listarInfo(){
         String sql = "SELECT * FROM Categoria_Item";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Categoria_Item> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
             while(rs.next()){
@@ -85,7 +77,7 @@ public class Categoria_ItemRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * io.quantidade_produtos\n" +
                 "    ) desc";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeCategoria = new ArrayList<>();
@@ -116,7 +108,7 @@ public class Categoria_ItemRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * io.quantidade_produtos\n" +
                 "    ) asc";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeCategoria = new ArrayList<>();
@@ -147,7 +139,7 @@ public class Categoria_ItemRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * io.quantidade_produtos\n" +
                 "    ) asc";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeCategoria = new ArrayList<>();
@@ -167,7 +159,7 @@ public class Categoria_ItemRepository {
 
     public Categoria_Item buscarPorId(Long id_categoria_item){
         String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ?";
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_categoria_item);
             ResultSet rs = pr.executeQuery();
             if(rs.next()) {
