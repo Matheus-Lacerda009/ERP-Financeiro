@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="06d33668-44fe-4d9a-8a25-2a66a398fe69" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/ERP-Financeiro-JDBC/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ERP-Financeiro-JDBC/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP-Financeiro-JDBC/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ERP-Financeiro-JDBC/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP-Financeiro-JDBC/src/net/financeiro/repository/Valor_SalarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ERP-Financeiro-JDBC/src/net/financeiro/repository/Valor_SalarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP-Financeiro-JDBC/src/net/financeiro/service/Valor_SalarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ERP-Financeiro-JDBC/src/net/financeiro/service/Valor_SalarioService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KaueKreuzDeMiranda&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Matheus-Lacerda009/ERP-Financeiro.git&quot;,
+    &quot;accountId&quot;: &quot;ac881f4d-db36-4998-a888-84493f135f6d&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="3GCAAX4ck2O3QzxlshgQsoIoTwr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "feature/Valor__Salario",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/kaue_miranda/Downloads/ERP-Financeiro"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="06d33668-44fe-4d9a-8a25-2a66a398fe69" name="Changes" comment="" />
+      <created>1783465033569</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1783465033569</updated>
+    </task>
+    <servers />
+  </component>
+</project>
