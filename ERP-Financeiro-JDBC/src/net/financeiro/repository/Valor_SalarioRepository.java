@@ -30,4 +30,25 @@ public class Valor_SalarioRepository {
             return null;
         }
     }
+
+    public Valor_Salario buscarPorId(Long id){
+        String sql = "select valor_salario.salario, f.nome\n" +
+                "from\n" +
+                "    Funcionario as f\n" +
+                "    join valor_salario on valor_salario.id_funcionario = f.id_funcionario\n" +
+                "where f.id_funcionario = ?";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id);
+            ResultSet rs = pr.executeQuery();
+            if(rs.next()){
+                return new Valor_Salario(rs.getLong("id_funcionario"), rs.getDouble("valor_salario"));
+            }else{
+                return null;
+            }
+        }catch(SQLException e){
+            System.out.println("Erro ao listar: " + e.getMessage());
+            return null;
+        }
+    }
 }
