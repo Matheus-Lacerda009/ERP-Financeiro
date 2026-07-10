@@ -1,13 +1,12 @@
--- Active: 1782855798917@@erp-financeiro-estudante-0530.a.aivencloud.com@26374@ERP_Financeiro
 create database ERP_Financeiro;
 use ERP_Financeiro;
 
 create table Funcionario(
 	id_funcionario int auto_increment primary key,
     nome varchar(100) not null,
-    cpf varchar(11) not null,
-    telefone varchar(11) not null,
-    email varchar(100) not null
+    cpf varchar(11) unique not null,
+    telefone varchar(11) unique not null,
+    email varchar(100) unique not null
 );
 
 create table Folha_Pagamento(
@@ -23,9 +22,9 @@ create table Folha_Pagamento(
 create table Fornecedor_Cliente(
 	id_fornecedor_cliente int auto_increment primary key,
     razao_social_nome varchar(100) not null,
-    cnpj_cpf varchar(14) not null,
-    telefone varchar(11) not null,
-    email varchar(100) not null
+    cnpj_cpf varchar(14) unique not null,
+    telefone varchar(11) unique not null,
+    email varchar(100) unique not null
 );
 
 create table Categoria_Item(
@@ -36,12 +35,12 @@ create table Categoria_Item(
 create table Conta_Bancaria(
 	id_caixa int auto_increment primary key,
     nome_banco varchar(100) not null,
-    numero_conta int
+    numero_conta int unique
 );
 
 create table Forma_Pagamento(
 	id_forma_pagamento int auto_increment primary key,
-    nome varchar(100) not null
+    nome varchar(100) unique not null
 );
 
 create table Produto(
