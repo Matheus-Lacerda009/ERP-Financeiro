@@ -11,8 +11,10 @@ public class Conexao {
     static Dotenv env = Dotenv.load();
 
     private static final String URL = env.get("URL");
+    private static final String USER = env.get("USER");
+    private static final String PASSWORD = env.get("PASSWORD");
 
-    public static Connection connecting(String USER, String PASSWORD){
+    public static Connection connecting(){
         try{
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch(SQLException e){
