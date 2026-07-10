@@ -61,12 +61,12 @@ public class ProdutosRepository {
     }
 
     public List<Produto> listarInfo(){
-        String sql = "SELECT * FROM Produto";
+        String sql = "SELECT Produto.*, Categoria_Item.nome FROM Produto join Categoria_Item on Categoria_Item.id_categoria_item = Produto.id_categoria_item";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Produto> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
             while(rs.next()){
-                lista.add(new Produto(rs.getLong("id_produto"), rs.getLong("id_categoria_item"), rs.getString("nome"), rs.getString("descricao"), rs.getDouble("valor"), rs.getInt("quantidade_estoque")));
+                lista.add(new Produto(rs.getLong("id_produto"), rs.getLong("id_categoria_item"), rs.getString("Produto.nome"), rs.getString("descricao"), rs.getDouble("valor"), rs.getInt("quantidade_estoque"), rs.getString("Categoria_Item.nome")));
             }
             return lista;
         } catch(SQLException e){
