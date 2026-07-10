@@ -1,5 +1,8 @@
 package net.financeiro.service;
 
+import net.financeiro.connection.Conexao;
+import net.financeiro.connection.ConexaoDados;
+import net.financeiro.exceptions.FkNaoEncontradaException;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.exceptions.NomeInvalidoException;
@@ -8,14 +11,24 @@ import net.financeiro.model.Produto;
 import net.financeiro.repository.Categoria_ItemRepository;
 import net.financeiro.repository.ProdutosRepository;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
 public class ProdutosService {
-    private final ProdutosRepository repository = new ProdutosRepository();
-    private final Categoria_ItemRepository categoriaItemRepository = new Categoria_ItemRepository();
 
-    public Produto inserir(Produto ins) throws NomeInvalidoException {
+    private Connection conn;
+
+    public ProdutosService(Connection conn) {
+        this.conn = conn;
+        repository = new ProdutosRepository(this.conn);
+        categoriaItemRepository = new Categoria_ItemRepository(this.conn);
+    }
+
+    private ProdutosRepository repository;
+    private Categoria_ItemRepository categoriaItemRepository;
+
+    public Produto inserir(Produto ins) {
         try{
             if(ins.getNome().trim().isEmpty()){
                 throw new NomeInvalidoException("Erro: nome vazio!");
@@ -27,13 +40,13 @@ public class ProdutosService {
                 throw new NomeInvalidoException("Erro: quantidade de produtos é negativa");
             }
             if(categoriaItemRepository.buscarPorId(ins.getId_categoria_item()) == null){
-                throw new IdNaoEncontradoException("Erro: chave estrangeira não encontrada!");
+                throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
             }
             return repository.inserir(ins);
         } catch(NomeInvalidoException e){
             System.out.println(e.getMessage());
             return null;
-        } catch (IdNaoEncontradoException e){
+        } catch (FkNaoEncontradaException e){
             System.out.println(e.getMessage());
             return null;
         }
@@ -54,13 +67,16 @@ public class ProdutosService {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
             if(categoriaItemRepository.buscarPorId(atl.getId_categoria_item()) == null){
-                throw new IdNaoEncontradoException("Erro: chave estrangeira não encontrada!");
+                throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
             }
             return repository.atualizar(atl);
         } catch(NomeInvalidoException e){
             System.out.println(e.getMessage());
             return null;
         } catch(IdNaoEncontradoException e){
+            System.out.println(e.getMessage());
+            return null;
+        } catch(FkNaoEncontradaException e){
             System.out.println(e.getMessage());
             return null;
         }
