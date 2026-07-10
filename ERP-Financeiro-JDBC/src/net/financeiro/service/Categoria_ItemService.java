@@ -8,10 +8,12 @@ import net.financeiro.repository.Categoria_ItemRepository;
 import net.financeiro.repository.Itens_OperacaoRepository;
 import net.financeiro.repository.ProdutosRepository;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
 public class Categoria_ItemService {
+
     private final Categoria_ItemRepository repository = new Categoria_ItemRepository();
     private final Itens_OperacaoRepository itensOperacaoRepository = new Itens_OperacaoRepository();
     private final ProdutosRepository produtosRepository = new ProdutosRepository();
