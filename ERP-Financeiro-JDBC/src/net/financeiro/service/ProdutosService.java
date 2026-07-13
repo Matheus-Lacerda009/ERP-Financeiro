@@ -3,7 +3,7 @@ package net.financeiro.service;
 import net.financeiro.exceptions.FkNaoEncontradaException;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.ValorInvalidoException;
 import net.financeiro.model.Produto;
 import net.financeiro.repository.Categoria_ItemRepository;
 import net.financeiro.repository.ProdutosRepository;
@@ -19,19 +19,19 @@ public class ProdutosService {
     public Produto inserir(Produto ins) {
         try{
             if(ins.getNome().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: nome vazio!");
+                throw new ValorInvalidoException("Erro: nome vazio!");
             }
             if(ins.getValor() < 0){
-                throw new NomeInvalidoException("Erro: valor é negativo!");
+                throw new ValorInvalidoException("Erro: valor é negativo!");
             }
             if(ins.getQuantidade_estoque() < 0){
-                throw new NomeInvalidoException("Erro: quantidade de produtos é negativa");
+                throw new ValorInvalidoException("Erro: quantidade de produtos é negativa");
             }
             if(categoriaItemRepository.buscarPorId(ins.getId_categoria_item()) == null){
                 throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
             }
             return repository.inserir(ins);
-        } catch(NomeInvalidoException e){
+        } catch(ValorInvalidoException e){
             System.out.println(e.getMessage());
             return null;
         } catch (FkNaoEncontradaException e){
@@ -43,13 +43,13 @@ public class ProdutosService {
     public Produto atualizar(Produto atl){
         try{
             if(atl.getNome().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: nome vazio!");
+                throw new ValorInvalidoException("Erro: nome vazio!");
             }
             if(atl.getValor() < 0){
-                throw new NomeInvalidoException("Erro: valor é negativo!");
+                throw new ValorInvalidoException("Erro: valor é negativo!");
             }
             if(atl.getQuantidade_estoque() < 0){
-                throw new NomeInvalidoException("Erro: quantidade de produtos é negativa");
+                throw new ValorInvalidoException("Erro: quantidade de produtos é negativa");
             }
             if(repository.buscarPorId(atl.getId_produto()) == null){
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
@@ -58,7 +58,7 @@ public class ProdutosService {
                 throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
             }
             return repository.atualizar(atl);
-        } catch(NomeInvalidoException e){
+        } catch(ValorInvalidoException e){
             System.out.println(e.getMessage());
             return null;
         } catch(IdNaoEncontradoException e){
