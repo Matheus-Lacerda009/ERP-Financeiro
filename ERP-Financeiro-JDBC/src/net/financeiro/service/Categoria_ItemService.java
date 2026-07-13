@@ -2,7 +2,7 @@ package net.financeiro.service;
 
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.ValorInvalidoException;
 import net.financeiro.model.Categoria_Item;
 import net.financeiro.repository.Categoria_ItemRepository;
 import net.financeiro.repository.ProdutosRepository;
@@ -19,10 +19,10 @@ public class Categoria_ItemService {
     public Categoria_Item inserir(Categoria_Item ins){
         try{
             if(ins.getNome().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: nome vazio!");
+                throw new ValorInvalidoException("Erro: nome vazio!");
             }
             return repository.inserir(ins);
-        } catch(NomeInvalidoException e){
+        } catch(ValorInvalidoException e){
             System.out.println(e.getMessage());
             return null;
         }
@@ -31,13 +31,13 @@ public class Categoria_ItemService {
     public Categoria_Item atualizar(Categoria_Item atl, Long id){
         try{
             if(atl.getNome().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: nome vazio!");
+                throw new ValorInvalidoException("Erro: nome vazio!");
             }
             if(repository.buscarPorId(id) == null){
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
             return repository.atualizar(atl, id);
-        } catch(NomeInvalidoException e){
+        } catch(ValorInvalidoException e){
             System.out.println(e.getMessage());
             return null;
         } catch(IdNaoEncontradoException e){

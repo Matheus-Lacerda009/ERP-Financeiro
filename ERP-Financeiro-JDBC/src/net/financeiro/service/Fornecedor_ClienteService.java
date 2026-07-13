@@ -2,7 +2,7 @@ package net.financeiro.service;
 
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.ValorInvalidoException;
 import net.financeiro.model.Fornecedor_Cliente;
 import net.financeiro.repository.Fornecedor_ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ public class Fornecedor_ClienteService {
     public Fornecedor_Cliente inserir(Fornecedor_Cliente ins) {
         try {
             if (ins.getRazao_social_nome() == null || ins.getRazao_social_nome().trim().isEmpty()) {
-                throw new NomeInvalidoException("Erro: Nome/Razão Social está vazio");
+                throw new ValorInvalidoException("Erro: Nome/Razão Social está vazio");
             }
             return repository.inserir(ins);
-        } catch (NomeInvalidoException e) {
+        } catch (ValorInvalidoException e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -29,12 +29,12 @@ public class Fornecedor_ClienteService {
     public Fornecedor_Cliente atualizar(Fornecedor_Cliente atl, Long id) {
         try {
             if (atl.getRazao_social_nome() == null || atl.getRazao_social_nome().trim().isEmpty()) {
-                throw new NomeInvalidoException("ERRO: Nome/Razão Social inválido, não pode ser vazio");
+                throw new ValorInvalidoException("ERRO: Nome/Razão Social inválido, não pode ser vazio");
             } else if (repository.buscarPorId(atl.getId_fornecedor_cliente()) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
             return repository.atualizar(atl, id);
-        } catch (NomeInvalidoException | IdNaoEncontradoException e) {
+        } catch (ValorInvalidoException | IdNaoEncontradoException e) {
             System.out.println(e.getMessage());
             return null;
         }

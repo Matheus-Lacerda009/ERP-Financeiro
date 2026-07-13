@@ -3,7 +3,7 @@ package net.financeiro.service;
 import net.financeiro.connection.Conexao;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.ValorInvalidoException;
 import net.financeiro.model.Funcionario;
 import net.financeiro.repository.FuncionarioRepository;
 import org.springframework.stereotype.Service;
@@ -23,16 +23,16 @@ public class FuncionarioService {
     public Funcionario inserir(Funcionario ins) {
         try {
             if (ins.getNome() == null || ins.getNome().trim().isEmpty()) {
-                throw new NomeInvalidoException("Erro: Nome está vazio");
+                throw new ValorInvalidoException("Erro: Nome está vazio");
             }
             if (ins.getCpf() == null  ) {
-                throw new NomeInvalidoException("Erro: CPF Invaido ");
+                throw new ValorInvalidoException("Erro: CPF Invaido ");
             }
             if (ins.getEmail() == null ) {
-                throw new NomeInvalidoException("Erro: E-mail Invalido");
+                throw new ValorInvalidoException("Erro: E-mail Invalido");
             }
             return repository.inserir(ins);
-        } catch (NomeInvalidoException e) {
+        } catch (ValorInvalidoException e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -41,12 +41,12 @@ public class FuncionarioService {
     public Funcionario atualizar(Funcionario atl, Long id) {
         try {
             if (atl.getNome() == null || atl.getNome().trim().isEmpty()) {
-                throw new NomeInvalidoException("ERRO: Nome inválido, não pode ser vazio");
+                throw new ValorInvalidoException("ERRO: Nome inválido, não pode ser vazio");
             } else if (repository.buscarPorId(atl.getId_funcionario()) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
             return repository.atualizar(atl, id);
-        } catch (NomeInvalidoException | IdNaoEncontradoException e) {
+        } catch (ValorInvalidoException | IdNaoEncontradoException e) {
             System.out.println(e.getMessage());
             return null;
         }
