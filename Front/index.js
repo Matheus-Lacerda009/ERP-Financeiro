@@ -1,4 +1,4 @@
-document.getElementById("login").addEventListener("submit", async (event) => {
+document.getElementById("formLogin").addEventListener("submit", async (event) => {
     event.preventDefault();
     try{
         const nome = document.getElementById("inputNome").value;
