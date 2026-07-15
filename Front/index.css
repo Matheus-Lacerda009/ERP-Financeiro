@@ -22,7 +22,8 @@ footer{
 
 #github{
     color: white;
-    font-size: 200%;
+    font-size: 2vw;
+    text-decoration-color: white;
 }
 
 h1{
@@ -75,6 +76,7 @@ body{
 }
 
 input::placeholder{
+    font-size: .7vw;
     text-align: center;
     color: black;
     transition: .5s;
@@ -85,6 +87,7 @@ input:hover::placeholder{
 }
 
 #inputNome, #inputSenha{
+    font-size: .7vw;
     margin-bottom: 10%;
     height: 3vh;
     width: 7vw;

@@ -23,12 +23,32 @@ footer{
 
 #github{
     color: white;
-    font-size: 200%;
+    font-size: 2vw;
+    text-decoration-color: white;
+}
+
+#sair{
+    margin-top: 2vh;
+    position: absolute;
+    left: 90vw;
+    color: black;
+    font-size: 1.5vw;
+    text-decoration-color: black;
+    background-color: #C5D8D1;
+    padding: .6%;
+    border: 3px solid white;
+    transition: .5s;
+    border-radius: 10px;
+}
+
+#sair:hover{
+    background-color: #2f7a7c;
+    padding: 1%;
+    color: white;
     text-decoration-color: white;
 }
 
 header, h1{
-    font-size: 300%;
     color: white;
     font-size: 3vw;
 }

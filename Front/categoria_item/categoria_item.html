@@ -7,40 +7,48 @@
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <a href="../menu/menu.html" id="menu">Menu</a>
+        <h1>VALENTIM</h1>
+        <h2 id="subtitulo">Visão Analítica de Lançamentos e Estratégias para Negócios, Transações, Investimentos e Monitoramento</h2>
+    </header>
     <main>
         <div class="container">
             <div id="post" class="dados">
                 <form id="formPost">
-                    <h1>Insira as informações para inserir uma categoria de produto</h1>
+                    <h2>Insira as informações para inserir uma categoria de produto</h2>
                     <p>Insira o nome da categoria</p>
                     <input placeholder="Nome" id="nomePost">
-                    <button type="submit">Enviar</button>
+                    <br>
+                    <button type="submit" id="enviar">Enviar</button>
                 </form>
             </div>
             <div id="put" class="dados">
                 <form id="formPut">
-                    <h1>Insira as informações para atualizar uma categoria de produto</h1>
+                    <h2>Insira as informações para atualizar uma categoria de produto</h2>
                     <p>Insira o id da categoria desejada</p>
                     <input placeholder="ID" id="idPut">
                     <p>Insira o nome da categoria</p>
                     <input placeholder="Nome" id="nomePut">
-                    <button type="submit">Enviar</button>
+                    <br>
+                    <button type="submit" id="enviar">Enviar</button>
                 </form>
             </div>
             <div id="get" class="dados">
                 <button id="getTodos">Listar todos</button>
             </div>
             <div id="getId" class="dados">
-                <button id="maiorVenda">Ordenar por maior venda</button>
-                <button id="menorVenda">Ordenar por menor venda</button>
-                <button id="mediaVenda">Ordenar pela média decrescente de vendas</button>
+                <button id="maiorVenda" class="listarMod">Ordenar por maior venda</button>
+                <button id="menorVenda" class="listarMod">Ordenar por menor venda</button>
+                <button id="mediaVenda" class="listarMod">Ordenar pela média decrescente de vendas</button>
             </div>
             <div id="delete" class="dados">
                 <form  id="formDelete">
-                    <h1>Insira as informações para deletar uma categoria de produto</h1>
+                    <h2>Insira as informações para deletar uma categoria de produto</h2>
                     <p>Insira o id da categoria desejada</p>
                     <input placeholder="ID" id="idDelete">
-                    <button type="submit">Enviar</button>
+                    <br>
+                    <button type="submit" id="enviar">Enviar</button>
                 </form>
             </div>
         </div>
@@ -48,6 +56,9 @@
             <p id="resultadoBusca">O resultado das buscas aparecerão aqui!</p>
         </div>
     </main>
+    <footer>
+        <a href="https://github.com/Matheus-Lacerda009/ERP-Financeiro.git" id="github">GitHub</a>
+    </footer>
 </body>
 <script src="categoria_item.js"></script>
 </html>
