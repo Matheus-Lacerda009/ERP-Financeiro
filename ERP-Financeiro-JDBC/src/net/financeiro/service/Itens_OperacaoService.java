@@ -1,18 +1,32 @@
 package net.financeiro.service;
 
+import net.financeiro.exceptions.FkNaoEncontradaException;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
+import net.financeiro.exceptions.NomeInvalidoException;
 import net.financeiro.model.Itens_Operacao;
 import net.financeiro.repository.Itens_OperacaoRepository;
+import net.financeiro.repository.OperacaoRepository;
+import net.financeiro.repository.ProdutosRepository;
 
 import java.util.List;
 
 public class Itens_OperacaoService {
     private final Itens_OperacaoRepository repository = new Itens_OperacaoRepository();
+    private final ProdutosRepository produtosRepository = new ProdutosRepository();
+    private final OperacaoRepository operacaoRepository = new OperacaoRepository();
 
     public Itens_Operacao inserir(Itens_Operacao ins) {
         try {
-            //todo Finalizar verificação regras de negócio
+            if(ins.getQuantidade_produtos() < 0) {
+                throw new NomeInvalidoException("Erro: quantidade de produtos negativa!");
+            }
+            if(produtosRepository.buscarPorId(ins.getId_produto()) == null) {
+                throw new FkNaoEncontradaException("Erro: chave estrangeira inválida!");
+            }
+            if(operacaoRepository.buscarPorId(ins.getId_operacao()) == null) {
+                throw new FkNaoEncontradaException("Erro: chave estrangeira inválida!");
+            }
             return repository.inserir(ins);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -22,13 +36,21 @@ public class Itens_OperacaoService {
 
     public Itens_Operacao atualizar(Itens_Operacao atl) {
         try {
-            //todo Finalizar verificação regras de negócio
+            if(atl.getQuantidade_produtos() < 0) {
+                throw new NomeInvalidoException("Erro: quantidade de produtos negativa!");
+            }
+            if(produtosRepository.buscarPorId(atl.getId_produto()) == null) {
+                throw new FkNaoEncontradaException("Erro: chave estrangeira inválida!");
+            }
+            if(operacaoRepository.buscarPorId(atl.getId_operacao()) == null) {
+                throw new FkNaoEncontradaException("Erro: chave estrangeira inválida!");
+            }
             if(repository.buscarPorId(atl.getId_itens_operacao()) == null) {
                 throw new IdNaoEncontradoException("Erro: ID não encontrado!");
             }
 
             return repository.atualizar(atl);
-        } catch (IdNaoEncontradoException e) {
+        } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
         }

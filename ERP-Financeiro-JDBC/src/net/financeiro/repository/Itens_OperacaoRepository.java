@@ -63,7 +63,7 @@ public class Itens_OperacaoRepository {
     }
 
     public List<Itens_Operacao> listarInfo() {
-        String sql = "SELECT * FROM Itens_Operacao";
+        String sql = "SELECT Itens_Operacao.*, Produto.nome FROM Itens_Operacao join Produto on Itens_Operacao.id_produto = Produto.id_produto";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             List<Itens_Operacao> lista = new ArrayList<>();
@@ -74,7 +74,8 @@ public class Itens_OperacaoRepository {
                         rs.getLong("id_itens_operacao"),
                         rs.getLong("id_produto"),
                         rs.getLong("id_operacao"),
-                        rs.getInt("quantidade_produtos")
+                        rs.getInt("quantidade_produtos"),
+                        rs.getString("Produto.nome")
                 ));
             }
 
