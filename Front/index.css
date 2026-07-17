@@ -61,7 +61,7 @@ body{
     text-align: center;
     background-color: #12263A;
     border: 3px outset white;
-    border-radius: 15%;
+    border-radius: 20px;
 }
 
 #botaoEnvio{
@@ -73,6 +73,7 @@ body{
     border-radius: 10px;
     color: black;
     font-size: .75vw;
+    margin-bottom: 2vmin;
 }
 
 input::placeholder{
@@ -88,7 +89,7 @@ input:hover::placeholder{
 
 #inputNome, #inputSenha{
     font-size: .7vw;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
     height: 3vh;
     width: 7vw;
     transition: .5s;
