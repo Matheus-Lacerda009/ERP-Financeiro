@@ -79,7 +79,7 @@ public class Fluxo_CaixaService {
             if(repository.buscarPorId(atl.getId_fluxo_caixa()) == null){
                 throw new IdNaoEncontradoException("Erro: id operação não encontrado!");
             }
-            return repository.inserir(atl);
+            return repository.atualizar(atl);
 
         } catch(NomeInvalidoException e){
             System.out.println(e.getMessage());

@@ -69,7 +69,7 @@ public class Folha_PagamentoService {
             if(atl.getData_entrada().trim().isEmpty()){
                 throw new NomeInvalidoException("Erro: id folha_pagamento não encontrado!");
             }
-            return repository.inserir(atl);
+            return repository.atualizar(atl);
 
         } catch(NomeInvalidoException e){
             System.out.println(e.getMessage());

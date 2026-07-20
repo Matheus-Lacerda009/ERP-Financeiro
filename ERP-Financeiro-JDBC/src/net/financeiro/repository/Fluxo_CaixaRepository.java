@@ -17,7 +17,7 @@ import java.util.List;
 public class Fluxo_CaixaRepository {
 
     public Fluxo_Caixa inserir(Fluxo_Caixa ins){
-        String sql = "INSERT INTO Fluxo_Caixa (id_caixa, id_forma_pagamento, tipo_operacao, parcelas, id_folha_pagamento)\n" +
+        String sql = "INSERT INTO Fluxo_Caixa (id_caixa, id_forma_pagamento, tipo_operacao, parcelas, id_folha_pagamento, id_operacao)\n" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setLong(1, ins.getId_caixa());
@@ -69,17 +69,29 @@ public class Fluxo_CaixaRepository {
 
 
     public List<Fluxo_Caixa> listarInfo(){
-        String sql = "SELECT * FROM Fluxo_Caixa";
+        String sql =  "SELECT Fluxo_Caixa.*, Conta_Bancaria.nome_banco, Forma_Pagamento.nome, Funcionario.nome, Operacao.status_operacao " +
+                "FROM Fluxo_Caixa " +
+                "join Conta_Bancaria on Conta_Bancaria.id_caixa = Fluxo_Caixa.id_caixa " +
+                "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
+                "join Folha_Pagamento on Folha_Pagamento.id_folha_pagamento = Fluxo_Caixa.id_folha_pagamento " +
+                "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
+                "join Operacao on Operacao.id_operacao = Fluxo_Caixa.id_operacao";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Fluxo_Caixa> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
             while(rs.next()){
-                lista.add(new Fluxo_Caixa(rs.getLong("id_fluxo_caixa"),  rs.getLong("id_caixa"),
-                rs.getLong("id_forma_pagamento"),
-                rs.getString("tipo_operacao"),
-                rs.getInt("parcelas"),
-                rs.getLong("id_folha_pagamento"),
-                rs.getLong("id_operacao")));
+                lista.add(new Fluxo_Caixa(
+                        rs.getLong("id_fluxo_caixa"),
+                        rs.getLong("id_caixa"),
+                        rs.getLong("id_forma_pagamento"),
+                        rs.getString("tipo_operacao"),
+                        rs.getInt("parcelas"),
+                        rs.getLong("id_folha_pagamento"),
+                        rs.getLong("id_operacao"),
+                        rs.getString("Conta_Bancaria.nome_banco"),
+                        rs.getString("Forma_Pagamento.nome"),
+                        rs.getString("Funcionario.nome"),
+                        rs.getString("Operacao.status_operacao")));
             }
             return lista;
         } catch(SQLException e){
@@ -89,12 +101,23 @@ public class Fluxo_CaixaRepository {
     }
 
     public Fluxo_Caixa buscarPorId(Long id_fluxo_caixa ){
-        String sql = "SELECT * FROM Fluxo_Caixa where id_fluxo_caixa  = ?";
+        String sql = "SELECT Fluxo_Caixa.*, Conta_Bancaria.nome_banco, Forma_Pagamento.nome, Funcionario.nome, Operacao.status_operacao " +
+                "FROM Fluxo_Caixa " +
+                "join Conta_Bancaria on Conta_Bancaria.id_caixa = Fluxo_Caixa.id_caixa " +
+                "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
+                "join Folha_Pagamento on Folha_Pagamento.id_folha_pagamento = Fluxo_Caixa.id_folha_pagamento " +
+                "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
+                "join Operacao on Operacao.id_operacao = Fluxo_Caixa.id_operacao " +
+                "where Fluxo_Caixa.id_fluxo_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_fluxo_caixa );
             ResultSet rs = pr.executeQuery();
             rs.next();
-            return new Fluxo_Caixa(id_fluxo_caixa , rs.getLong("id_caixa"), rs.getLong("id_forma_pagamento"), rs.getString("tipo_operacao"), rs.getInt("parcelas"), rs.getLong("id_folha_pagamento"), rs.getLong("id_operacao"));
+            return new Fluxo_Caixa(id_fluxo_caixa, rs.getLong("id_caixa"), rs.getLong("id_forma_pagamento"),
+                    rs.getString("tipo_operacao"), rs.getInt("parcelas"), rs.getLong("id_folha_pagamento"),
+                    rs.getLong("id_operacao"), rs.getString("Conta_Bancaria.nome_banco"),
+                    rs.getString("Forma_Pagamento.nome"), rs.getString("Funcionario.nome"),
+                    rs.getString("Operacao.status_operacao"));
         } catch(SQLException e){
             System.out.println("Erro ao buscar por ID: " + e.getMessage());
             return null;
