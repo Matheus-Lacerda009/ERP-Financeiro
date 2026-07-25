@@ -6,7 +6,7 @@ import com.williamcallahan.tui4j.compat.bubbletea.KeyPressMessage;
 import java.util.List;
 
 public class HomeMenu implements TableMenu {
-    private final List<String> tabelas = List.of("Operações", "Vendas");
+    private final List<String> tabelas = List.of("Operações", "Vendas", "Saldo Atual");
     private int cursor = 0;
     private String tabelaSelecionada = null;
 
@@ -47,10 +47,9 @@ public class HomeMenu implements TableMenu {
     @Override
     public String render(boolean isLoading, String spinnerView) {
         StringBuilder buffer = new StringBuilder();
-        buffer.append("---=== Home ===---").append("\n\n");
 
         for(int i = 0; i < tabelas.size(); i++) {
-            String prefix = i == cursor ? " ❯ [ ] " : "   [ ] ";
+            String prefix = i == cursor ? " > " : "   ";
             buffer.append(prefix).append(tabelas.get(i)).append("\n");
         }
 
