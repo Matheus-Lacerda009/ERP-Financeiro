@@ -8,13 +8,14 @@ import net.financeiro.model.Produto;
 import net.financeiro.repository.Categoria_ItemRepository;
 import net.financeiro.repository.ProdutosRepository;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
 public class ProdutosService {
 
-    private ProdutosRepository repository;
-    private Categoria_ItemRepository categoriaItemRepository;
+    private ProdutosRepository repository = new ProdutosRepository();
+    private Categoria_ItemRepository categoriaItemRepository = new Categoria_ItemRepository();
 
     public Produto inserir(Produto ins) {
         try{
