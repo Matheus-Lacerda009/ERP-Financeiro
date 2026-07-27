@@ -1,20 +1,17 @@
 package net.financeiro.model;
 
-import java.time.LocalDateTime;
-
 public class Operacao {
     private Long id_operacao, id_fornecedor_cliente, id_funcionario;
-    private LocalDateTime data_operacao;
-    private String status_operacao;
+    private String status_operacao, data_operacao;
 
-    public Operacao(Long id_fornecedor_cliente, Long id_funcionario, LocalDateTime data_operacao, String status_operacao) {
+    public Operacao(Long id_fornecedor_cliente, Long id_funcionario, String data_operacao, String status_operacao) {
         this.id_fornecedor_cliente = id_fornecedor_cliente;
         this.id_funcionario = id_funcionario;
         this.data_operacao = data_operacao;
         this.status_operacao = status_operacao;
     }
 
-    public Operacao(Long id_operacao, Long id_fornecedor_cliente, Long id_funcionario, LocalDateTime data_operacao, String status_operacao) {
+    public Operacao(Long id_operacao, Long id_fornecedor_cliente, Long id_funcionario, String data_operacao, String status_operacao) {
         this.id_operacao = id_operacao;
         this.id_fornecedor_cliente = id_fornecedor_cliente;
         this.id_funcionario = id_funcionario;
@@ -34,7 +31,7 @@ public class Operacao {
         return id_funcionario;
     }
 
-    public LocalDateTime getData_operacao() {
+    public String getData_operacao() {
         return data_operacao;
     }
 
