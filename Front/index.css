@@ -23,7 +23,7 @@ footer{
 #github{
     color: white;
     font-size: 2vw;
-    text-decoration-color: white;
+    text-decoration: none;
 }
 
 h1{
@@ -117,4 +117,22 @@ input:hover::placeholder{
 
 #login{
     color: white;
+}
+
+#loginErro {
+    color: black;
+    transition: .5s;
+    transition-behavior: allow-discrete;
+    background-color: #C5D8D1;
+    border: .5vmin solid white;
+    width: 10vmin;
+    border-radius: 10px;
+    padding: .5vmin;
+    font-size: 1vmin;
+}
+
+@starting-style {
+  #loginErro {
+    color: black;
+  }
 }

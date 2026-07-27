@@ -3,12 +3,6 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
     try{
         const loginErro = document.getElementById("loginErro");
         loginErro.style.color = "black";
-        loginErro.style.backgroundColor = "#C5D8D1";
-        loginErro.style.border = ".5vmin solid white";
-        loginErro.style.width = "10vmin";
-        loginErro.style.borderRadius = "10px";
-        loginErro.style.padding = ".5vmin";
-        loginErro.style.fontSize = "1vmin";
         loginErro.innerHTML = "Carregando...";
         const form = document.getElementById("formLogin");
         const nome = document.getElementById("inputNome").value;
@@ -18,9 +12,8 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
         if(retorno){
             window.location.href = "menu/menu.html";
         } else {
-            loginErro.style.color = "red";
             loginErro.innerHTML = "Erro ao logar!";
-            form.appendChild(loginErro);
+            loginErro.style.color = "red";
         }
     } catch(erro){
         console.log(erro);

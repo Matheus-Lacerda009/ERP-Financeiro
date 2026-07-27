@@ -23,7 +23,7 @@ footer{
 #github{
     color: white;
     font-size: 4vmin;
-    text-decoration-color: white;
+    text-decoration: none;
 }
 
 h1{
@@ -42,7 +42,7 @@ h1{
     left: 90vw;
     color: black;
     font-size: 3vmin;
-    text-decoration-color: black;
+    text-decoration: none;
     background-color: #C5D8D1;
     padding: .6%;
     border: 3px solid white;
@@ -58,7 +58,6 @@ h1{
     background-color: #2f7a7c;
     padding: 1%;
     color: white;
-    text-decoration-color: white;
 }
 
 body{
