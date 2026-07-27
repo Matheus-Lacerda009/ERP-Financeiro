@@ -1,6 +1,6 @@
 package net.financeiro.exceptions;
 
-public class FkNaoEncontradaException extends RuntimeException {
+public class FkNaoEncontradaException extends Exception{
     public FkNaoEncontradaException(String message) {
         super(message);
     }
