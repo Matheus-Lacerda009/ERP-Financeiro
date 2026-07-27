@@ -7,6 +7,7 @@ import net.financeiro.model.Categoria_Item;
 import net.financeiro.model.Fluxo_Caixa;
 import net.financeiro.repository.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Fluxo_CaixaService {
@@ -55,8 +56,6 @@ public class Fluxo_CaixaService {
 
     public Fluxo_Caixa atualizar(Fluxo_Caixa atl){
 
-
-
         try{
 
             if(repositoryA.buscarPorId(atl.getId_caixa()) == null){
@@ -80,7 +79,7 @@ public class Fluxo_CaixaService {
             if(repository.buscarPorId(atl.getId_fluxo_caixa()) == null){
                 throw new IdNaoEncontradoException("Erro: id operação não encontrado!");
             }
-            return repository.inserir(atl);
+            return repository.atualizar(atl);
 
         } catch(NomeInvalidoException e){
             System.out.println(e.getMessage());
@@ -125,6 +124,60 @@ public class Fluxo_CaixaService {
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+
+
+    /*MÉTODOS QUERIES*/
+
+    public HashMap<String, List<String>> entradas_realizadas(int dias ){
+        try{
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.entradas_realizadas( dias);
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
+    public HashMap<String, List<String>> entradas_previstas(int dias ){
+        try{
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.entradas_previstas( dias);
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
+    public HashMap<String, List<String>> saidas_realizadas(int dias ){
+        try{
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.saidas_realizadas( dias);
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
+    public HashMap<String, List<String>> saidas_previstas(int dias ){
+        try{
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.saidas_previstas( dias);
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
