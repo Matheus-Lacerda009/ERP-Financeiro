@@ -84,7 +84,7 @@ public class ProdutosService {
         }
     }
 
-    public void deletar(Long id){
+    public boolean deletar(Long id){
         try {
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
@@ -92,14 +92,30 @@ public class ProdutosService {
             if (repository.listarInfo().isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            if(repository.deletar(id)){
-                System.out.println("Deletado com sucesso!");
-            }
+            return repository.deletar(id);
         } catch(IdNaoEncontradoException e){
             System.out.println(e.getMessage());
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
         }
+        return false;
+    }
+
+    public boolean reativar(Long id){
+        try {
+            if (repository.buscarPorId(id) == null) {
+                throw new IdNaoEncontradoException("Erro: id não encontrado!");
+            }
+            if (repository.listarInfo().isEmpty()) {
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.reativar(id);
+        } catch(IdNaoEncontradoException e){
+            System.out.println(e.getMessage());
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public HashMap<String, List<String>> maiorVenda(){

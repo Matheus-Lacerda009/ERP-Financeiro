@@ -49,7 +49,7 @@ public class ProdutosRepository {
     }
 
     public boolean deletar(Long id){
-        String sql = "DELETE FROM Produto WHERE id_produto = ?";
+        String sql = "update Produto set ativo = false WHERE id_produto = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -60,8 +60,20 @@ public class ProdutosRepository {
         }
     }
 
+    public boolean reativar(Long id){
+        String sql = "update Produto set ativo = true WHERE id_produto = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("Erro ao reativar: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<Produto> listarInfo(){
-        String sql = "SELECT Produto.*, Categoria_Item.nome FROM Produto join Categoria_Item on Categoria_Item.id_categoria_item = Produto.id_categoria_item";
+        String sql = "SELECT Produto.*, Categoria_Item.nome FROM Produto join Categoria_Item on Categoria_Item.id_categoria_item = Produto.id_categoria_item where Produto.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Produto> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -82,6 +94,7 @@ public class ProdutosRepository {
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
+                "where p.ativo = true" +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
                 "ORDER BY sum(\n" +
@@ -112,6 +125,7 @@ public class ProdutosRepository {
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
+                "where p.ativo = true" +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
                 "ORDER BY sum(\n" +
@@ -142,6 +156,7 @@ public class ProdutosRepository {
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
+                "where p.ativo = true" +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
                 "ORDER BY sum(\n" +
@@ -166,7 +181,7 @@ public class ProdutosRepository {
     }
 
     public Produto buscarPorId(Long id){
-        String sql = "select * from Produto where id = ?";
+        String sql = "select * from Produto where id = ? where Produto.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             ResultSet rs = pr.executeQuery();
