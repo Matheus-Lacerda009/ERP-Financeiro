@@ -2,7 +2,7 @@ package net.financeiro.service;
 
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Fluxo_Caixa;
 import net.financeiro.model.Folha_Pagamento;
 import net.financeiro.repository.*;
@@ -16,7 +16,7 @@ public class Folha_PagamentoService {
     private final Folha_PagamentoRepository repository = new Folha_PagamentoRepository();
     private final FuncionarioRepository repositoryA = new FuncionarioRepository();
 
-    public Folha_Pagamento inserir(Folha_Pagamento ins) throws NomeInvalidoException, IdNaoEncontradoException, NadaInseridoException {
+    public Folha_Pagamento inserir(Folha_Pagamento ins) throws NadaInseridoException, IdNaoEncontradoException, NadaInseridoException {
         try{
 
             if(repositoryA.buscarPorId(ins.getId_funcionario()) == null){
@@ -32,18 +32,15 @@ public class Folha_PagamentoService {
                 throw new NadaInseridoException("Erro: Horas trabalhadas nulo!");
             }
             if(ins.getData_entrada().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: id folha_pagamento não encontrado!");
+                throw new NadaInseridoException("Erro: id folha_pagamento não encontrado!");
             }
 
             return repository.inserir(ins);
 
-        } catch(NomeInvalidoException e){
+        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         }
@@ -67,17 +64,14 @@ public class Folha_PagamentoService {
                 throw new NadaInseridoException("Erro: Horas trabalhadas nulo!");
             }
             if(atl.getData_entrada().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: id folha_pagamento não encontrado!");
+                throw new NadaInseridoException("Erro: id folha_pagamento não encontrado!");
             }
             return repository.atualizar(atl);
 
-        } catch(NomeInvalidoException e){
+        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         }

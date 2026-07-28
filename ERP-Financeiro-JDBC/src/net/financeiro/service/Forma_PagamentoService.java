@@ -2,7 +2,7 @@ package net.financeiro.service;
 
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Forma_Pagamento;
 import net.financeiro.repository.Forma_PagamentoRepository;
 
@@ -14,10 +14,10 @@ public class Forma_PagamentoService {
     public Forma_Pagamento inserir(Forma_Pagamento ins) {
         try {
             if (ins.getNome().trim().isEmpty()) {
-                throw new NomeInvalidoException("Erro: Nome está vazio");
+                throw new NadaInseridoException("Erro: Nome está vazio");
             }
             return repository.inserir(ins);
-        } catch (NomeInvalidoException e) {
+        } catch (NadaInseridoException e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -26,12 +26,12 @@ public class Forma_PagamentoService {
     public Forma_Pagamento atualizar(Forma_Pagamento atl) {
         try {
             if (atl.getNome().trim().isEmpty()) {
-                throw new NomeInvalidoException("ERRO: Nome inválido, não pode ser vazio");
+                throw new NadaInseridoException("ERRO: Nome inválido, não pode ser vazio");
             } else if (repository.buscarPorId(atl.getId_forma_pagamento()) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
             return repository.atualizar(atl);
-        } catch (NomeInvalidoException | IdNaoEncontradoException e) {
+        } catch (NadaInseridoException | IdNaoEncontradoException e) {
             System.out.println(e.getMessage());
             return null;
         }

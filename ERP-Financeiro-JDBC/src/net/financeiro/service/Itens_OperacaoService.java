@@ -3,7 +3,7 @@ package net.financeiro.service;
 import net.financeiro.exceptions.FkNaoEncontradaException;
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Itens_Operacao;
 import net.financeiro.repository.Itens_OperacaoRepository;
 import net.financeiro.repository.OperacaoRepository;
@@ -19,7 +19,7 @@ public class Itens_OperacaoService {
     public Itens_Operacao inserir(Itens_Operacao ins) {
         try {
             if(ins.getQuantidade_produtos() < 0) {
-                throw new NomeInvalidoException("Erro: quantidade de produtos negativa!");
+                throw new NadaInseridoException("Erro: quantidade de produtos negativa!");
             }
             if(produtosRepository.buscarPorId(ins.getId_produto()) == null) {
                 throw new FkNaoEncontradaException("Erro: chave estrangeira inválida!");
@@ -37,7 +37,7 @@ public class Itens_OperacaoService {
     public Itens_Operacao atualizar(Itens_Operacao atl) {
         try {
             if(atl.getQuantidade_produtos() < 0) {
-                throw new NomeInvalidoException("Erro: quantidade de produtos negativa!");
+                throw new NadaInseridoException("Erro: quantidade de produtos negativa!");
             }
             if(produtosRepository.buscarPorId(atl.getId_produto()) == null) {
                 throw new FkNaoEncontradaException("Erro: chave estrangeira inválida!");

@@ -2,7 +2,7 @@ package net.financeiro.service;
 
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NomeInvalidoException;
+import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Categoria_Item;
 import net.financeiro.model.Fluxo_Caixa;
 import net.financeiro.repository.*;
@@ -18,7 +18,7 @@ public class Fluxo_CaixaService {
     private final Folha_PagamentoRepository repositoryC = new Folha_PagamentoRepository();
     private final OperacaoRepository repositoryD = new OperacaoRepository();
 
-    public Fluxo_Caixa inserir(Fluxo_Caixa ins) throws NomeInvalidoException, IdNaoEncontradoException, NadaInseridoException {
+    public Fluxo_Caixa inserir(Fluxo_Caixa ins) throws NadaInseridoException, IdNaoEncontradoException, NadaInseridoException {
         try{
 
             if(repositoryA.buscarPorId(ins.getId_caixa()) == null){
@@ -28,7 +28,7 @@ public class Fluxo_CaixaService {
                 throw new IdNaoEncontradoException("Erro: id forma_pagamento não encontrado!");
             }
             if(ins.getTipo_operacao().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: Tipo da operação vazio!");
+                throw new NadaInseridoException("Erro: Tipo da operação vazio!");
             }
             if(ins.getParcelas() < 0){
                 throw new NadaInseridoException("Erro: parcelas nulo!");
@@ -41,13 +41,10 @@ public class Fluxo_CaixaService {
             }
             return repository.inserir(ins);
 
-        } catch(NomeInvalidoException e){
+        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         }
@@ -65,7 +62,7 @@ public class Fluxo_CaixaService {
                 throw new IdNaoEncontradoException("Erro: id forma_pagamento não encontrado!");
             }
             if(atl.getTipo_operacao().trim().isEmpty()){
-                throw new NomeInvalidoException("Erro: Tipo da operação vazio!");
+                throw new NadaInseridoException("Erro: Tipo da operação vazio!");
             }
             if(atl.getParcelas() < 0){
                 throw new NadaInseridoException("Erro: parcelas nulo!");
@@ -81,13 +78,10 @@ public class Fluxo_CaixaService {
             }
             return repository.atualizar(atl);
 
-        } catch(NomeInvalidoException e){
+        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
         }
