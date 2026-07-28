@@ -42,7 +42,19 @@ public class Forma_PagamentoRepository {
     }
 
     public  boolean deletar(Long id){
-        String sql = "DELETE FROM Forma_Pagamento WHERE id_forma_pagamento = ?";
+        String sql = "update Forma_Pagamento set ativo = false WHERE id_forma_pagamento = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+            return  true;
+        }catch (SQLException e){
+            System.out.println("ERRO ao deletar : " + e.getMessage());
+            return  false;
+        }
+    }
+
+    public  boolean reativar(Long id){
+        String sql = "update Forma_Pagamento set ativo = true WHERE id_forma_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -54,7 +66,7 @@ public class Forma_PagamentoRepository {
     }
 
     public List<Forma_Pagamento> listarInfo(){
-        String sql = "SELECT * FROM Forma_Pagamento";
+        String sql = "SELECT * FROM Forma_Pagamento where ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Forma_Pagamento> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -70,7 +82,7 @@ public class Forma_PagamentoRepository {
     }
 
     public Forma_Pagamento buscarPorId(Long id_Forma_Pagamento){
-        String sql = "SELECT * FROM Forma_Pagamento where id_forma_pagamento = ?";
+        String sql = "SELECT * FROM Forma_Pagamento where id_forma_pagamento = ? and ativo = true";
         try (PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_Forma_Pagamento);
             ResultSet rs = pr.executeQuery();

@@ -61,4 +61,16 @@ public class Forma_PagamentoService {
             return false;
         }
     }
+
+    public boolean reativar(Long id) {
+        try {
+            if (repository.buscarPorId(id) == null) {
+                throw new IdNaoEncontradoException("ERRO: Id não encontrado");
+            }
+            return repository.reativar(id);
+        } catch (IdNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 }
