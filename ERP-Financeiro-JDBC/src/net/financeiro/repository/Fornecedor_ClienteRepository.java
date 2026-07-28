@@ -49,19 +49,31 @@ public class Fornecedor_ClienteRepository {
     }
 
     public boolean deletar(Long id){
-        String sql = "DELETE FROM Fornecedor_Cliente WHERE id_fornecedor_cliente = ?";
+        String sql = "update Fornecedor_Cliente set ativo = false WHERE id_fornecedor_cliente = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
             return true;
         } catch(SQLException e){
-            System.out.println("ERRO ao deletar : " + e.getMessage());
+            System.out.println("ERRO ao deletar: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean reativar(Long id){
+        String sql = "update Fornecedor_Cliente set ativo = true WHERE id_fornecedor_cliente = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("ERRO ao reativar: " + e.getMessage());
             return false;
         }
     }
 
     public List<Fornecedor_Cliente> listarInfo(){
-        String sql = "SELECT * FROM Fornecedor_Cliente";
+        String sql = "SELECT * FROM Fornecedor_Cliente where ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Fornecedor_Cliente> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -82,7 +94,7 @@ public class Fornecedor_ClienteRepository {
     }
 
     public Fornecedor_Cliente buscarPorId(Long id_fornecedor_cliente){
-        String sql = "SELECT * FROM Fornecedor_Cliente WHERE id_fornecedor_cliente = ?";
+        String sql = "SELECT * FROM Fornecedor_Cliente WHERE id_fornecedor_cliente = ? and ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_fornecedor_cliente);
             ResultSet rs = pr.executeQuery();
@@ -111,6 +123,7 @@ public class Fornecedor_ClienteRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
+                "where fc.ativo = true" +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY sum(\n" +
@@ -143,6 +156,7 @@ public class Fornecedor_ClienteRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
+                "where fc.ativo = true" +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY sum(\n" +
@@ -175,6 +189,7 @@ public class Fornecedor_ClienteRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
+                "where fc.ativo = true" +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY avg(\n" +
