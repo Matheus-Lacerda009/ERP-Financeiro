@@ -100,8 +100,7 @@ public class Folha_PagamentoService {
             if (repository.listarInfo().isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            repository.deletar(id);
-            return true;
+            return repository.deletar(id);
         } catch(IdNaoEncontradoException e){
             System.out.println(e.getMessage());
             return false;
@@ -119,8 +118,7 @@ public class Folha_PagamentoService {
             if (repository.listarInfo().isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            repository.reativar(id);
-            return true;
+            return repository.reativar(id);
         } catch(IdNaoEncontradoException e){
             System.out.println(e.getMessage());
             return false;

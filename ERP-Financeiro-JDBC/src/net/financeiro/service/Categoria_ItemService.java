@@ -61,7 +61,7 @@ public class Categoria_ItemService {
         }
     }
 
-    public void deletar(Long id){
+    public boolean deletar(Long id){
         try {
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
@@ -72,14 +72,16 @@ public class Categoria_ItemService {
             if(repository.deletar(id)){
                 System.out.println("Deletado com sucesso!");
             }
+            return repository.deletar(id);
         } catch(IdNaoEncontradoException e){
             System.out.println(e.getMessage());
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
-    public void reativar(Long id){
+    public boolean reativar(Long id){
         try {
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
@@ -90,11 +92,13 @@ public class Categoria_ItemService {
             if(repository.reativar(id)){
                 System.out.println("Reativado com sucesso!");
             }
+            return repository.reativar(id);
         } catch(IdNaoEncontradoException e){
             System.out.println(e.getMessage());
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
     public HashMap<String, List<String>> maiorVenda(){
