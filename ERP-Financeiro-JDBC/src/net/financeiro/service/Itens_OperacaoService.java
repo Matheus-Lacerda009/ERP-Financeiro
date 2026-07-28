@@ -68,6 +68,18 @@ public class Itens_OperacaoService {
         }
     }
 
+    public boolean reativar(Long id) {
+        try {
+            if(repository.buscarPorId(id) == null) {
+                throw new IdNaoEncontradoException("Erro: ID não encontrado!");
+            }
+            return repository.reativar(id);
+        } catch(IdNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     public List<Itens_Operacao> listarInfo() {
         try {
             List<Itens_Operacao> lista = repository.listarInfo();

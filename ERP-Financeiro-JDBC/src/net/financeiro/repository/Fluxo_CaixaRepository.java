@@ -74,7 +74,7 @@ public class Fluxo_CaixaRepository {
             pr.executeUpdate();
             return true;
         } catch(SQLException e){
-            System.out.println("Erro ao deletar: " + e.getMessage());
+            System.out.println("Erro ao reativar: " + e.getMessage());
             return false;
         }
     }

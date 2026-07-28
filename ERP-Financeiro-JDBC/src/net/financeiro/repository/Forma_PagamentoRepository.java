@@ -60,7 +60,7 @@ public class Forma_PagamentoRepository {
             pr.executeUpdate();
             return  true;
         }catch (SQLException e){
-            System.out.println("ERRO ao deletar : " + e.getMessage());
+            System.out.println("ERRO ao reativar : " + e.getMessage());
             return  false;
         }
     }

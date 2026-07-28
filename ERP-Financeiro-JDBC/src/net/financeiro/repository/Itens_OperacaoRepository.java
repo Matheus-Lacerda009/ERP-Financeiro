@@ -49,7 +49,7 @@ public class Itens_OperacaoRepository {
     }
 
     public boolean deletar(Long id) {
-        String sql = "DELETE FROM Itens_Operacao WHERE id_itens_operacao = ?";
+        String sql = "update Itens_Operacao set ativo = false WHERE id_itens_operacao = ?";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id);
@@ -62,8 +62,22 @@ public class Itens_OperacaoRepository {
         }
     }
 
+    public boolean reativar(Long id) {
+        String sql = "update Itens_Operacao set ativo = true WHERE id_itens_operacao = ?";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+
+            return true;
+        } catch(SQLException e) {
+            System.out.println("Erro ao reativar: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<Itens_Operacao> listarInfo() {
-        String sql = "SELECT Itens_Operacao.*, Produto.nome FROM Itens_Operacao join Produto on Itens_Operacao.id_produto = Produto.id_produto";
+        String sql = "SELECT Itens_Operacao.*, Produto.nome FROM Itens_Operacao join Produto on Itens_Operacao.id_produto = Produto.id_produto where Itens_Operacao.ativo = true";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             List<Itens_Operacao> lista = new ArrayList<>();
@@ -87,7 +101,7 @@ public class Itens_OperacaoRepository {
     }
 
     public Itens_Operacao buscarPorId(Long id) {
-        String sql = "SELECT * FROM Itens_Operacao WHERE id_itens_operacao = ?";
+        String sql = "SELECT * FROM Itens_Operacao WHERE id_itens_operacao = ? and ativo = true";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id);
