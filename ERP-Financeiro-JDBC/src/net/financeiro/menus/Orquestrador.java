@@ -59,14 +59,11 @@ public class Orquestrador implements Model {
 
     @Override
     public UpdateResult<? extends Model> update(Message msg) {
-
-        //todo WindowSizeMessage: Por Algum motivo o tamanho fica cortando
-
-        // if(msg instanceof WindowSizeMessage w) {
-        //     this.width = w.width();
-        //     this.height = w.height();
-        //     return UpdateResult.from(this);
-        // }
+         if(msg instanceof WindowSizeMessage w) {
+             this.width = w.width();
+             this.height = w.height();
+             return UpdateResult.from(this);
+         }
 
         if(msg instanceof JdbcQueryResult result) {
             this.isLoading = false;
@@ -134,6 +131,7 @@ public class Orquestrador implements Model {
         String viewMenuAtivo = menuAtivo.render(isLoading, spinner.view());
 
         int larguraUtil = Math.max(0, this.width - 2);
+        int alturaUtil = Math.max(0, this.height - 2);
 
         Style tituloStyle = Style.newStyle()
                 .foreground(ERP_DARKBLUE)
@@ -147,8 +145,8 @@ public class Orquestrador implements Model {
         String renderCompleta = tituloCentralizado + "\n\n" + viewMenuAtivo;
 
         return PANEL_BORDER
-                .height(this.height)
-                .width(this.width)
+                .height(alturaUtil)
+                .width(larguraUtil)
                 .render(renderCompleta);
     }
 }
