@@ -43,6 +43,7 @@ public class Orquestrador implements Model {
 
     //windows management
     private final HomeMenu homeMenu = new HomeMenu();
+    private final CategoriaItemMenu categoriaItemMenu = new CategoriaItemMenu();
     private final SaldoAtualMenu saldoAtualMenu = new SaldoAtualMenu();
 
     private TableMenu menuAtivo = homeMenu;
@@ -63,6 +64,8 @@ public class Orquestrador implements Model {
          if(msg instanceof WindowSizeMessage w) {
              this.width = w.width();
              this.height = w.height();
+
+             menuAtivo.handleInput(new WindowSizeMessage(getLarguraInterna(), getAlturaInterna()));
              return UpdateResult.from(this);
          }
 
@@ -114,10 +117,15 @@ public class Orquestrador implements Model {
 
     private UpdateResult<? extends Model> trocarModulo(String modulo) {
         switch (modulo) {
+            case "Categoria Item":
+                this.menuAtivo = categoriaItemMenu;
+                break;
             case "Saldo Atual":
                 this.menuAtivo = saldoAtualMenu;
                 break;
         }
+
+        this.menuAtivo.handleInput(new WindowSizeMessage(getLarguraInterna(), getAlturaInterna()));
 
         Command cmdInit = this.menuAtivo.init();
 
@@ -133,6 +141,14 @@ public class Orquestrador implements Model {
 
         this.isLoading = false;
         return UpdateResult.from(this);
+    }
+
+    private int getLarguraInterna() {
+        return Math.max(10, this.width - 4);
+    }
+
+    private int getAlturaInterna() {
+        return Math.max(5, this.height - 5);
     }
 
     @Override

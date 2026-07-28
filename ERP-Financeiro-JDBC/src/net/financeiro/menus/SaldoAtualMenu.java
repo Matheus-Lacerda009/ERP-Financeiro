@@ -10,7 +10,13 @@ import net.financeiro.menus.events.JdbcQueryResult;
 import net.financeiro.model.SaldoAtual;
 import net.financeiro.service.SaldoAtualService;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class SaldoAtualMenu implements TableMenu {
+    private final AdaptiveColor RED = new AdaptiveColor("#ff1f31", "#ff1f31");
+    private final AdaptiveColor GREEN = new AdaptiveColor("#00c431", "#00c431");
+
     private final SaldoAtualService service = new SaldoAtualService();
 
     private String errorMessage = "";
@@ -59,18 +65,15 @@ public class SaldoAtualMenu implements TableMenu {
     @Override
     public String render(boolean isLoading, String spinnerView) {
         Style dinheiroStyle = Style.newStyle()
-                .foreground(new AdaptiveColor("#00c431", "#00c431"));
-
-        Style centralizarStyle = Style.newStyle()
-                .align(Position.Center);
+                .foreground(GREEN);
 
         if(isLoading) {
-            return centralizarStyle.render("\n   Aguardando servidor " + spinnerView);
+            return "\n   Aguardando servidor " + spinnerView;
         }
         if(!errorMessage.isEmpty()) {
             return errorMessage;
         }
 
-        return dinheiroStyle.render("\n > R$ " + saldoAtual.getValor());
+        return dinheiroStyle.render("\n > " + NumberFormat.getCurrencyInstance().format(saldoAtual.getValor()));
     }
 }
