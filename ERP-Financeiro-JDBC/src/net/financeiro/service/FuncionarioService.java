@@ -87,4 +87,40 @@ public class FuncionarioService {
             return false;
         }
     }
+
+    public HashMap<String, List<String>> maiorVenda(){
+        try{
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.maiorVenda();
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public HashMap<String, List<String>> menorVenda(){
+        try{
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.menorVenda();
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public HashMap<String, List<String>> mediaVendas(){
+        try{
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.mediaVendas();
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }
