@@ -46,7 +46,7 @@ public class Conta_BancariaRepository {
 
 
     public boolean deletar(Long id_caixa){
-        String sql = "DELETE FROM Conta_Bancaria WHERE id_caixa = ?";
+        String sql = "update Conta_Bancaria set ativo = false WHERE id_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_caixa);
             pr.executeUpdate();
@@ -57,8 +57,20 @@ public class Conta_BancariaRepository {
         }
     }
 
+    public boolean reativar(Long id_caixa){
+        String sql = "update Conta_Bancaria set ativo = true WHERE id_caixa = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id_caixa);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("Erro ao reativar: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<Conta_Bancaria> listarInfo(){
-        String sql = "SELECT * FROM Conta_Bancaria";
+        String sql = "SELECT * FROM Conta_Bancaria where ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Conta_Bancaria> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -73,7 +85,7 @@ public class Conta_BancariaRepository {
     }
 
     public Conta_Bancaria buscarPorId(Long id_caixa){
-        String sql = "SELECT * FROM Conta_Bancaria where id_caixa = ?";
+        String sql = "SELECT * FROM Conta_Bancaria where id_caixa = ? where ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_caixa);
             ResultSet rs = pr.executeQuery();
