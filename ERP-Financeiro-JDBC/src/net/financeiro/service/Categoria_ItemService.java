@@ -79,6 +79,24 @@ public class Categoria_ItemService {
         }
     }
 
+    public void reativar(Long id){
+        try {
+            if (repository.buscarPorId(id) == null) {
+                throw new IdNaoEncontradoException("Erro: id não encontrado!");
+            }
+            if (repository.listarInfo().isEmpty()) {
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            if(repository.reativar(id)){
+                System.out.println("Reativado com sucesso!");
+            }
+        } catch(IdNaoEncontradoException e){
+            System.out.println(e.getMessage());
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public HashMap<String, List<String>> maiorVenda(){
         try{
             if(repository.listarInfo().isEmpty()){

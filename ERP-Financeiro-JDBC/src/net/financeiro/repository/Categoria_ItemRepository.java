@@ -40,13 +40,25 @@ public class Categoria_ItemRepository {
     }
 
     public boolean deletar(Long id){
-        String sql = "DELETE FROM Categoria_Item WHERE id_categoria_item = ?";
+        String sql = "update Categoria_Item set ativo = false WHERE id_categoria_item = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
             return true;
         } catch(SQLException e){
             System.out.println("Erro ao deletar: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean reativar(Long id){
+        String sql = "update Categoria_Item set ativo = true WHERE id_categoria_item = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("Erro ao reativar: " + e.getMessage());
             return false;
         }
     }
