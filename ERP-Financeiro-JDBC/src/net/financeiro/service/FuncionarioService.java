@@ -76,99 +76,15 @@ public class FuncionarioService {
         }
     }
 
-    public HashMap<String, List<String>> maiorVenda(){
-        String sql = "SELECT sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por funcionários', f.nome as 'Nome funcionario'\n" +
-                "from\n" +
-                "    Produto as p\n" +
-                "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
-                "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
-                "    join `Funcionario` as f on f.id_funcionario = op.id_funcionario\n" +
-                "GROUP BY\n" +
-                "    f.id_funcionario\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) desc;";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
-            ResultSet rs = pr.executeQuery();
-            HashMap<String, List<String>> lista = new HashMap<>();
-            List<String> nomeCategoria = new ArrayList<>();
-            List<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
-            while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+    public boolean reativar(Long id) {
+        try {
+            if (repository.buscarPorId(id) == null) {
+                throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
-            return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public HashMap<String, List<String>> menorVenda(){
-        String sql = "SELECT sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por funcionários', f.nome as 'Nome funcionario'\n" +
-                "from\n" +
-                "    Produto as p\n" +
-                "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
-                "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
-                "    join `Funcionario` as f on f.id_funcionario = op.id_funcionario\n" +
-                "GROUP BY\n" +
-                "    f.id_funcionario\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc;";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
-            ResultSet rs = pr.executeQuery();
-            HashMap<String, List<String>> lista = new HashMap<>();
-            List<String> nomeCategoria = new ArrayList<>();
-            List<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
-            while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
-            }
-            return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public HashMap<String, List<String>> mediaVendas(){
-        String sql = "SELECT avg(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Média Venda por funcionários', f.nome as 'Nome funcionario'\n" +
-                "from\n" +
-                "    Produto as p\n" +
-                "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
-                "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
-                "    join `Funcionario` as f on f.id_funcionario = op.id_funcionario\n" +
-                "GROUP BY\n" +
-                "    f.id_funcionario\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc;";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
-            ResultSet rs = pr.executeQuery();
-            HashMap<String, List<String>> lista = new HashMap<>();
-            List<String> nomeCategoria = new ArrayList<>();
-            List<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
-            while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Média Venda por categoria"));
-            }
-            return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
+            return repository.reativar(id);
+        } catch (IdNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 }
