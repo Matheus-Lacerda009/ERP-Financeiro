@@ -80,18 +80,18 @@ public class Categoria_ItemRepository {
 
     public HashMap<String, List<String>> maiorVenda(){
         String sql = "select sum(\n" +
-                "        p.valor * io.quantidade_produtos\n" +
-                "    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria'\n" +
-                "from\n" +
-                "    Produto as p\n" +
-                "    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
-                "    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
-                "where ativo = true" +
-                "group by\n" +
-                "    ci.id_categoria_item\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * io.quantidade_produtos\n" +
-                "    ) desc ";
+                "                        p.valor * io.quantidade_produtos\n" +
+                "                    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria', ci.ativo\n" +
+                "                from\n" +
+                "                    Produto as p\n" +
+                "                    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+                "                    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+                "                    where ci.ativo = 1\n" +
+                "                group by\n" +
+                "                    ci.id_categoria_item\n" +
+                "                ORDER BY sum(\n" +
+                "                        p.valor * io.quantidade_produtos\n" +
+                "                    ) desc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -112,18 +112,18 @@ public class Categoria_ItemRepository {
 
     public HashMap<String, List<String>> menorVenda(){
         String sql = "select sum(\n" +
-                "        p.valor * io.quantidade_produtos\n" +
-                "    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria'\n" +
-                "from\n" +
-                "    Produto as p\n" +
-                "    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
-                "    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
-                "where ativo = true" +
-                "group by\n" +
-                "    ci.id_categoria_item\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * io.quantidade_produtos\n" +
-                "    ) asc ";
+                "                        p.valor * io.quantidade_produtos\n" +
+                "                    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria', ci.ativo\n" +
+                "                from\n" +
+                "                    Produto as p\n" +
+                "                    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+                "                    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+                "                    where ci.ativo = 1\n" +
+                "                group by\n" +
+                "                    ci.id_categoria_item\n" +
+                "                ORDER BY sum(\n" +
+                "                        p.valor * io.quantidade_produtos\n" +
+                "                    ) asc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -144,18 +144,18 @@ public class Categoria_ItemRepository {
 
     public HashMap<String, List<String>> mediaVendas(){
         String sql = "select avg(\n" +
-                "        p.valor * io.quantidade_produtos\n" +
-                "    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria'\n" +
-                "from\n" +
-                "    Produto as p\n" +
-                "    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
-                "    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
-                "where ativo = true" +
-                "group by\n" +
-                "    ci.id_categoria_item\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * io.quantidade_produtos\n" +
-                "    ) asc ";
+    "                        p.valor * io.quantidade_produtos\n" +
+    "                    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria', ci.ativo\n" +
+    "                from\n" +
+    "                    Produto as p\n" +
+    "                    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+    "                    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+    "                    where ci.ativo = 1\n" +
+    "                group by\n" +
+    "                    ci.id_categoria_item\n" +
+    "                ORDER BY sum(\n" +
+    "                        p.valor * io.quantidade_produtos\n" +
+    "                    ) asc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -175,7 +175,7 @@ public class Categoria_ItemRepository {
     }
 
     public Categoria_Item buscarPorId(Long id_categoria_item){
-        String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ? where ativo = true";
+        String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ? and ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_categoria_item);
             ResultSet rs = pr.executeQuery();
