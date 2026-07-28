@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Fornecedor_ClienteRepository {
+public class FornecedorRepository {
 
     public Fornecedor_Cliente inserir(Fornecedor_Cliente ins){
-        String sql = "INSERT INTO Fornecedor_Cliente (razao_social_nome, cnpj_cpf, telefone, email) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Fornecedor_Cliente (razao_social_nome, cnpj_cpf, telefone, email, fornecedor) VALUES (?, ?, ?, ?, 1)";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getRazao_social_nome());
             pr.setString(2, ins.getCnpj_cpf());
@@ -33,7 +33,7 @@ public class Fornecedor_ClienteRepository {
     }
 
     public Fornecedor_Cliente atualizar(Fornecedor_Cliente alt){
-        String sql = "UPDATE Fornecedor_Cliente SET razao_social_nome = ?, cnpj_cpf = ?, telefone = ?, email = ? WHERE id_fornecedor_cliente = ?";
+        String sql = "UPDATE Fornecedor_Cliente SET razao_social_nome = ?, cnpj_cpf = ?, telefone = ?, email = ? WHERE id_fornecedor_cliente = ? and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getRazao_social_nome());
             pr.setString(2, alt.getCnpj_cpf());
@@ -49,7 +49,7 @@ public class Fornecedor_ClienteRepository {
     }
 
     public boolean deletar(Long id){
-        String sql = "update Fornecedor_Cliente set ativo = false WHERE id_fornecedor_cliente = ?";
+        String sql = "update Fornecedor_Cliente set ativo = false WHERE id_fornecedor_cliente = ? and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -61,7 +61,7 @@ public class Fornecedor_ClienteRepository {
     }
 
     public boolean reativar(Long id){
-        String sql = "update Fornecedor_Cliente set ativo = true WHERE id_fornecedor_cliente = ?";
+        String sql = "update Fornecedor_Cliente set ativo = true WHERE id_fornecedor_cliente = ? and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -73,7 +73,7 @@ public class Fornecedor_ClienteRepository {
     }
 
     public List<Fornecedor_Cliente> listarInfo(){
-        String sql = "SELECT * FROM Fornecedor_Cliente where ativo = true";
+        String sql = "SELECT * FROM Fornecedor_Cliente where ativo = true and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Fornecedor_Cliente> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -94,7 +94,7 @@ public class Fornecedor_ClienteRepository {
     }
 
     public Fornecedor_Cliente buscarPorId(Long id_fornecedor_cliente){
-        String sql = "SELECT * FROM Fornecedor_Cliente WHERE id_fornecedor_cliente = ? and ativo = true";
+        String sql = "SELECT * FROM Fornecedor_Cliente WHERE id_fornecedor_cliente = ? and ativo = true and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_fornecedor_cliente);
             ResultSet rs = pr.executeQuery();
@@ -123,7 +123,7 @@ public class Fornecedor_ClienteRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true" +
+                "where fc.ativo = true and fc.fornecedor = 1" +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY sum(\n" +
@@ -156,7 +156,7 @@ public class Fornecedor_ClienteRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true" +
+                "where fc.ativo = true and fc.fornecedor = 1" +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY sum(\n" +
@@ -189,7 +189,7 @@ public class Fornecedor_ClienteRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true" +
+                "where fc.ativo = true and fc.fornecedor = 1" +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY avg(\n" +

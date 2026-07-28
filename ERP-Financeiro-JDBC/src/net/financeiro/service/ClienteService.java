@@ -2,15 +2,14 @@ package net.financeiro.service;
 
 import net.financeiro.exceptions.IdNaoEncontradoException;
 import net.financeiro.exceptions.NadaInseridoException;
-import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Fornecedor_Cliente;
-import net.financeiro.repository.Fornecedor_ClienteRepository;
+import net.financeiro.repository.ClienteRepository;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class Fornecedor_ClienteService {
-    private final Fornecedor_ClienteRepository repository = new Fornecedor_ClienteRepository();
+public class ClienteService {
+    private final ClienteRepository repository = new ClienteRepository();
 
     public Fornecedor_Cliente inserir(Fornecedor_Cliente ins) {
         try {
