@@ -2,6 +2,8 @@ package net.financeiro.menus;
 
 import com.williamcallahan.tui4j.compat.bubbletea.Command;
 import com.williamcallahan.tui4j.compat.bubbletea.KeyPressMessage;
+import com.williamcallahan.tui4j.compat.bubbletea.Message;
+import com.williamcallahan.tui4j.compat.lipgloss.Position;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
 import net.financeiro.menus.events.JdbcQueryResult;
@@ -25,9 +27,11 @@ public class SaldoAtualMenu implements TableMenu {
     }
 
     @Override
-    public Command handleInput(KeyPressMessage key) {
-        if("r".equals(key.key()) || "enter".equals(key.key())) {
-            return consultarSaldo();
+    public Command handleInput(Message msg) {
+        if(msg instanceof KeyPressMessage key) {
+            if("r".equals(key.key()) || "enter".equals(key.key())) {
+                return consultarSaldo();
+            }
         }
         return null;
     }
@@ -57,13 +61,16 @@ public class SaldoAtualMenu implements TableMenu {
         Style dinheiroStyle = Style.newStyle()
                 .foreground(new AdaptiveColor("#00c431", "#00c431"));
 
+        Style centralizarStyle = Style.newStyle()
+                .align(Position.Center);
+
         if(isLoading) {
-            return "Aguardando servidor " + spinnerView;
+            return centralizarStyle.render("\n   Aguardando servidor " + spinnerView);
         }
         if(!errorMessage.isEmpty()) {
             return errorMessage;
         }
 
-        return dinheiroStyle.render(" > R$ " + saldoAtual.getValor());
+        return dinheiroStyle.render("\n > R$ " + saldoAtual.getValor());
     }
 }

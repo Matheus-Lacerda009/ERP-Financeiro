@@ -44,6 +44,7 @@ public class Orquestrador implements Model {
     //windows management
     private final HomeMenu homeMenu = new HomeMenu();
     private final SaldoAtualMenu saldoAtualMenu = new SaldoAtualMenu();
+
     private TableMenu menuAtivo = homeMenu;
     
     //constructor
@@ -71,6 +72,12 @@ public class Orquestrador implements Model {
             return UpdateResult.from(this);
         }
 
+        if(isLoading) {
+            UpdateResult<Spinner> spinnerResult = spinner.update(msg);
+            this.spinner = spinnerResult.model();
+            return UpdateResult.from(this, spinnerResult.command());
+        }
+
         if(msg instanceof KeyPressMessage key && !isLoading) {
             String k = key.key();
 
@@ -84,25 +91,22 @@ public class Orquestrador implements Model {
                 this.isLoading = false;
                 return UpdateResult.from(this);
             }
+        }
 
-            Command cmdService = menuAtivo.handleInput(key);
+        Command cmdService = menuAtivo.handleInput(msg);
 
-            if(menuAtivo == homeMenu && homeMenu.getTabelaSelecionada() != null) {
-                String moduloSelecionado = homeMenu.getTabelaSelecionada();
-                homeMenu.limparSelecao();
-                return trocarModulo(moduloSelecionado);
-            }
+        if(menuAtivo == homeMenu && homeMenu.getTabelaSelecionada() != null) {
+            String moduloSelecionado = homeMenu.getTabelaSelecionada();
+            homeMenu.limparSelecao();
+            return trocarModulo(moduloSelecionado);
+        }
 
-            if(cmdService != null) {
+        if(cmdService != null) {
+            if(msg instanceof KeyPressMessage key && ("enter".equals(key.key()) || "r".equals(key.key()))) {
                 this.isLoading = true;
                 return UpdateResult.from(this, Command.batch(() -> spinner.tick(), cmdService));
             }
-        }
-
-        if(isLoading) {
-            UpdateResult<Spinner> spinnerResult = spinner.update(msg);
-            this.spinner = spinnerResult.model();
-            return UpdateResult.from(this, spinnerResult.command());
+            return UpdateResult.from(this, cmdService);
         }
 
         return UpdateResult.from(this);
@@ -118,8 +122,13 @@ public class Orquestrador implements Model {
         Command cmdInit = this.menuAtivo.init();
 
         if(cmdInit != null) {
-            this.isLoading = true;
-            return UpdateResult.from(this, Command.batch(() -> spinner.tick(), cmdInit));
+            if(menuAtivo.requiresLoadingOnInit()) {
+                this.isLoading = true;
+                return UpdateResult.from(this, Command.batch(() -> spinner.tick(), cmdInit));
+            }
+
+            this.isLoading = false;
+            return UpdateResult.from(this, cmdInit);
         }
 
         this.isLoading = false;
@@ -128,10 +137,9 @@ public class Orquestrador implements Model {
 
     @Override
     public String view() {
-        String viewMenuAtivo = menuAtivo.render(isLoading, spinner.view());
-
         int larguraUtil = Math.max(0, this.width - 2);
         int alturaUtil = Math.max(0, this.height - 2);
+        int alturaCorpo = Math.max(1, alturaUtil - 3);
 
         Style tituloStyle = Style.newStyle()
                 .foreground(ERP_DARKBLUE)
@@ -139,10 +147,21 @@ public class Orquestrador implements Model {
                 .align(Position.Center)
                 .bold(true);
 
-        String tituloDinamico = " [ ERP Finanças :: " + menuAtivo.getTitle().toUpperCase() + " ] ";
-        String tituloCentralizado = tituloStyle.render(tituloDinamico);
+        Style rodapeStyle = Style.newStyle()
+                .width(larguraUtil)
+                .foreground(TEXT_DIM)
+                .align(Position.Center);
 
-        String renderCompleta = tituloCentralizado + "\n\n" + viewMenuAtivo;
+        Style corpoStyle = Style.newStyle()
+                .width(larguraUtil)
+                .height(alturaCorpo);
+
+        String titulo = tituloStyle.render(" [ ERP Finanças :: " + menuAtivo.getTitle().toUpperCase() + " ] ");
+        String rodape = rodapeStyle.render(" [q] Sair • [esc] Voltar ao Menu Inicial • [↑/↓] Navegar");
+
+        String renderCorpo = corpoStyle.render(menuAtivo.render(isLoading, spinner.view()));
+
+        String renderCompleta = titulo + "\n" + renderCorpo + "\n" + rodape;
 
         return PANEL_BORDER
                 .height(alturaUtil)
