@@ -111,5 +111,22 @@ public class Folha_PagamentoService {
         }
     }
 
-
+    public boolean reativar(Long id){
+        try {
+            if (repository.buscarPorId(id) == null) {
+                throw new IdNaoEncontradoException("Erro: id não encontrado!");
+            }
+            if (repository.listarInfo().isEmpty()) {
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            repository.reativar(id);
+            return true;
+        } catch(IdNaoEncontradoException e){
+            System.out.println(e.getMessage());
+            return false;
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 }

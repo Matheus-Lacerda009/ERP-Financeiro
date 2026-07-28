@@ -49,7 +49,19 @@ public class Folha_PagamentoRepository {
     }
 
     public boolean deletar(Long id){
-        String sql = "DELETE FROM Folha_Pagamento WHERE id_folha_pagamento = ?";
+        String sql = "update Folha_Pagamento set ativo = false WHERE id_folha_pagamento = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("Erro ao deletar: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean reativar(Long id){
+        String sql = "update Folha_Pagamento set ativo = true WHERE id_folha_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -63,7 +75,8 @@ public class Folha_PagamentoRepository {
     public List<Folha_Pagamento> listarInfo(){
         String sql = "SELECT Folha_Pagamento.*, Funcionario.nome " +
                 "FROM Folha_Pagamento " +
-                "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario";
+                "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario" +
+                "where Folha_Pagamento.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Folha_Pagamento> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -88,7 +101,7 @@ public class Folha_PagamentoRepository {
         String sql = "SELECT Folha_Pagamento.*, Funcionario.nome " +
                 "FROM Folha_Pagamento " +
                 "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
-                "where Folha_Pagamento.id_folha_pagamento = ?";
+                "where Folha_Pagamento.id_folha_pagamento = ? and Folha_Pagamento.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_folha_pagamento);
             ResultSet rs = pr.executeQuery();
