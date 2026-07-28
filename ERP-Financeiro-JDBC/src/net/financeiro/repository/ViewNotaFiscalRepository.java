@@ -24,20 +24,4 @@ public class ViewNotaFiscalRepository {
             return null;
         }
     }
-
-    public ViewNotaFiscal buscarPorId(Long id){
-        String sql = "SELECT * FROM ViewNotaFiscal where numero_nota_fiscal = ?";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
-            pr.setLong(1, id);
-            ResultSet rs = pr.executeQuery();
-            if(rs.next()){
-                return new ViewNotaFiscal(rs.getLong("numero_nota_fiscal"), rs.getLong("id_fluxo_caixa"), rs.getLong("id_parceiro"), rs.getString("data_emissao"), rs.getString("nome_empresa_parceira"), rs.getString("documento_parceiro"), rs.getString("email_parceiro"), rs.getString("forma_pagamento"), rs.getString("banco_recebimento"), rs.getInt("parcelas"));
-            } else {
-                return null;
-            }
-        } catch (SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
-        }
-    }
 }
