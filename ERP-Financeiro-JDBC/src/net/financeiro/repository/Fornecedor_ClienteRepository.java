@@ -22,8 +22,9 @@ public class Fornecedor_ClienteRepository {
             pr.setString(4, ins.getEmail());
             pr.executeUpdate();
             ResultSet rs = pr.getGeneratedKeys();
-            rs.next();
-            ins.setId_fornecedor_cliente(rs.getLong("GENERATED_KEY"));
+            if(rs.next()){
+                ins.setId_fornecedor_cliente(rs.getLong(1));
+            }
             return ins;
         } catch(SQLException e){
             System.out.println("ERRO ao inserir : " + e.getMessage());
@@ -85,14 +86,16 @@ public class Fornecedor_ClienteRepository {
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_fornecedor_cliente);
             ResultSet rs = pr.executeQuery();
-            rs.next();
-            return new Fornecedor_Cliente(
-                    id_fornecedor_cliente,
-                    rs.getString("razao_social_nome"),
-                    rs.getString("cnpj_cpf"),
-                    rs.getString("telefone"),
-                    rs.getString("email")
-            );
+            if(rs.next()){
+                return new Fornecedor_Cliente(
+                        id_fornecedor_cliente,
+                        rs.getString("razao_social_nome"),
+                        rs.getString("cnpj_cpf"),
+                        rs.getString("telefone"),
+                        rs.getString("email")
+                );
+            }
+            return null;
         } catch(SQLException e){
             System.out.println("ERRO de busca : " + e.getMessage());
             return null;
@@ -102,7 +105,7 @@ public class Fornecedor_ClienteRepository {
     public HashMap<String, List<String>> maiorVenda(){
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente'\n" +
+                "    ) as 'Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
@@ -116,13 +119,13 @@ public class Fornecedor_ClienteRepository {
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
-            List<String> nomeCategoria = new ArrayList<>();
-            List<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
+            List<String> nomeFornecedorCliente = new ArrayList<>();
+            List<String> vendaFornecedorCliente = new ArrayList<>();
+            lista.put("NomeFornecedorCliente", nomeFornecedorCliente);
+            lista.put("VendaFornecedorCliente", vendaFornecedorCliente);
             while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+                lista.get("NomeFornecedorCliente").add(rs.getString("Nome_Fornecedor_Cliente"));
+                lista.get("VendaFornecedorCliente").add(rs.getString("Venda_Fornecedor_Cliente"));
             }
             return lista;
         } catch(SQLException e){
@@ -134,7 +137,7 @@ public class Fornecedor_ClienteRepository {
     public HashMap<String, List<String>> menorVenda(){
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente '\n" +
+                "    ) as 'Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
@@ -148,13 +151,13 @@ public class Fornecedor_ClienteRepository {
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
-            List<String> nomeCategoria = new ArrayList<>();
-            List<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
+            List<String> nomeFornecedorCliente = new ArrayList<>();
+            List<String> vendaFornecedorCliente = new ArrayList<>();
+            lista.put("NomeFornecedorCliente", nomeFornecedorCliente);
+            lista.put("VendaFornecedorCliente", vendaFornecedorCliente);
             while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+                lista.get("NomeFornecedorCliente").add(rs.getString("Nome_Fornecedor_Cliente"));
+                lista.get("VendaFornecedorCliente").add(rs.getString("Venda_Fornecedor_Cliente"));
             }
             return lista;
         } catch(SQLException e){
@@ -166,7 +169,7 @@ public class Fornecedor_ClienteRepository {
     public HashMap<String, List<String>> mediaVendas(){
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Média Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente '\n" +
+                "    ) as 'Media_Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
@@ -174,19 +177,19 @@ public class Fornecedor_ClienteRepository {
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
-                "ORDER BY sum(\n" +
+                "ORDER BY avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) asc;\n";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
-            List<String> nomeCategoria = new ArrayList<>();
-            List<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
+            List<String> nomeFornecedorCliente = new ArrayList<>();
+            List<String> mediaVendaFornecedorCliente = new ArrayList<>();
+            lista.put("NomeFornecedorCliente", nomeFornecedorCliente);
+            lista.put("MediaVendaFornecedorCliente", mediaVendaFornecedorCliente);
             while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Média Venda por categoria"));
+                lista.get("NomeFornecedorCliente").add(rs.getString("Nome_Fornecedor_Cliente"));
+                lista.get("MediaVendaFornecedorCliente").add(rs.getString("Media_Venda_Fornecedor_Cliente"));
             }
             return lista;
         } catch(SQLException e){
