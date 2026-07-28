@@ -56,7 +56,7 @@ public class Fluxo_CaixaRepository {
     }
 
     public boolean deletar(Long id){
-        String sql = "DELETE FROM Fluxo_Caixa WHERE id_fluxo_caixa = ?";
+        String sql = "update Fluxo_Caixa set ativo = false WHERE id_fluxo_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
@@ -67,6 +67,17 @@ public class Fluxo_CaixaRepository {
         }
     }
 
+    public boolean reativar(Long id){
+        String sql = "update Fluxo_Caixa set ativo = true WHERE id_fluxo_caixa = ?";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("Erro ao deletar: " + e.getMessage());
+            return false;
+        }
+    }
 
     public List<Fluxo_Caixa> listarInfo(){
         String sql =  "SELECT Fluxo_Caixa.*, Conta_Bancaria.nome_banco, Forma_Pagamento.nome, Funcionario.nome, Operacao.status_operacao " +
@@ -75,7 +86,8 @@ public class Fluxo_CaixaRepository {
                 "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
                 "join Folha_Pagamento on Folha_Pagamento.id_folha_pagamento = Fluxo_Caixa.id_folha_pagamento " +
                 "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
-                "join Operacao on Operacao.id_operacao = Fluxo_Caixa.id_operacao";
+                "join Operacao on Operacao.id_operacao = Fluxo_Caixa.id_operacao" +
+                "where Fluxo_Caixa.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Fluxo_Caixa> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -108,7 +120,7 @@ public class Fluxo_CaixaRepository {
                 "join Folha_Pagamento on Folha_Pagamento.id_folha_pagamento = Fluxo_Caixa.id_folha_pagamento " +
                 "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
                 "join Operacao on Operacao.id_operacao = Fluxo_Caixa.id_operacao " +
-                "where Fluxo_Caixa.id_fluxo_caixa = ?";
+                "where Fluxo_Caixa.id_fluxo_caixa = ? and Fluxo_Caixa.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_fluxo_caixa );
             ResultSet rs = pr.executeQuery();
@@ -124,7 +136,6 @@ public class Fluxo_CaixaRepository {
         }
     }
 
-
     /*MÉTODOS QUERIES8*/
 
     public HashMap<String, List<String>> entradas_realizadas(int dias){
@@ -136,7 +147,8 @@ public class Fluxo_CaixaRepository {
                 "\n" +
                 "WHERE fc.tipo_operacao = 'Venda'\n" +
                 "  AND o.status_operacao = 'Concluída'\n" +
-                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY;\n";
+                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY\n" +
+                "  and fc.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setInt(1, dias);
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -163,7 +175,8 @@ public class Fluxo_CaixaRepository {
                 "JOIN Valor_pVenda vv ON o.id_operacao = vv.id_operacao\n" +
                 "\n" +
                 "WHERE fc.tipo_operacao = 'Venda'\n" +
-                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY;";
+                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY" +
+                "  and fc.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setInt(1, dias);
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -183,7 +196,6 @@ public class Fluxo_CaixaRepository {
         }
     }
 
-
     public HashMap<String, List<String>> saidas_realizadas (int dias){
         String sql = "SELECT o.data_operacao AS Data, vv.valor_total AS ValorVenda\n" +
                 "FROM Fluxo_Caixa fc\n" +
@@ -192,7 +204,8 @@ public class Fluxo_CaixaRepository {
                 "\n" +
                 "WHERE fc.tipo_operacao = 'Compra'\n" +
                 "  AND o.status_operacao = 'Concluída'\n" +
-                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY;";
+                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY" +
+                "  and fc.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setInt(1, dias);
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -220,7 +233,8 @@ public class Fluxo_CaixaRepository {
                 "\n" +
                 "WHERE fc.tipo_operacao = 'Compra'\n" +
                 "  AND o.status_operacao = 'Concluída'\n" +
-                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY;";
+                "  AND o.data_operacao >= NOW() - INTERVAL ? DAY" +
+                "  and fc.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setInt(1, dias);
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -239,12 +253,4 @@ public class Fluxo_CaixaRepository {
             return null;
         }
     }
-
-
-
-
-
-
-
-
 }

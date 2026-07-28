@@ -48,7 +48,6 @@ public class Fluxo_CaixaService {
             System.out.println(e.getMessage());
             return null;
         }
-
     }
 
     public Fluxo_Caixa atualizar(Fluxo_Caixa atl){
@@ -85,8 +84,6 @@ public class Fluxo_CaixaService {
             System.out.println(e.getMessage());
             return null;
         }
-
-
     }
 
     public List<Fluxo_Caixa> listarInfo(){
@@ -121,21 +118,38 @@ public class Fluxo_CaixaService {
         }
     }
 
+    public boolean reativar(Long id){
+        try {
+            if (repository.buscarPorId(id) == null) {
+                throw new IdNaoEncontradoException("Erro: id não encontrado!");
+            }
+            if (repository.listarInfo().isEmpty()) {
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            repository.reativar(id);
+            return true;
+        } catch(IdNaoEncontradoException e){
+            System.out.println(e.getMessage());
+            return false;
+        } catch(NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 
     /*MÉTODOS QUERIES*/
 
-    public HashMap<String, List<String>> entradas_realizadas(int dias ){
-        try{
-            if(repository.listarInfo().isEmpty()){
+    public HashMap<String, List<String>> entradas_realizadas(int dias ) {
+        try {
+            if (repository.listarInfo().isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            return repository.entradas_realizadas( dias);
-        } catch(NadaInseridoException e){
+            return repository.entradas_realizadas(dias);
+        } catch (NadaInseridoException e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
-
 
     public HashMap<String, List<String>> entradas_previstas(int dias ){
         try{
@@ -149,7 +163,6 @@ public class Fluxo_CaixaService {
         }
     }
 
-
     public HashMap<String, List<String>> saidas_realizadas(int dias ){
         try{
             if(repository.listarInfo().isEmpty()){
@@ -162,7 +175,6 @@ public class Fluxo_CaixaService {
         }
     }
 
-
     public HashMap<String, List<String>> saidas_previstas(int dias ){
         try{
             if(repository.listarInfo().isEmpty()){
@@ -174,6 +186,4 @@ public class Fluxo_CaixaService {
             return null;
         }
     }
-
-
 }
