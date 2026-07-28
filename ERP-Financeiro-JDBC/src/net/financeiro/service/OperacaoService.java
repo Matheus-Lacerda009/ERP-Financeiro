@@ -44,7 +44,7 @@ public class OperacaoService {
             if(repository.buscarPorId(op.getId_funcionario()) == null){
                 throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
             }
-            return op;
+            return repository.atualizar(op);
         }catch(IdNaoEncontradoException | AtributoInvalidoException | FkNaoEncontradaException e){
             System.out.println(e.getMessage());
             return null;
@@ -72,7 +72,22 @@ public class OperacaoService {
             if(repository.listarInfo().isEmpty()){
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            return true;
+            return repository.deletar(id);
+        }catch(IdNaoEncontradoException | NadaInseridoException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean reativar(Long id){
+        try{
+            if(repository.buscarPorId(id) == null){
+                throw new IdNaoEncontradoException("Erro: id não encontrado!");
+            }
+            if(repository.listarInfo().isEmpty()){
+                throw new NadaInseridoException("Erro: nada inserido no banco");
+            }
+            return repository.reativar(id);
         }catch(IdNaoEncontradoException | NadaInseridoException e){
             System.out.println(e.getMessage());
             return false;

@@ -49,7 +49,7 @@ public class OperacaoRepository {
     }
 
     public boolean deletar(Long id_digitado){
-        String sql = "DELETE FROM Operacao WHERE id_operacao = ?";
+        String sql = "update Operacao set ativo = false WHERE id_operacao = ?";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_digitado);
@@ -61,8 +61,21 @@ public class OperacaoRepository {
         }
     }
 
+    public boolean reativar(Long id_digitado){
+        String sql = "update Operacao set ativo = true WHERE id_operacao = ?";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+            pr.setLong(1, id_digitado);
+            pr.executeUpdate();
+            return true;
+        } catch(SQLException e){
+            System.out.println("Erro ao reativar: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<Operacao> listarInfo(){
-        String sql = "SELECT * FROM Operacao";
+        String sql = "SELECT * FROM Operacao where ativo = true";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Operacao> lista = new ArrayList<>();
@@ -79,7 +92,7 @@ public class OperacaoRepository {
     }
 
     public Operacao buscarPorId(Long id_digitado){
-        String sql = "SELECT * FROM Operacao WHERE id_Operacao = ?";
+        String sql = "SELECT * FROM Operacao WHERE id_Operacao = ? and ativo = true";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_digitado);
