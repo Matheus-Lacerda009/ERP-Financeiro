@@ -24,7 +24,7 @@ public class Categoria_ItemRepository {
 
     public Categoria_Item atualizar(Categoria_Item atl) throws SQLException {
         String sql = "UPDATE Categoria_Item SET nome = ? WHERE id_categoria_item = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setString(1, atl.getNome());
         pr.setLong(2, atl.getId_categoria_item());
         pr.executeUpdate();
@@ -34,7 +34,7 @@ public class Categoria_ItemRepository {
 
     public boolean deletar(Long id) throws SQLException {
         String sql = "update Categoria_Item set ativo = false WHERE id_categoria_item = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setLong(1, id);
         pr.executeUpdate();
         pr.close();
@@ -43,7 +43,7 @@ public class Categoria_ItemRepository {
 
     public boolean reativar(Long id) throws SQLException {
         String sql = "update Categoria_Item set ativo = true WHERE id_categoria_item = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
             pr.setLong(1, id);
             pr.executeUpdate();
             pr.close();
@@ -52,7 +52,7 @@ public class Categoria_ItemRepository {
 
     public List<Categoria_Item> listarInfo() throws SQLException {
         String sql = "SELECT * FROM Categoria_Item where ativo = true";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
             List<Categoria_Item> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
             while(rs.next()){
@@ -76,7 +76,7 @@ public class Categoria_ItemRepository {
                 "                ORDER BY sum(\n" +
                 "                        p.valor * io.quantidade_produtos\n" +
                 "                    ) desc;";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         HashMap<String, List<String>> lista = new HashMap<>();
         List<String> nomeCategoria = new ArrayList<>();
@@ -105,7 +105,7 @@ public class Categoria_ItemRepository {
                 "                ORDER BY sum(\n" +
                 "                        p.valor * io.quantidade_produtos\n" +
                 "                    ) asc;";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         HashMap<String, List<String>> lista = new HashMap<>();
         List<String> nomeCategoria = new ArrayList<>();
@@ -134,7 +134,7 @@ public class Categoria_ItemRepository {
     "                ORDER BY sum(\n" +
     "                        p.valor * io.quantidade_produtos\n" +
     "                    ) asc;";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         ResultSet rs = pr.executeQuery();
         HashMap<String, List<String>> lista = new HashMap<>();
         List<String> nomeCategoria = new ArrayList<>();
@@ -151,7 +151,7 @@ public class Categoria_ItemRepository {
 
     public Categoria_Item buscarPorId(Long id_categoria_item) throws SQLException {
         String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ? and ativo = true";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setLong(1, id_categoria_item);
         ResultSet rs = pr.executeQuery();
         pr.close();

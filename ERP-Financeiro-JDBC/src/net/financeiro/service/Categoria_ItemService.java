@@ -9,6 +9,7 @@ import net.financeiro.repository.Itens_OperacaoRepository;
 import net.financeiro.repository.ProdutosRepository;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,14 +19,14 @@ public class Categoria_ItemService {
     private final Itens_OperacaoRepository itensOperacaoRepository = new Itens_OperacaoRepository();
     private final ProdutosRepository produtosRepository = new ProdutosRepository();
 
-    public Categoria_Item inserir(Categoria_Item ins) throws ValorInvalidoException {
+    public Categoria_Item inserir(Categoria_Item ins) throws ValorInvalidoException, SQLException {
         if(ins.getNome().trim().isEmpty()){
             throw new ValorInvalidoException("Erro: nome vazio!");
         }
         return repository.inserir(ins);
     }
 
-    public Categoria_Item atualizar(Categoria_Item atl) throws ValorInvalidoException, IdNaoEncontradoException {
+    public Categoria_Item atualizar(Categoria_Item atl) throws ValorInvalidoException, IdNaoEncontradoException, SQLException {
         if(atl.getNome().trim().isEmpty()){
             throw new ValorInvalidoException("Erro: nome vazio!");
         }
@@ -35,7 +36,7 @@ public class Categoria_ItemService {
         return repository.atualizar(atl);
     }
 
-    public List<Categoria_Item> listarInfo() throws NadaInseridoException {
+    public List<Categoria_Item> listarInfo() throws NadaInseridoException, SQLException {
         List<Categoria_Item> lista = repository.listarInfo();
         if (lista.isEmpty()) {
             throw new NadaInseridoException("Erro: nada inserido no banco");
@@ -43,7 +44,7 @@ public class Categoria_ItemService {
         return lista;
     }
 
-    public boolean deletar(Long id) throws IdNaoEncontradoException, NadaInseridoException {
+    public boolean deletar(Long id) throws IdNaoEncontradoException, NadaInseridoException, SQLException {
         if (repository.buscarPorId(id) == null) {
             throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
@@ -56,7 +57,7 @@ public class Categoria_ItemService {
         return repository.deletar(id);
     }
 
-    public boolean reativar(Long id) throws IdNaoEncontradoException, NadaInseridoException {
+    public boolean reativar(Long id) throws IdNaoEncontradoException, NadaInseridoException, SQLException {
         if (repository.buscarPorId(id) == null) {
             throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
@@ -69,21 +70,21 @@ public class Categoria_ItemService {
         return repository.reativar(id);
     }
 
-    public HashMap<String, List<String>> maiorVenda() throws NadaInseridoException {
+    public HashMap<String, List<String>> maiorVenda() throws NadaInseridoException, SQLException {
         if(repository.listarInfo().isEmpty()){
             throw new NadaInseridoException("Erro: nada inserido no banco");
         }
         return repository.maiorVenda();
     }
 
-    public HashMap<String, List<String>> menorVenda() throws NadaInseridoException {
+    public HashMap<String, List<String>> menorVenda() throws NadaInseridoException, SQLException {
         if(repository.listarInfo().isEmpty()){
             throw new NadaInseridoException("Erro: nada inserido no banco");
         }
         return repository.menorVenda();
     }
 
-    public HashMap<String, List<String>> mediaVendas() throws NadaInseridoException {
+    public HashMap<String, List<String>> mediaVendas() throws NadaInseridoException, SQLException {
         if(repository.listarInfo().isEmpty()){
             throw new NadaInseridoException("Erro: nada inserido no banco");
         }
