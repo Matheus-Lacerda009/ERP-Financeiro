@@ -24,6 +24,7 @@ public class ProdutosRepository {
         ResultSet rs = pr.getGeneratedKeys();
         rs.next();
         ins.setId_produto(rs.getLong("GENERATED_KEY"));
+        pr.close();
         return ins;
     }
 
@@ -37,6 +38,7 @@ public class ProdutosRepository {
         pr.setLong(5, atl.getId_categoria_item());
         pr.setLong(6, atl.getId_produto());
         pr.executeUpdate();
+        pr.close();
         return atl;
     }
 
@@ -45,6 +47,7 @@ public class ProdutosRepository {
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setLong(1, id);
         pr.executeUpdate();
+        pr.close();
         return true;
     }
 
@@ -53,6 +56,7 @@ public class ProdutosRepository {
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setLong(1, id);
         pr.executeUpdate();
+        pr.close();
         return true;
     }
 
@@ -64,6 +68,7 @@ public class ProdutosRepository {
         while(rs.next()){
             lista.add(new Produto(rs.getLong("id_produto"), rs.getLong("id_categoria_item"), rs.getString("Produto.nome"), rs.getString("descricao"), rs.getDouble("valor"), rs.getInt("quantidade_estoque"), rs.getString("Categoria_Item.nome")));
         }
+        pr.close();
         return lista;
     }
 
@@ -91,6 +96,7 @@ public class ProdutosRepository {
             lista.get("NomeProduto").add(rs.getString("Nome produto"));
             lista.get("VendaProduto").add(rs.getString("Venda por produto"));
         }
+        pr.close();
         return lista;
     }
 
@@ -118,6 +124,7 @@ public class ProdutosRepository {
             lista.get("NomeProduto").add(rs.getString("Nome produto"));
             lista.get("VendaProduto").add(rs.getString("Venda por produto"));
         }
+        pr.close();
         return lista;
     }
 
@@ -145,6 +152,7 @@ public class ProdutosRepository {
             lista.get("NomeProduto").add(rs.getString("Nome produto"));
             lista.get("VendaProduto").add(rs.getString("Média Venda por produto"));
         }
+        pr.close();
         return lista;
     }
 
@@ -153,6 +161,7 @@ public class ProdutosRepository {
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setLong(1, id);
         ResultSet rs = pr.executeQuery();
+        pr.close();
         if(rs.next()){
             return new Produto(rs.getLong("id_produto"), rs.getLong("id_categoria_item"), rs.getString("nome"), rs.getString("descricao"), rs.getDouble("valor"), rs.getInt("quantidade_estoque"));
         } else {
