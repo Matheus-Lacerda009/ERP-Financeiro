@@ -31,7 +31,7 @@ public class Folha_PagamentoRepository {
         }
     }
 
-    public Folha_Pagamento atualizar(Folha_Pagamento atl){
+    public Folha_Pagamento atualizar(Folha_Pagamento atl, Long id){
         String sql = "UPDATE Folha_Pagamento SET descontos = ?, data_entrada = ?, horas_trabalhadas = ?, valor_hora = ?, id_funcionario = ? WHERE id_folha_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setDouble(1, atl.getDescontos());
@@ -39,7 +39,7 @@ public class Folha_PagamentoRepository {
             pr.setInt(3, atl.getHoras_trabalhadas());
             pr.setDouble(4, atl.getValor_hora());
             pr.setLong(5, atl.getId_funcionario());
-            pr.setLong(6, atl.getId_folha_pagamento());
+            pr.setLong(6, id);
             pr.executeUpdate();
             return atl;
         } catch(SQLException e){
