@@ -32,14 +32,14 @@ public class FornecedorRepository {
         }
     }
 
-    public Fornecedor_Cliente atualizar(Fornecedor_Cliente alt){
+    public Fornecedor_Cliente atualizar(Fornecedor_Cliente alt, Long id){
         String sql = "UPDATE Fornecedor_Cliente SET razao_social_nome = ?, cnpj_cpf = ?, telefone = ?, email = ? WHERE id_fornecedor_cliente = ? and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getRazao_social_nome());
             pr.setString(2, alt.getCnpj_cpf());
             pr.setString(3, alt.getTelefone());
             pr.setString(4, alt.getEmail());
-            pr.setLong(5, alt.getId_fornecedor_cliente());
+            pr.setLong(5, id);
             pr.executeUpdate();
             return alt;
         } catch(SQLException e){
@@ -180,7 +180,7 @@ public class FornecedorRepository {
         }
     }
 
-    public HashMap<String, List<String>> mediaVendas(){
+    public HashMap<String, List<String>> mediaVenda(){
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Media_Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
