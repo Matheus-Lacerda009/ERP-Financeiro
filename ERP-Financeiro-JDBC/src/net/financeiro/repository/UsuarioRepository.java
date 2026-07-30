@@ -32,13 +32,13 @@ public class UsuarioRepository {
         return rs.getLong("id") == 1L && BCrypt.checkpw(adm.getSenha(), rs.getString("senha"));
     }
 
-    public boolean validacao(String nome, String senha) throws SQLException {
+    public boolean validacao(Usuario user) throws SQLException {
         String sql = "select senha from Usuarios where nome = ?";
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setString(1, nome);
+        pr.setString(1, user.getNome());
         ResultSet rs = pr.executeQuery();
         rs.next();
         pr.close();
-        return BCrypt.checkpw(senha, rs.getString("senha"));
+        return BCrypt.checkpw(user.getSenha(), rs.getString("senha"));
     }
 }
