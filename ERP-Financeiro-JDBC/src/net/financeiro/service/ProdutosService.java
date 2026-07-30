@@ -34,7 +34,7 @@ public class ProdutosService {
         return repository.inserir(ins);
     }
 
-    public Produto atualizar(Produto atl) throws ValorInvalidoException, IdNaoEncontradoException, FkNaoEncontradaException, SQLException {
+    public Produto atualizar(Produto atl, Long id) throws ValorInvalidoException, IdNaoEncontradoException, FkNaoEncontradaException, SQLException {
         if(atl.getNome().trim().isEmpty()){
             throw new ValorInvalidoException("Erro: nome vazio!");
         }
@@ -44,13 +44,13 @@ public class ProdutosService {
         if(atl.getQuantidade_estoque() < 0){
             throw new ValorInvalidoException("Erro: quantidade de produtos é negativa");
         }
-        if(repository.buscarPorId(atl.getId_produto()) == null){
+        if(repository.buscarPorId(id) == null){
             throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
         if(categoriaItemRepository.buscarPorId(atl.getId_categoria_item()) == null){
             throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
         }
-        return repository.atualizar(atl);
+        return repository.atualizar(atl, id);
     }
 
     public List<Produto> listarInfo() throws NadaInseridoException, SQLException {
@@ -95,10 +95,10 @@ public class ProdutosService {
         return repository.menorVenda();
     }
 
-    public HashMap<String, List<String>> mediaVendas() throws SQLException, NadaInseridoException {
+    public HashMap<String, List<String>> mediaVenda() throws SQLException, NadaInseridoException {
         if(repository.listarInfo().isEmpty()){
             throw new NadaInseridoException("Erro: nada inserido no banco");
         }
-        return repository.mediaVendas();
+        return repository.mediaVenda();
     }
 }
