@@ -47,12 +47,15 @@ public class Folha_PagamentoService {
 
     }
 
-    public Folha_Pagamento atualizar(Folha_Pagamento atl){
+    public Folha_Pagamento atualizar(Folha_Pagamento atl, Long id){
 
         try{
 
             if(repositoryA.buscarPorId(atl.getId_funcionario()) == null){
                 throw new IdNaoEncontradoException("Erro: id funcionário não encontrado!");
+            }
+            if(repository.buscarPorId(id) == null){
+                throw new IdNaoEncontradoException("Erro: id folha pagamento não encontrado!");
             }
             if(atl.getDescontos() < 0.0){
                 throw new NadaInseridoException("Erro: Desconto vazio!");
@@ -66,7 +69,7 @@ public class Folha_PagamentoService {
             if(atl.getData_entrada().trim().isEmpty()){
                 throw new NadaInseridoException("Erro: id folha_pagamento não encontrado!");
             }
-            return repository.atualizar(atl);
+            return repository.atualizar(atl, id);
 
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());

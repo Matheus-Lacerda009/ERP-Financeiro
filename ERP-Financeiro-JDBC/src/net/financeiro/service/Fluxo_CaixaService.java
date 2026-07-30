@@ -50,7 +50,7 @@ public class Fluxo_CaixaService {
         }
     }
 
-    public Fluxo_Caixa atualizar(Fluxo_Caixa atl){
+    public Fluxo_Caixa atualizar(Fluxo_Caixa atl, Long id){
 
         try{
 
@@ -72,10 +72,10 @@ public class Fluxo_CaixaService {
             if(repositoryD.buscarPorId(atl.getId_operacao()) == null){
                 throw new IdNaoEncontradoException("Erro: id operação não encontrado!");
             }
-            if(repository.buscarPorId(atl.getId_fluxo_caixa()) == null){
-                throw new IdNaoEncontradoException("Erro: id operação não encontrado!");
+            if(repository.buscarPorId(id) == null){
+                throw new IdNaoEncontradoException("Erro: id fluxo de caixa não encontrado!");
             }
-            return repository.atualizar(atl);
+            return repository.atualizar(atl, id);
 
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());

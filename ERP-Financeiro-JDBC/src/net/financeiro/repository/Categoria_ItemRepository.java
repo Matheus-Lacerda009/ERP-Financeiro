@@ -22,11 +22,11 @@ public class Categoria_ItemRepository {
         return ins;
     }
 
-    public Categoria_Item atualizar(Categoria_Item atl) throws SQLException {
+    public Categoria_Item atualizar(Categoria_Item atl, Long id) throws SQLException {
         String sql = "UPDATE Categoria_Item SET nome = ? WHERE id_categoria_item = ?";
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setString(1, atl.getNome());
-        pr.setLong(2, atl.getId_categoria_item());
+        pr.setLong(2, id);
         pr.executeUpdate();
         pr.close();
         return atl;
@@ -120,7 +120,7 @@ public class Categoria_ItemRepository {
         return lista;
     }
 
-    public HashMap<String, List<String>> mediaVendas() throws SQLException {
+    public HashMap<String, List<String>> mediaVenda() throws SQLException {
         String sql = "select avg(\n" +
                 "                        p.valor * io.quantidade_produtos\n" +
                 "                    ) as 'Média Venda por categoria', ci.nome as 'Nome categoria', ci.ativo\n" +

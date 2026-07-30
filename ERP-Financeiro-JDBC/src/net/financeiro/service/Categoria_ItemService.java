@@ -26,14 +26,14 @@ public class Categoria_ItemService {
         return repository.inserir(ins);
     }
 
-    public Categoria_Item atualizar(Categoria_Item atl) throws ValorInvalidoException, IdNaoEncontradoException, SQLException {
+    public Categoria_Item atualizar(Categoria_Item atl, Long id) throws ValorInvalidoException, IdNaoEncontradoException, SQLException {
         if(atl.getNome().trim().isEmpty()){
             throw new ValorInvalidoException("Erro: nome vazio!");
         }
         if(repository.buscarPorId(atl.getId_categoria_item()) == null){
             throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
-        return repository.atualizar(atl);
+        return repository.atualizar(atl, id);
     }
 
     public List<Categoria_Item> listarInfo() throws NadaInseridoException, SQLException {
@@ -84,10 +84,10 @@ public class Categoria_ItemService {
         return repository.menorVenda();
     }
 
-    public HashMap<String, List<String>> mediaVendas() throws NadaInseridoException, SQLException {
+    public HashMap<String, List<String>> mediaVenda() throws NadaInseridoException, SQLException {
         if(repository.listarInfo().isEmpty()){
             throw new NadaInseridoException("Erro: nada inserido no banco");
         }
-        return repository.mediaVendas();
+        return repository.mediaVenda();
     }
 }

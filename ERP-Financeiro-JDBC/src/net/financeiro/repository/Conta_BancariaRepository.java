@@ -30,12 +30,12 @@ public class Conta_BancariaRepository {
         }
     }
 
-    public Conta_Bancaria atualizar(Conta_Bancaria atl){
+    public Conta_Bancaria atualizar(Conta_Bancaria atl, Long id){
         String sql = "UPDATE Conta_Bancaria SET nome_banco = ?, numero_conta = ? WHERE id_caixa = ? ";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, atl.getNome_banco());
             pr.setInt(2, atl.getNumero_conta());
-            pr.setLong(3, atl.getId_caixa());
+            pr.setLong(3, id);
             pr.executeUpdate();
             return atl;
         } catch(SQLException e){
