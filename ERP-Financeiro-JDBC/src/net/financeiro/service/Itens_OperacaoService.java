@@ -34,7 +34,7 @@ public class Itens_OperacaoService {
         }
     }
 
-    public Itens_Operacao atualizar(Itens_Operacao atl) {
+    public Itens_Operacao atualizar(Itens_Operacao atl, Long id) {
         try {
             if(atl.getQuantidade_produtos() < 0) {
                 throw new NadaInseridoException("Erro: quantidade de produtos negativa!");
@@ -45,11 +45,11 @@ public class Itens_OperacaoService {
             if(operacaoRepository.buscarPorId(atl.getId_operacao()) == null) {
                 throw new FkNaoEncontradaException("Erro: chave estrangeira inválida!");
             }
-            if(repository.buscarPorId(atl.getId_itens_operacao()) == null) {
+            if(repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: ID não encontrado!");
             }
 
-            return repository.atualizar(atl);
+            return repository.atualizar(atl, id);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;

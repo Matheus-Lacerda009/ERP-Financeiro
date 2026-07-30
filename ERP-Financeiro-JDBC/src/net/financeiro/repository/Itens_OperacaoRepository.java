@@ -31,14 +31,14 @@ public class Itens_OperacaoRepository {
         }
     }
 
-    public Itens_Operacao atualizar(Itens_Operacao atl) {
+    public Itens_Operacao atualizar(Itens_Operacao atl, Long id) {
         String sql = "UPDATE Itens_Operacao SET quantidade_produtos = ?, id_produto = ?, id_operacao = ? WHERE id_itens_operacao = ?";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setInt(1, atl.getQuantidade_produtos());
             pr.setLong(2, atl.getId_produto());
             pr.setLong(3, atl.getId_operacao());
-            pr.setLong(4, atl.getId_itens_operacao());
+            pr.setLong(4, id);
             pr.executeUpdate();
 
             return atl;
