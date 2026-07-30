@@ -7,90 +7,66 @@ import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Operacao;
 import net.financeiro.repository.OperacaoRepository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class OperacaoService {
     private final OperacaoRepository repository = new OperacaoRepository();
 
-    public Operacao inserir(Operacao op){
-        try{
-            if(!op.getStatus_operacao().equals("Pendente") || !op.getStatus_operacao().equals("Concluída")){
-                throw new AtributoInvalidoException("Erro: atributo inválido!");
-            }
-            if(repository.buscarPorId(op.getId_fornecedor_cliente()) == null){
-                throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
-            }
-            if(repository.buscarPorId(op.getId_funcionario()) == null){
-                throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
-            }
-            return repository.inserir(op);
-        }catch(AtributoInvalidoException | FkNaoEncontradaException e){
-            System.out.println(e.getMessage());
-            return null;
+    public Operacao inserir(Operacao op) throws AtributoInvalidoException, FkNaoEncontradaException, SQLException {
+        if(!op.getStatus_operacao().equals("Pendente") || !op.getStatus_operacao().equals("Concluída")){
+            throw new AtributoInvalidoException("Erro: atributo inválido!");
         }
+        if(repository.buscarPorId(op.getId_fornecedor_cliente()) == null){
+            throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
+        }
+        if(repository.buscarPorId(op.getId_funcionario()) == null){
+            throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
+        }
+        return repository.inserir(op);
     }
 
-    public Operacao atualizar(Operacao op){
-        try{
-            if(repository.buscarPorId(op.getId_operacao()) == null){
-                throw new IdNaoEncontradoException("Erro: id não encontrado!");
-            }
-            if(!op.getStatus_operacao().equals("Pendente") || !op.getStatus_operacao().equals("Concluída")){
-                throw new AtributoInvalidoException("Erro: atributo inválido!");
-            }
-            if(repository.buscarPorId(op.getId_fornecedor_cliente()) == null){
-                throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
-            }
-            if(repository.buscarPorId(op.getId_funcionario()) == null){
-                throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
-            }
-            return repository.atualizar(op);
-        }catch(IdNaoEncontradoException | AtributoInvalidoException | FkNaoEncontradaException e){
-            System.out.println(e.getMessage());
-            return null;
+    public Operacao atualizar(Operacao op) throws IdNaoEncontradoException, FkNaoEncontradaException, SQLException {
+        if(repository.buscarPorId(op.getId_operacao()) == null){
+            throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
+        if(!op.getStatus_operacao().equals("Pendente") || !op.getStatus_operacao().equals("Concluída")){
+            throw new AtributoInvalidoException("Erro: atributo inválido!");
+        }
+        if(repository.buscarPorId(op.getId_fornecedor_cliente()) == null){
+            throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
+        }
+        if(repository.buscarPorId(op.getId_funcionario()) == null){
+            throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
+        }
+        return repository.atualizar(op);
     }
 
-    public List<Operacao> listarInfo(){
-        try{
-            List<Operacao> lista = repository.listarInfo();
-            if(lista.isEmpty()){
-                throw new NadaInseridoException("Erro: nada inserido no banco");
-            }
-            return lista;
-        }catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
+    public List<Operacao> listarInfo() throws NadaInseridoException, SQLException {
+        List<Operacao> lista = repository.listarInfo();
+        if(lista.isEmpty()){
+            throw new NadaInseridoException("Erro: nada inserido no banco");
         }
+        return lista;
     }
 
-    public boolean deletar(Long id){
-        try{
-            if(repository.buscarPorId(id) == null){
-                throw new IdNaoEncontradoException("Erro: id não encontrado!");
-            }
-            if(repository.listarInfo().isEmpty()){
-                throw new NadaInseridoException("Erro: nada inserido no banco");
-            }
-            return repository.deletar(id);
-        }catch(IdNaoEncontradoException | NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return false;
+    public boolean deletar(Long id) throws IdNaoEncontradoException, NadaInseridoException, SQLException {
+        if(repository.buscarPorId(id) == null){
+            throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
+        if(repository.listarInfo().isEmpty()){
+            throw new NadaInseridoException("Erro: nada inserido no banco");
+        }
+        return repository.deletar(id);
     }
 
-    public boolean reativar(Long id){
-        try{
-            if(repository.buscarPorId(id) == null){
-                throw new IdNaoEncontradoException("Erro: id não encontrado!");
-            }
-            if(repository.listarInfo().isEmpty()){
-                throw new NadaInseridoException("Erro: nada inserido no banco");
-            }
-            return repository.reativar(id);
-        }catch(IdNaoEncontradoException | NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return false;
+    public boolean reativar(Long id) throws IdNaoEncontradoException, NadaInseridoException, SQLException {
+        if(repository.buscarPorId(id) == null){
+            throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
+        if(repository.listarInfo().isEmpty()){
+            throw new NadaInseridoException("Erro: nada inserido no banco");
+        }
+        return repository.reativar(id);
     }
 }
