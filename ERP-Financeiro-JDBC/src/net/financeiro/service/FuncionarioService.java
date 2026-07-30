@@ -37,14 +37,14 @@ public class FuncionarioService {
         }
     }
 
-    public Funcionario atualizar(Funcionario atl) {
+    public Funcionario atualizar(Funcionario atl, Long id) {
         try {
             if (atl.getNome() == null || atl.getNome().trim().isEmpty()) {
                 throw new NadaInseridoException("ERRO: Nome inválido, não pode ser vazio");
             } else if (repository.buscarPorId(atl.getId_funcionario()) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
-            return repository.atualizar(atl);
+            return repository.atualizar(atl, id);
         } catch (NadaInseridoException | IdNaoEncontradoException e) {
             System.out.println(e.getMessage());
             return null;
@@ -112,12 +112,12 @@ public class FuncionarioService {
         }
     }
 
-    public HashMap<String, List<String>> mediaVendas(){
+    public HashMap<String, List<String>> mediaVenda(){
         try{
             if(repository.listarInfo().isEmpty()){
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            return repository.mediaVendas();
+            return repository.mediaVenda();
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
