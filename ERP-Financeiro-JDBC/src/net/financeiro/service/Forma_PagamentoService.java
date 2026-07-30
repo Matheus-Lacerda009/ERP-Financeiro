@@ -23,14 +23,14 @@ public class Forma_PagamentoService {
         }
     }
 
-    public Forma_Pagamento atualizar(Forma_Pagamento atl) {
+    public Forma_Pagamento atualizar(Forma_Pagamento atl, Long id) {
         try {
             if (atl.getNome().trim().isEmpty()) {
                 throw new NadaInseridoException("ERRO: Nome inválido, não pode ser vazio");
-            } else if (repository.buscarPorId(atl.getId_forma_pagamento()) == null) {
+            } else if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
-            return repository.atualizar(atl);
+            return repository.atualizar(atl, id);
         } catch (NadaInseridoException | IdNaoEncontradoException e) {
             System.out.println(e.getMessage());
             return null;
