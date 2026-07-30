@@ -19,6 +19,7 @@ public class UsuarioRepository {
         if(pr.executeUpdate() != 0){
             return true;
         }
+        pr.close();
         return false;
     }
 
@@ -28,8 +29,9 @@ public class UsuarioRepository {
         prVal.setString(1, adm.getNome());
         ResultSet rs = prVal.executeQuery();
         rs.next();
+        boolean resultado = rs.getLong("id") == 1L && BCrypt.checkpw(adm.getSenha(), rs.getString("senha"));
         prVal.close();
-        return rs.getLong("id") == 1L && BCrypt.checkpw(adm.getSenha(), rs.getString("senha"));
+        return resultado;
     }
 
     public boolean validacao(Usuario user) throws SQLException {
@@ -38,7 +40,8 @@ public class UsuarioRepository {
         pr.setString(1, user.getNome());
         ResultSet rs = pr.executeQuery();
         rs.next();
+        boolean resultado = BCrypt.checkpw(user.getSenha(), rs.getString("senha"));
         pr.close();
-        return BCrypt.checkpw(user.getSenha(), rs.getString("senha"));
+        return resultado;
     }
 }
