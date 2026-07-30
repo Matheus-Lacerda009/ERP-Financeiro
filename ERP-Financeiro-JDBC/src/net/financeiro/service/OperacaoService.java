@@ -26,8 +26,8 @@ public class OperacaoService {
         return repository.inserir(op);
     }
 
-    public Operacao atualizar(Operacao op) throws IdNaoEncontradoException, FkNaoEncontradaException, SQLException {
-        if(repository.buscarPorId(op.getId_operacao()) == null){
+    public Operacao atualizar(Operacao op, Long id) throws IdNaoEncontradoException, FkNaoEncontradaException, SQLException {
+        if(repository.buscarPorId(id) == null){
             throw new IdNaoEncontradoException("Erro: id não encontrado!");
         }
         if(!op.getStatus_operacao().equals("Pendente") || !op.getStatus_operacao().equals("Concluída")){
@@ -39,7 +39,7 @@ public class OperacaoService {
         if(repository.buscarPorId(op.getId_funcionario()) == null){
             throw new FkNaoEncontradaException("Erro: chave estrangeira não encontrada!");
         }
-        return repository.atualizar(op);
+        return repository.atualizar(op, id);
     }
 
     public List<Operacao> listarInfo() throws NadaInseridoException, SQLException {
