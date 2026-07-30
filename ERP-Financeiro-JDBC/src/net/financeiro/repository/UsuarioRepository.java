@@ -23,17 +23,13 @@ public class UsuarioRepository {
     }
 
     public boolean isAdm(Usuario adm) throws SQLException {
-        String sqlVal = "select id from Usuarios where nome = ? && senha = sha2(?, 256)";
+        String sqlVal = "select id, senha from Usuarios where nome = ?";
         PreparedStatement prVal = Conexao.connecting().prepareStatement(sqlVal);
         prVal.setString(1, adm.getNome());
-        prVal.setString(2, adm.getSenha());
         ResultSet rs = prVal.executeQuery();
         rs.next();
         prVal.close();
-        if (rs.getLong("id") == 1L) {
-            return true;
-        }
-        return false;
+        return rs.getLong("id") == 1L && BCrypt.checkpw(adm.getSenha(), rs.getString("senha"));
     }
 
     public boolean validacao(String nome, String senha) throws SQLException {
@@ -41,7 +37,8 @@ public class UsuarioRepository {
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setString(1, nome);
         ResultSet rs = pr.executeQuery();
+        rs.next();
         pr.close();
-        return rs.next() && BCrypt.checkpw(senha, rs.getString("senha"));
+        return BCrypt.checkpw(senha, rs.getString("senha"));
     }
 }
