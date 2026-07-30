@@ -39,7 +39,7 @@ public class ClienteRepository {
             pr.setString(2, alt.getCnpj_cpf());
             pr.setString(3, alt.getTelefone());
             pr.setString(4, alt.getEmail());
-            pr.setLong(5, alt.getId_fornecedor_cliente());
+            pr.setLong(5, id);
             pr.executeUpdate();
             return alt;
         } catch(SQLException e){
