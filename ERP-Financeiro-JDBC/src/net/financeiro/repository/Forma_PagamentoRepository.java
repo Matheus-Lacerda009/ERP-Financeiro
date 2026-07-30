@@ -28,11 +28,11 @@ public class Forma_PagamentoRepository {
         }
     }
 
-    public  Forma_Pagamento atualizar(Forma_Pagamento alt){
+    public  Forma_Pagamento atualizar(Forma_Pagamento alt, Long id){
         String sql = "UPDATE Forma_Pagamento SET nome = ? WHERE id_forma_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getNome());
-            pr.setLong(2, alt.getId_forma_pagamento());
+            pr.setLong(2, id);
             pr.executeUpdate();
             return  alt;
         }catch (SQLException e ){

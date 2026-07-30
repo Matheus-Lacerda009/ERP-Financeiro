@@ -28,7 +28,7 @@ public class ProdutosRepository {
         return ins;
     }
 
-    public Produto atualizar(Produto atl) throws SQLException {
+    public Produto atualizar(Produto atl, Long id) throws SQLException {
         String sql = "UPDATE Produto SET nome = ?, valor = ?, descricao = ?, quantidade_estoque = ?, id_categoria_item = ? WHERE id_produto = ?";
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setString(1, atl.getNome());
@@ -36,7 +36,7 @@ public class ProdutosRepository {
         pr.setString(3, atl.getDescricao());
         pr.setInt(4, atl.getQuantidade_estoque());
         pr.setLong(5, atl.getId_categoria_item());
-        pr.setLong(6, atl.getId_produto());
+        pr.setLong(6, id);
         pr.executeUpdate();
         pr.close();
         return atl;
@@ -128,7 +128,7 @@ public class ProdutosRepository {
         return lista;
     }
 
-    public HashMap<String, List<String>> mediaVendas() throws SQLException {
+    public HashMap<String, List<String>> mediaVenda() throws SQLException {
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Média Venda por produto', p.nome as 'Nome produto'\n" +

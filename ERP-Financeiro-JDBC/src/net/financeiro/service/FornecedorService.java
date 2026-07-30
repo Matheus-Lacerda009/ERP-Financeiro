@@ -23,14 +23,14 @@ public class FornecedorService {
         }
     }
 
-    public Fornecedor_Cliente atualizar(Fornecedor_Cliente atl) {
+    public Fornecedor_Cliente atualizar(Fornecedor_Cliente atl, Long id) {
         try {
             if (atl.getRazao_social_nome() == null || atl.getRazao_social_nome().trim().isEmpty()) {
                 throw new NadaInseridoException("ERRO: Nome/Razão Social inválido, não pode ser vazio");
-            } else if (repository.buscarPorId(atl.getId_fornecedor_cliente()) == null) {
+            } else if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
-            return repository.atualizar(atl);
+            return repository.atualizar(atl, id);
         } catch (NadaInseridoException | IdNaoEncontradoException e) {
             System.out.println(e.getMessage());
             return null;
@@ -98,12 +98,12 @@ public class FornecedorService {
         }
     }
 
-    public HashMap<String, List<String>> mediaVendas(){
+    public HashMap<String, List<String>> mediaVenda(){
         try{
             if(repository.listarInfo().isEmpty()){
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            return repository.mediaVendas();
+            return repository.mediaVenda();
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;

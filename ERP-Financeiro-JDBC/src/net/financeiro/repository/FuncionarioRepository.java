@@ -32,14 +32,14 @@ public class FuncionarioRepository {
         }
     }
 
-    public Funcionario atualizar(Funcionario alt){
+    public Funcionario atualizar(Funcionario alt, Long id){
         String sql = "UPDATE Funcionario SET nome = ?, cpf = ?, telefone = ?, email = ? WHERE id_funcionario = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getNome());
             pr.setString(2, alt.getCpf());
             pr.setString(3, alt.getTelefone());
             pr.setString(4, alt.getEmail());
-            pr.setLong(5, alt.getId_funcionario());
+            pr.setLong(5, id);
             pr.executeUpdate();
             return alt;
         } catch(SQLException e){
@@ -179,7 +179,7 @@ public class FuncionarioRepository {
         }
     }
 
-    public HashMap<String, List<String>> mediaVendas(){
+    public HashMap<String, List<String>> mediaVenda(){
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Média Venda por funcionários', f.nome as 'Nome funcionario'\n" +
