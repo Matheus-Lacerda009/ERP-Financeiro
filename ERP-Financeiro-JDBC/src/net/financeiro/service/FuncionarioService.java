@@ -41,7 +41,7 @@ public class FuncionarioService {
         try {
             if (atl.getNome() == null || atl.getNome().trim().isEmpty()) {
                 throw new NadaInseridoException("ERRO: Nome inválido, não pode ser vazio");
-            } else if (repository.buscarPorId(atl.getId_funcionario()) == null) {
+            } else if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
             return repository.atualizar(atl, id);

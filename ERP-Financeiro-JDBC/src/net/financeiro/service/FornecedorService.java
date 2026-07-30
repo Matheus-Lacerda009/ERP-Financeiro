@@ -27,7 +27,7 @@ public class FornecedorService {
         try {
             if (atl.getRazao_social_nome() == null || atl.getRazao_social_nome().trim().isEmpty()) {
                 throw new NadaInseridoException("ERRO: Nome/Razão Social inválido, não pode ser vazio");
-            } else if (repository.buscarPorId(atl.getId_fornecedor_cliente()) == null) {
+            } else if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("ERRO: Id não encontrado");
             }
             return repository.atualizar(atl, id);
