@@ -26,4 +26,14 @@ public class UsuarioService {
         }
         return repository.cadastrando(ins);
     }
+
+    public boolean validacao(Usuario user) throws SQLException, NadaInseridoException {
+        if(user.getNome().trim().isEmpty()){
+            throw new NadaInseridoException("Erro: nome vazio!");
+        }
+        if(user.getSenha().trim().isEmpty()){
+            throw new NadaInseridoException("Erro: senha vazia!");
+        }
+        return repository.validacao(user);
+    }
 }
