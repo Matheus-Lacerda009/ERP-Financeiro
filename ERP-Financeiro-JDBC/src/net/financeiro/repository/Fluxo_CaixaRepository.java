@@ -37,7 +37,7 @@ public class Fluxo_CaixaRepository {
         }
     }
 
-    public Fluxo_Caixa atualizar(Fluxo_Caixa atl){
+    public Fluxo_Caixa atualizar(Fluxo_Caixa atl, Long id){
         String sql = "UPDATE Fluxo_Caixa SET id_caixa = ?, id_forma_pagamento = ?, tipo_operacao  = ?, parcelas  = ?, id_folha_pagamento = ?, id_operacao = ? WHERE id_fluxo_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, atl.getId_caixa());
@@ -46,7 +46,7 @@ public class Fluxo_CaixaRepository {
             pr.setInt(4, atl.getParcelas());
             pr.setLong(5, atl.getId_folha_pagamento());
             pr.setLong(6, atl.getId_operacao());
-            pr.setLong(7, atl.getId_fluxo_caixa());
+            pr.setLong(7, id);
             pr.executeUpdate();
             return atl;
         } catch(SQLException e){
