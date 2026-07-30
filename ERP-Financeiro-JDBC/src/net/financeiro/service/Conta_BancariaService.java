@@ -32,7 +32,7 @@ public class Conta_BancariaService {
         }
     }
 
-    public Conta_Bancaria atualizar(Conta_Bancaria atl){
+    public Conta_Bancaria atualizar(Conta_Bancaria atl, Long id){
         try{
             if(atl.getNome_banco().trim().isEmpty()){
                 throw new NadaInseridoException("Erro: nome banco vazio!");
@@ -40,10 +40,10 @@ public class Conta_BancariaService {
             if(atl.getNumero_conta() < 0){
                 throw new NadaInseridoException("Erro: número banco vazio!");
             }
-            if(repository.buscarPorId(atl.getId_caixa()) == null){
+            if(repository.buscarPorId(id) == null){
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
-            return repository.atualizar(atl);
+            return repository.atualizar(atl, id);
         } catch(NadaInseridoException e){
             System.out.println(e.getMessage());
             return null;
