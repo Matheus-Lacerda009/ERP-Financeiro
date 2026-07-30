@@ -18,19 +18,15 @@ public class CategoriaItemMenu implements TableMenu {
     private final AdaptiveColor RED = new AdaptiveColor("#ff1f31", "#ff1f31");
     private final AdaptiveColor GRAY = new AdaptiveColor("#878787", "#878787");
 
-    private final Style ERROR_STYLE = Style.newStyle()
+    private final Style WARN_STYLE = Style.newStyle()
             .foreground(RED);
 
-    private final Style PANEL_BORDER = Style.newStyle()
-            .border(StandardBorder.RoundedBorder)
-            .borderForeground(GRAY);
-
     private Categoria_ItemService service = new Categoria_ItemService();
-    private enum Estado { VISUALIZANDO, EDITANDO, CRIANDO };
+    private enum Estado { VISUALIZANDO, EDITANDO, CRIANDO, DELETANDO };
     private Viewport viewport;
 
     //estado do menu
-    private Estado estado;
+    private Estado estado = Estado.VISUALIZANDO;
 
     //posicao na lista de entidades
     private int cursor = 0;
@@ -55,11 +51,13 @@ public class CategoriaItemMenu implements TableMenu {
     @Override
     public Command init() {
         estado = Estado.VISUALIZANDO;
+        iniciarCampos();
         return consultarBanco();
     }
 
     //nome autoexplicativo
     private Command consultarBanco() {
+        //inicia os campos para edição e inserção de entidades
         return () -> {
             try {
                 List<Categoria_Item> result = service.listarInfo();
@@ -108,7 +106,7 @@ public class CategoriaItemMenu implements TableMenu {
                             cursor--;
                             atualizarViewport();
 
-                            int linhaCursor = cursor + 2;
+                            int linhaCursor = cursor;
                             if(linhaCursor < viewport.getYOffset()) {
                                 viewport.scrollUp(1);
                             }
@@ -116,11 +114,18 @@ public class CategoriaItemMenu implements TableMenu {
                         break;
                     case "n":
                         //inicia a criação de uma nova entidade
+                        estado = Estado.CRIANDO;
+                        iniciarFormulario();
                         break;
                     case "f":
                         //inicia a edição da entidade selecionada
+                        estado = Estado.EDITANDO;
+                        iniciarFormulario();
+                        break;
                     case "x":
                         //deleta a entidade selecionada;
+                        estado = Estado.DELETANDO;
+                        atualizarViewport();
                         break;
                     case "r":
                         return consultarBanco();
@@ -131,22 +136,86 @@ public class CategoriaItemMenu implements TableMenu {
                 switch(k) {
                     case "down", "tab":
                         //avança o cursor para o próximo input
+                        inputs.get(inputCursor).blur();
+                        inputCursor = (inputCursor + 1) % inputs.size();
+                        inputs.get(inputCursor).focus();
 
-                        //retorna null para não atualizar campo
+                        atualizarViewport();
                         return null;
                     case "up", "shift+tab":
                         //volta o cursor para o input anterior
+                        inputs.get(inputCursor).blur();
+                        inputCursor = (inputCursor - 1 + inputs.size()) % inputs.size();
+                        inputs.get(inputCursor).focus();
 
-                        //retorna null para não atualizar campo
+                        atualizarViewport();
                         return null;
                     case "ctrl+s":
                         //pega valor dos inputs e cria/atualiza o objeto e envia a service para realizar as alterações no banco
+                        //todo fazer verificação de permissão antes de continuar ação
+                        estado = Estado.VISUALIZANDO;
+
+                        String nome = inputs.get(0).value();
+
+                        return () -> {
+                          try {
+                              if(estado == Estado.CRIANDO) {
+                                  Categoria_Item item = new Categoria_Item(nome);
+                                  service.inserir(item);
+                              } else if(estado == Estado.EDITANDO) {
+
+                              }
+
+                              List<Categoria_Item> result = service.listarInfo();
+                              return new JdbcQueryResult(result, null);
+                          } catch(Exception e) {
+                              return new JdbcQueryResult(null, e.getMessage());
+                          }
+                        };
+                    case "ctrl+x":
+                        //cancela a operação
+                        estado = Estado.VISUALIZANDO;
+                        atualizarViewport();
                         return null;
                 }
+            }
+            else if(estado == Estado.DELETANDO) {
+                switch(k) {
+                    case "ctrl+s":
+                        //realizar o delete
+                        estado = Estado.VISUALIZANDO;
 
-                //atualiza o campo selecionado
+                        return () -> {
+                          try {
+                              //deleta a entidade
+                              service.deletar(itens.get(cursor).getId_categoria_item());
+
+                              //atualiza a lista
+                              List<Categoria_Item> result = service.listarInfo();
+                              return new JdbcQueryResult(result, null);
+                          } catch(Exception e) {
+                              return new JdbcQueryResult(null, e.getMessage());
+                          }
+                        };
+                    case "ctrl+x":
+                        //cancela a operação
+                        estado = Estado.VISUALIZANDO;
+                        atualizarViewport();
+                        return null;
+                }
             }
         }
+
+
+        if(estado == Estado.EDITANDO || estado == Estado.CRIANDO) {
+            if(!inputs.isEmpty()) {
+                UpdateResult<TextInput> res = inputs.get(inputCursor).update(msg);
+                inputs.set(inputCursor, res.model());
+                atualizarViewport();
+                return res.command();
+            }
+        }
+
         //retorna null pois não temos nada para o Orquestrador processar
         return null;
     }
@@ -156,10 +225,12 @@ public class CategoriaItemMenu implements TableMenu {
         if(data == null) {
             errorMessage = error;
         } else {
-            itens = (List<Categoria_Item>) data;
-            atualizarViewport();
-            cursor = 0;
-            viewport.gotoTop();
+            if(data instanceof List<?>) {
+                itens = (List<Categoria_Item>) data;
+                atualizarViewport();
+                cursor = 0;
+                viewport.gotoTop();
+            }
         }
     }
 
@@ -168,8 +239,13 @@ public class CategoriaItemMenu implements TableMenu {
 
         //atualiza o viewport para o estado atual
         switch(estado) {
+            case Estado.DELETANDO:
+                buffer.append(WARN_STYLE.render("   Deseja continuar e deletar?")).append("\n > ").append(itens.get(cursor).getNome());
+                break;
             case Estado.CRIANDO, Estado.EDITANDO:
-                //todo preparar a visualização dos campos de edicao/insercao
+                for(TextInput input : inputs) {
+                    buffer.append("\n ").append(input.view()).append("\n");
+                }
                 break;
             case Estado.VISUALIZANDO:
                 for(int i = 0; i < itens.size(); i++) {
@@ -187,15 +263,12 @@ public class CategoriaItemMenu implements TableMenu {
     }
 
     private void iniciarCampos() {
-        TextInput idInput = new TextInput();
-        idInput.setPlaceholder("Ex: 001");
-
-
         TextInput nomeInput = new TextInput();
         nomeInput.setPlaceholder("Ex: Eletrônicos");
         nomeInput.setCharLimit(100);
 
-        inputs = List.of(idInput, nomeInput);
+        inputs = new ArrayList<>();
+        inputs.add(nomeInput);
     }
 
     private void iniciarFormulario() {
@@ -205,8 +278,7 @@ public class CategoriaItemMenu implements TableMenu {
         if(estado == Estado.EDITANDO) {
             //atualiza os campos para corresponderem aos valores da entidade
             Categoria_Item item = itens.get(cursor);
-            inputs.get(0).setValue(item.getId_categoria_item().toString());
-            inputs.get(1).setValue(item.getNome());
+            inputs.get(0).setValue(item.getNome());
         } else if(estado == Estado.CRIANDO) {
             //limpa os campos
             for(TextInput input : inputs) {
@@ -222,6 +294,9 @@ public class CategoriaItemMenu implements TableMenu {
                 inputs.get(i).blur();
             }
         }
+
+        //atualiza o viewport
+        atualizarViewport();
     }
 
     @Override
@@ -229,9 +304,9 @@ public class CategoriaItemMenu implements TableMenu {
         if(isLoading) return "\n   Aguardando servidor " + spinnerView;
 
         if(!errorMessage.isEmpty()) {
-            return ERROR_STYLE.render("\n   ⚠️ " + errorMessage);
+            return WARN_STYLE.render("\n   ⚠️ " + errorMessage);
         }
 
-        return PANEL_BORDER.render(viewport.view() + "\n\n");
+        return viewport.view() + "\n\n";
     }
 }

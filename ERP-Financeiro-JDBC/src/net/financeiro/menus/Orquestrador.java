@@ -105,7 +105,7 @@ public class Orquestrador implements Model {
         }
 
         if(cmdService != null) {
-            if(msg instanceof KeyPressMessage key && ("enter".equals(key.key()) || "r".equals(key.key()))) {
+            if(msg instanceof KeyPressMessage key && ("enter".equals(key.key()) || "r".equals(key.key()) || "ctrl+s".equals(key.key()))) {
                 this.isLoading = true;
                 return UpdateResult.from(this, Command.batch(() -> spinner.tick(), cmdService));
             }
