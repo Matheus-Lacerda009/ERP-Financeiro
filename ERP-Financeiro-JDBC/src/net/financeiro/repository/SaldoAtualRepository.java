@@ -8,18 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SaldoAtualRepository {
-    public SaldoAtual visualizar() {
+    public SaldoAtual visualizar() throws SQLException {
         String sql = "SELECT * FROM SaldoAtual";
 
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
-            ResultSet rs = pr.executeQuery();
-            if(rs.next())
-                return new SaldoAtual(rs.getDouble("Saldo_Total"));
-            else
-                return null;
-        } catch(SQLException e) {
-            System.out.println("Erro ao visualizar dados: " + e.getMessage());
-            return null;
-        }
+        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
+        ResultSet rs = pr.executeQuery();
+
+        rs.next();
+        return new SaldoAtual(rs.getDouble("Saldo_Total"));
     }
 }
