@@ -13,15 +13,15 @@ public class Valor_pVendaRepository {
     public List<Valor_pVenda> visualizar() throws SQLException {
         String sql = "SELECT * FROM Valor_pVenda";
 
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        ResultSet rs = pr.executeQuery();
-        List<Valor_pVenda> lista = new ArrayList<>();
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
+            List<Valor_pVenda> lista = new ArrayList<>();
 
-        while(rs.next()) {
-            lista.add(new Valor_pVenda(rs.getLong("id_operacao"), rs.getDouble("valor_total")));
+            while(rs.next()) {
+                lista.add(new Valor_pVenda(rs.getLong("id_operacao"), rs.getDouble("valor_total")));
+            }
+
+            return lista;
         }
-
-        pr.close();
-        return lista;
     }
 }
