@@ -11,12 +11,11 @@ public class SaldoAtualRepository {
     public SaldoAtual visualizar() throws SQLException {
         String sql = "SELECT * FROM SaldoAtual";
 
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        ResultSet rs = pr.executeQuery();
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
 
-        rs.next();
-        SaldoAtual result = new SaldoAtual(rs.getDouble("Saldo_Total"));
-        pr.close();
-        return result;
+            rs.next();
+            return new SaldoAtual(rs.getDouble("Saldo_Total"));
+        }
     }
 }
