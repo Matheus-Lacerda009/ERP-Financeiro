@@ -12,54 +12,52 @@ public class Categoria_ItemRepository {
 
     public Categoria_Item inserir(Categoria_Item ins) throws SQLException {
         String sql = "INSERT INTO Categoria_Item (nome) VALUES (?)";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pr.setString(1, ins.getNome());
-        pr.executeUpdate();
-        ResultSet rs = pr.getGeneratedKeys();
-        rs.next();
-        ins.setId_categoria_item(rs.getLong("GENERATED_KEY"));
-        pr.close();
-        return ins;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+            pr.setString(1, ins.getNome());
+            pr.executeUpdate();
+            ResultSet rs = pr.getGeneratedKeys();
+            rs.next();
+            ins.setId_categoria_item(rs.getLong("GENERATED_KEY"));
+            return ins;
+        }
     }
 
     public Categoria_Item atualizar(Categoria_Item atl, Long id) throws SQLException {
         String sql = "UPDATE Categoria_Item SET nome = ? WHERE id_categoria_item = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setString(1, atl.getNome());
-        pr.setLong(2, id);
-        pr.executeUpdate();
-        pr.close();
-        return atl;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setString(1, atl.getNome());
+            pr.setLong(2, id);
+            pr.executeUpdate();
+            return atl;
+        }
     }
 
     public boolean deletar(Long id) throws SQLException {
         String sql = "update Categoria_Item set ativo = false WHERE id_categoria_item = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setLong(1, id);
-        pr.executeUpdate();
-        pr.close();
-        return true;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id);
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public boolean reativar(Long id) throws SQLException {
         String sql = "update Categoria_Item set ativo = true WHERE id_categoria_item = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setLong(1, id);
-        pr.executeUpdate();
-        pr.close();
-        return true;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id);
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public List<Categoria_Item> listarInfo() throws SQLException {
         String sql = "SELECT * FROM Categoria_Item where ativo = true";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        List<Categoria_Item> lista = new ArrayList<>();
-        ResultSet rs = pr.executeQuery();
-        while (rs.next()) {
-            lista.add(new Categoria_Item(rs.getLong("id_categoria_item"), rs.getString("nome")));
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            List<Categoria_Item> lista = new ArrayList<>();
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                lista.add(new Categoria_Item(rs.getLong("id_categoria_item"), rs.getString("nome")));
+            }
+            return lista;
         }
-        pr.close();
-        return lista;
     }
 
     public HashMap<String, List<String>> maiorVenda() throws SQLException {
@@ -76,19 +74,19 @@ public class Categoria_ItemRepository {
                 "                ORDER BY sum(\n" +
                 "                        p.valor * io.quantidade_produtos\n" +
                 "                    ) desc;";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        ResultSet rs = pr.executeQuery();
-        HashMap<String, List<String>> lista = new HashMap<>();
-        List<String> nomeCategoria = new ArrayList<>();
-        List<String> vendaCategoria = new ArrayList<>();
-        lista.put("NomeCategoria", nomeCategoria);
-        lista.put("VendaCategoria", vendaCategoria);
-        while (rs.next()) {
-            lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-            lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeCategoria", nomeCategoria);
+            lista.put("VendaCategoria", vendaCategoria);
+            while (rs.next()) {
+                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
+                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+            }
+            return lista;
         }
-        pr.close();
-        return lista;
     }
 
     public HashMap<String, List<String>> menorVenda() throws SQLException {
@@ -105,19 +103,19 @@ public class Categoria_ItemRepository {
                 "                ORDER BY sum(\n" +
                 "                        p.valor * io.quantidade_produtos\n" +
                 "                    ) asc;";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        ResultSet rs = pr.executeQuery();
-        HashMap<String, List<String>> lista = new HashMap<>();
-        List<String> nomeCategoria = new ArrayList<>();
-        List<String> vendaCategoria = new ArrayList<>();
-        lista.put("NomeCategoria", nomeCategoria);
-        lista.put("VendaCategoria", vendaCategoria);
-        while (rs.next()) {
-            lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-            lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeCategoria", nomeCategoria);
+            lista.put("VendaCategoria", vendaCategoria);
+            while (rs.next()) {
+                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
+                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+            }
+            return lista;
         }
-        pr.close();
-        return lista;
     }
 
     public HashMap<String, List<String>> mediaVenda() throws SQLException {
@@ -134,28 +132,28 @@ public class Categoria_ItemRepository {
                 "                ORDER BY sum(\n" +
                 "                        p.valor * io.quantidade_produtos\n" +
                 "                    ) asc;";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        ResultSet rs = pr.executeQuery();
-        HashMap<String, List<String>> lista = new HashMap<>();
-        List<String> nomeCategoria = new ArrayList<>();
-        List<String> vendaCategoria = new ArrayList<>();
-        lista.put("NomeCategoria", nomeCategoria);
-        lista.put("VendaCategoria", vendaCategoria);
-        while (rs.next()) {
-            lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-            lista.get("VendaCategoria").add(rs.getString("Média Venda por categoria"));
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeCategoria", nomeCategoria);
+            lista.put("VendaCategoria", vendaCategoria);
+            while (rs.next()) {
+                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
+                lista.get("VendaCategoria").add(rs.getString("Média Venda por categoria"));
+            }
+            return lista;
         }
-        pr.close();
-        return lista;
     }
 
     public Categoria_Item buscarPorId(Long id_categoria_item) throws SQLException {
         String sql = "SELECT * FROM Categoria_Item where id_categoria_item = ? and ativo = true";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setLong(1, id_categoria_item);
-        ResultSet rs = pr.executeQuery();
-        rs.next();
-        pr.close();
-        return new Categoria_Item(id_categoria_item, rs.getString("nome"));
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id_categoria_item);
+            ResultSet rs = pr.executeQuery();
+            rs.next();
+            return new Categoria_Item(id_categoria_item, rs.getString("nome"));
+        }
     }
 }
