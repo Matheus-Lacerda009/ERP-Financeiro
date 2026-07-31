@@ -15,6 +15,8 @@ public class SaldoAtualRepository {
         ResultSet rs = pr.executeQuery();
 
         rs.next();
-        return new SaldoAtual(rs.getDouble("Saldo_Total"));
+        SaldoAtual result = new SaldoAtual(rs.getDouble("Saldo_Total"));
+        pr.close();
+        return result;
     }
 }
