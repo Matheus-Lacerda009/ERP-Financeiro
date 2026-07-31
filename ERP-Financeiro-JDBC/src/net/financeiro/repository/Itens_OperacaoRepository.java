@@ -40,6 +40,7 @@ public class Itens_OperacaoRepository {
         pr.setLong(4, id);
         pr.executeUpdate();
 
+        pr.close();
         return atl;
     }
 
@@ -51,6 +52,7 @@ public class Itens_OperacaoRepository {
         pr.setLong(1, id);
         pr.executeUpdate();
 
+        pr.close();
         return true;
     }
 
@@ -62,6 +64,7 @@ public class Itens_OperacaoRepository {
         pr.setLong(1, id);
         pr.executeUpdate();
 
+        pr.close();
         return true;
     }
 
@@ -96,6 +99,8 @@ public class Itens_OperacaoRepository {
         ResultSet rs = pr.executeQuery();
 
         rs.next();
-        return new Itens_Operacao(id, rs.getLong("id_produto"), rs.getLong("id_operacao"), rs.getInt("quantidade_produtos"));
+        Itens_Operacao result = new Itens_Operacao(id, rs.getLong("id_produto"), rs.getLong("id_operacao"), rs.getInt("quantidade_produtos"));
+        pr.close();
+        return result;
     }
 }
