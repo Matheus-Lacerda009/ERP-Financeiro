@@ -44,20 +44,18 @@ public class ProdutosRepository {
 
     public boolean deletar(Long id) throws SQLException {
         String sql = "update Produto set ativo = false WHERE id_produto = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setLong(1, id);
-        pr.executeUpdate();
-        pr.close();
-        return true;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id);
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public boolean reativar(Long id) throws SQLException {
         String sql = "update Produto set ativo = true WHERE id_produto = ?";
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setLong(1, id);
-        pr.executeUpdate();
-        pr.close();
-        return true;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id);
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public List<Produto> listarInfo() throws SQLException {

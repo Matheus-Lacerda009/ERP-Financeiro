@@ -46,21 +46,19 @@ public class OperacaoRepository {
     public boolean deletar(Long id_digitado) throws SQLException{
         String sql = "update Operacao set ativo = false WHERE id_operacao = ?";
 
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setLong(1, id_digitado);
-        pr.executeUpdate();
-        pr.close();
-        return true;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id_digitado);
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public boolean reativar(Long id_digitado) throws SQLException{
         String sql = "update Operacao set ativo = true WHERE id_operacao = ?";
 
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
-        pr.setLong(1, id_digitado);
-        pr.executeUpdate();
-        pr.close();
-        return true;
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            pr.setLong(1, id_digitado);
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public List<Operacao> listarInfo() throws SQLException{

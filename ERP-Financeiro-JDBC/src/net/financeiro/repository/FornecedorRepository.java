@@ -52,8 +52,7 @@ public class FornecedorRepository {
         String sql = "update Fornecedor_Cliente set ativo = false WHERE id_fornecedor_cliente = ? and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("ERRO ao deletar: " + e.getMessage());
             return false;
@@ -64,8 +63,7 @@ public class FornecedorRepository {
         String sql = "update Fornecedor_Cliente set ativo = true WHERE id_fornecedor_cliente = ? and fornecedor = 1";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("ERRO ao reativar: " + e.getMessage());
             return false;

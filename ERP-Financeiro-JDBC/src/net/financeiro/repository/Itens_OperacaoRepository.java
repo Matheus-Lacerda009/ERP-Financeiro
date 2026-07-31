@@ -47,25 +47,23 @@ public class Itens_OperacaoRepository {
     public boolean deletar(Long id) throws SQLException {
         String sql = "update Itens_Operacao set ativo = false WHERE id_itens_operacao = ?";
 
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
 
-        pr.setLong(1, id);
-        pr.executeUpdate();
+            pr.setLong(1, id);
 
-        pr.close();
-        return true;
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public boolean reativar(Long id) throws SQLException {
         String sql = "update Itens_Operacao set ativo = true WHERE id_itens_operacao = ?";
 
-        PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
 
-        pr.setLong(1, id);
-        pr.executeUpdate();
+            pr.setLong(1, id);
 
-        pr.close();
-        return true;
+            return pr.executeUpdate() != 0;
+        }
     }
 
     public List<Itens_Operacao> listarInfo() throws SQLException {

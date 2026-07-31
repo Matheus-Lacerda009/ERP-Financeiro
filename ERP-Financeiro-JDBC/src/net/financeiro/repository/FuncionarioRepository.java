@@ -52,8 +52,7 @@ public class FuncionarioRepository {
         String sql = "update Funcionario set ativo = false WHERE id_funcionario = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("ERRO ao deletar : " + e.getMessage());
             return false;
@@ -64,8 +63,7 @@ public class FuncionarioRepository {
         String sql = "update Funcionario set ativo = true WHERE id_funcionario = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("ERRO ao reativar : " + e.getMessage());
             return false;

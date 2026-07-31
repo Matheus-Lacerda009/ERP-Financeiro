@@ -49,8 +49,7 @@ public class Conta_BancariaRepository {
         String sql = "update Conta_Bancaria set ativo = false WHERE id_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_caixa);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("Erro ao deletar: " + e.getMessage());
             return false;
@@ -61,8 +60,7 @@ public class Conta_BancariaRepository {
         String sql = "update Conta_Bancaria set ativo = true WHERE id_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_caixa);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("Erro ao reativar: " + e.getMessage());
             return false;

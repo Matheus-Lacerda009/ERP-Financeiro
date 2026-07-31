@@ -59,8 +59,7 @@ public class Fluxo_CaixaRepository {
         String sql = "update Fluxo_Caixa set ativo = false WHERE id_fluxo_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("Erro ao deletar: " + e.getMessage());
             return false;
@@ -71,8 +70,7 @@ public class Fluxo_CaixaRepository {
         String sql = "update Fluxo_Caixa set ativo = true WHERE id_fluxo_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("Erro ao reativar: " + e.getMessage());
             return false;

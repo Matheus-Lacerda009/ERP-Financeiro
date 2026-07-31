@@ -45,8 +45,7 @@ public class Forma_PagamentoRepository {
         String sql = "update Forma_Pagamento set ativo = false WHERE id_forma_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return  true;
+            return pr.executeUpdate() != 0;
         }catch (SQLException e){
             System.out.println("ERRO ao deletar : " + e.getMessage());
             return  false;
@@ -57,8 +56,7 @@ public class Forma_PagamentoRepository {
         String sql = "update Forma_Pagamento set ativo = true WHERE id_forma_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return  true;
+            return pr.executeUpdate() != 0;
         }catch (SQLException e){
             System.out.println("ERRO ao reativar : " + e.getMessage());
             return  false;

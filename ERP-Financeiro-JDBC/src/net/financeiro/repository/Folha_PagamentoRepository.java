@@ -52,8 +52,7 @@ public class Folha_PagamentoRepository {
         String sql = "update Folha_Pagamento set ativo = false WHERE id_folha_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("Erro ao deletar: " + e.getMessage());
             return false;
@@ -64,8 +63,7 @@ public class Folha_PagamentoRepository {
         String sql = "update Folha_Pagamento set ativo = true WHERE id_folha_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
+            return pr.executeUpdate() != 0;
         } catch(SQLException e){
             System.out.println("Erro ao reativar: " + e.getMessage());
             return false;
