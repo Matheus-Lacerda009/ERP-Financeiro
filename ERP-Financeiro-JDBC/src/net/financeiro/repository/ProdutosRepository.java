@@ -161,11 +161,8 @@ public class ProdutosRepository {
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setLong(1, id);
         ResultSet rs = pr.executeQuery();
+        rs.next();
         pr.close();
-        if(rs.next()){
-            return new Produto(rs.getLong("id_produto"), rs.getLong("id_categoria_item"), rs.getString("nome"), rs.getString("descricao"), rs.getDouble("valor"), rs.getInt("quantidade_estoque"));
-        } else {
-            return null;
-        }
+        return new Produto(rs.getLong("id_produto"), rs.getLong("id_categoria_item"), rs.getString("nome"), rs.getString("descricao"), rs.getDouble("valor"), rs.getInt("quantidade_estoque"));
     }
 }

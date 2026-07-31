@@ -154,11 +154,8 @@ public class Categoria_ItemRepository {
         PreparedStatement pr = Conexao.connecting().prepareStatement(sql);
         pr.setLong(1, id_categoria_item);
         ResultSet rs = pr.executeQuery();
+        rs.next();
         pr.close();
-        if (rs.next()) {
-            return new Categoria_Item(id_categoria_item, rs.getString("nome"));
-        } else {
-            return null;
-        }
+        return new Categoria_Item(id_categoria_item, rs.getString("nome"));
     }
 }

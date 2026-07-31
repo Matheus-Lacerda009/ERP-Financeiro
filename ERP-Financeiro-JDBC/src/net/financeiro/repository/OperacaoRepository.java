@@ -84,8 +84,7 @@ public class OperacaoRepository {
         pr.setLong(1, id_digitado);
         ResultSet rs = pr.executeQuery();
         rs.next();
-        Operacao resultado = new Operacao(id_digitado, rs.getLong("id_fornecedor_cliente"), rs.getLong("id_funcionario"), rs.getString("data_operacao"), rs.getString("status_operacao"));
         pr.close();
-        return resultado;
+        return new Operacao(id_digitado, rs.getLong("id_fornecedor_cliente"), rs.getLong("id_funcionario"), rs.getString("data_operacao"), rs.getString("status_operacao"));
     }
 }
