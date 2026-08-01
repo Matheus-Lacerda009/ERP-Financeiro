@@ -43,7 +43,7 @@ public class Orquestrador implements Model {
 
     //windows management
     private final HomeMenu homeMenu = new HomeMenu();
-    private final CategoriaItemMenu categoriaItemMenu = new CategoriaItemMenu();
+    private final Categoria_ItemMenu categoriaItemMenu = new Categoria_ItemMenu();
     private final SaldoAtualMenu saldoAtualMenu = new SaldoAtualMenu();
 
     private TableMenu menuAtivo = homeMenu;

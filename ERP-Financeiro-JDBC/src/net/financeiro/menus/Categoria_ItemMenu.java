@@ -5,17 +5,15 @@ import com.williamcallahan.tui4j.compat.bubbles.viewport.Viewport;
 import com.williamcallahan.tui4j.compat.bubbletea.*;
 import com.williamcallahan.tui4j.compat.lipgloss.Position;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
-import com.williamcallahan.tui4j.compat.lipgloss.border.StandardBorder;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
 import net.financeiro.menus.events.JdbcQueryResult;
 import net.financeiro.model.Categoria_Item;
 import net.financeiro.service.Categoria_ItemService;
 
-import javax.print.attribute.SupportedValuesAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriaItemMenu implements TableMenu {
+public class Categoria_ItemMenu implements TableMenu {
     //Paleta e styles
     private final AdaptiveColor RED = new AdaptiveColor("#ff1f31", "#ff1f31");
     private final AdaptiveColor GRAY = new AdaptiveColor("#878787", "#878787");
@@ -41,7 +39,7 @@ public class CategoriaItemMenu implements TableMenu {
     private String errorMessage = "";
     List<Categoria_Item> itens = new ArrayList<>();
 
-    public CategoriaItemMenu() {
+    public Categoria_ItemMenu() {
         this.viewport = new Viewport();
     }
 
