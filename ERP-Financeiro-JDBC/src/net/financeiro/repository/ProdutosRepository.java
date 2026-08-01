@@ -14,7 +14,7 @@ import java.util.List;
 public class ProdutosRepository {
     public Produto inserir(Produto ins) throws SQLException {
         String sql = "INSERT INTO Produto (nome, valor, descricao, quantidade_estoque, id_categoria_item) VALUES (?, ?, ?, ?, ?)";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pr.setString(1, ins.getNome());
             pr.setDouble(2, ins.getValor());
             pr.setString(3, ins.getDescricao());
