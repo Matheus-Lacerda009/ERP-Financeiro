@@ -235,9 +235,9 @@ public class Categoria_ItemMenu implements TableMenu {
         } else {
             if(data instanceof List<?>) {
                 itens = (List<Categoria_Item>) data;
-                atualizarViewport();
                 cursor = 0;
                 viewport.gotoTop();
+                atualizarViewport();
             }
         }
     }
