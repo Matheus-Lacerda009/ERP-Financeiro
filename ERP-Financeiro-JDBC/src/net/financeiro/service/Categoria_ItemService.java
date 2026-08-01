@@ -51,9 +51,6 @@ public class Categoria_ItemService {
         if (repository.listarInfo().isEmpty()) {
             throw new NadaInseridoException("Erro: nada inserido no banco");
         }
-        if(repository.deletar(id)){
-            System.out.println("Deletado com sucesso!");
-        }
         return repository.deletar(id);
     }
 
@@ -63,9 +60,6 @@ public class Categoria_ItemService {
         }
         if (repository.listarInfo().isEmpty()) {
             throw new NadaInseridoException("Erro: nada inserido no banco");
-        }
-        if(repository.reativar(id)){
-            System.out.println("Reativado com sucesso!");
         }
         return repository.reativar(id);
     }
