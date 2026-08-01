@@ -1,11 +1,11 @@
-package net.financeiro.menus.events;
+package net.financeiro.menus;
 
 import com.williamcallahan.tui4j.compat.bubbles.textinput.TextInput;
 import com.williamcallahan.tui4j.compat.bubbles.viewport.Viewport;
 import com.williamcallahan.tui4j.compat.bubbletea.*;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
-import net.financeiro.menus.TableMenu;
+import net.financeiro.menus.events.JdbcQueryResult;
 import net.financeiro.model.Conta_Bancaria;
 import net.financeiro.service.Conta_BancariaService;
 

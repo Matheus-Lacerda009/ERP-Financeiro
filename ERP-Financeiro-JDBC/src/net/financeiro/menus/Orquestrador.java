@@ -7,7 +7,6 @@ import com.williamcallahan.tui4j.compat.lipgloss.Position;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
 import com.williamcallahan.tui4j.compat.lipgloss.border.StandardBorder;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
-import net.financeiro.menus.events.Conta_BancariaMenu;
 import net.financeiro.menus.events.JdbcQueryResult;
 
 public class Orquestrador implements Model {
