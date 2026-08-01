@@ -7,6 +7,7 @@ import com.williamcallahan.tui4j.compat.lipgloss.Position;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
 import com.williamcallahan.tui4j.compat.lipgloss.border.StandardBorder;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
+import net.financeiro.menus.events.Conta_BancariaMenu;
 import net.financeiro.menus.events.JdbcQueryResult;
 
 public class Orquestrador implements Model {
@@ -45,6 +46,7 @@ public class Orquestrador implements Model {
     private final HomeMenu homeMenu = new HomeMenu();
     private final Categoria_ItemMenu categoriaItemMenu = new Categoria_ItemMenu();
     private final SaldoAtualMenu saldoAtualMenu = new SaldoAtualMenu();
+    Conta_BancariaMenu contaBancariaMenu = new Conta_BancariaMenu();
 
     private TableMenu menuAtivo = homeMenu;
     
@@ -105,7 +107,7 @@ public class Orquestrador implements Model {
         }
 
         if(cmdService != null) {
-            if(msg instanceof KeyPressMessage key && ("enter".equals(key.key()) || "r".equals(key.key()) || "ctrl+s".equals(key.key()))) {
+            if(msg instanceof KeyPressMessage key && ("ctrl+r".equals(key.key()) || "ctrl+s".equals(key.key()))) {
                 this.isLoading = true;
                 return UpdateResult.from(this, Command.batch(() -> spinner.tick(), cmdService));
             }
@@ -122,6 +124,9 @@ public class Orquestrador implements Model {
                 break;
             case "Saldo Atual":
                 this.menuAtivo = saldoAtualMenu;
+                break;
+            case "Conta Bancaria":
+                this.menuAtivo = contaBancariaMenu;
                 break;
         }
 
