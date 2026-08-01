@@ -315,13 +315,6 @@ public class Categoria_ItemMenu implements TableMenu {
             return WARN_STYLE.render("\n   ⚠️ " + errorMessage);
         }
 
-        Style rodapeStyle = Style.newStyle()
-                .width(viewport.getWidth())
-                .foreground(GRAY)
-                .align(Position.Center);
-
-        String textRodape = rodapeStyle.render("[f] Editar • [n] Inserir • [x] Deletar • [ctrl+s] Continuar/Aceitar • [ctrl+x] Cancelar/Voltar");
-
-        return viewport.view() + "\n\n" + textRodape;
+        return viewport.view() + "\n\n";
     }
 }
