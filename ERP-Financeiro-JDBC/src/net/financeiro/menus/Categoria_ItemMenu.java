@@ -90,7 +90,7 @@ public class Categoria_ItemMenu implements TableMenu {
             //ações caso o estado seja VISUALIZANDO
             if(estado == Estado.VISUALIZANDO) {
                 switch(k) {
-                    case "s", "down", "tab":
+                    case "s", "down":
                         //avança para a próxima entidade na lista
                         if(cursor < itens.size() - 1) {
                             cursor++;
@@ -102,7 +102,7 @@ public class Categoria_ItemMenu implements TableMenu {
                             }
                         }
                         break;
-                    case "w", "up", "shift+tab":
+                    case "w", "up":
                         //volta para a entidade anterior
                         if(cursor > 0) {
                             cursor--;
@@ -132,7 +132,7 @@ public class Categoria_ItemMenu implements TableMenu {
                         estado = Estado.DELETANDO;
                         atualizarViewport();
                         break;
-                    case "r":
+                    case "ctrl+r":
                         return consultarBanco();
                 }
             }
