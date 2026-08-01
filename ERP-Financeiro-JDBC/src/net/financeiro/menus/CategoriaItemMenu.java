@@ -3,6 +3,7 @@ package net.financeiro.menus;
 import com.williamcallahan.tui4j.compat.bubbles.textinput.TextInput;
 import com.williamcallahan.tui4j.compat.bubbles.viewport.Viewport;
 import com.williamcallahan.tui4j.compat.bubbletea.*;
+import com.williamcallahan.tui4j.compat.lipgloss.Position;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
 import com.williamcallahan.tui4j.compat.lipgloss.border.StandardBorder;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
@@ -10,6 +11,7 @@ import net.financeiro.menus.events.JdbcQueryResult;
 import net.financeiro.model.Categoria_Item;
 import net.financeiro.service.Categoria_ItemService;
 
+import javax.print.attribute.SupportedValuesAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,11 +53,13 @@ public class CategoriaItemMenu implements TableMenu {
     @Override
     public Command init() {
         estado = Estado.VISUALIZANDO;
+        cursor = 0;
+        errorMessage = "";
         iniciarCampos();
+
         return consultarBanco();
     }
 
-    //nome autoexplicativo
     private Command consultarBanco() {
         //inicia os campos para edição e inserção de entidades
         return () -> {
@@ -73,7 +77,7 @@ public class CategoriaItemMenu implements TableMenu {
         //atualiza o tamanho do viewport
         if(msg instanceof WindowSizeMessage size) {
             int larguraUtil = Math.max(10, size.width() - 4);
-            int alturaUtil = Math.max(5, size.height() - 6);
+            int alturaUtil = Math.max(5, size.height() - 2);
 
             viewport.setHeight(alturaUtil);
             viewport.setWidth(larguraUtil);
@@ -114,16 +118,19 @@ public class CategoriaItemMenu implements TableMenu {
                         break;
                     case "n":
                         //inicia a criação de uma nova entidade
+                        //todo fazer verificação de permissão antes de continuar ação
                         estado = Estado.CRIANDO;
                         iniciarFormulario();
                         break;
                     case "f":
                         //inicia a edição da entidade selecionada
+                        //todo fazer verificação de permissão antes de continuar ação
                         estado = Estado.EDITANDO;
                         iniciarFormulario();
                         break;
                     case "x":
                         //deleta a entidade selecionada;
+                        //todo fazer verificação de permissão antes de continuar ação
                         estado = Estado.DELETANDO;
                         atualizarViewport();
                         break;
@@ -152,18 +159,20 @@ public class CategoriaItemMenu implements TableMenu {
                         return null;
                     case "ctrl+s":
                         //pega valor dos inputs e cria/atualiza o objeto e envia a service para realizar as alterações no banco
-                        //todo fazer verificação de permissão antes de continuar ação
-                        estado = Estado.VISUALIZANDO;
+                        final int idSelecionado = cursor;
+                        final Estado modoOperacao = estado;
+                        final String nome = inputs.get(0).value();
 
-                        String nome = inputs.get(0).value();
+                        estado = Estado.VISUALIZANDO;
 
                         return () -> {
                           try {
-                              if(estado == Estado.CRIANDO) {
-                                  Categoria_Item item = new Categoria_Item(nome);
+                              Categoria_Item item = new Categoria_Item(nome);
+                              if(modoOperacao == Estado.CRIANDO) {
                                   service.inserir(item);
-                              } else if(estado == Estado.EDITANDO) {
-
+                              } else if(modoOperacao == Estado.EDITANDO) {
+                                  final long idItem = itens.get(idSelecionado).getId_categoria_item();
+                                  service.atualizar(item, idItem);
                               }
 
                               List<Categoria_Item> result = service.listarInfo();
@@ -183,12 +192,13 @@ public class CategoriaItemMenu implements TableMenu {
                 switch(k) {
                     case "ctrl+s":
                         //realizar o delete
+                        final int idSelecionado = cursor;
                         estado = Estado.VISUALIZANDO;
 
                         return () -> {
                           try {
                               //deleta a entidade
-                              service.deletar(itens.get(cursor).getId_categoria_item());
+                              service.deletar(itens.get(idSelecionado).getId_categoria_item());
 
                               //atualiza a lista
                               List<Categoria_Item> result = service.listarInfo();
@@ -307,6 +317,13 @@ public class CategoriaItemMenu implements TableMenu {
             return WARN_STYLE.render("\n   ⚠️ " + errorMessage);
         }
 
-        return viewport.view() + "\n\n";
+        Style rodapeStyle = Style.newStyle()
+                .width(viewport.getWidth())
+                .foreground(GRAY)
+                .align(Position.Center);
+
+        String textRodape = rodapeStyle.render("[f] Editar • [n] Inserir • [x] Deletar • [ctrl+s] Continuar/Aceitar • [ctrl+x] Cancelar/Voltar");
+
+        return viewport.view() + "\n\n" + textRodape;
     }
 }
