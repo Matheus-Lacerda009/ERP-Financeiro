@@ -45,6 +45,7 @@ public class Orquestrador implements Model {
     private final HomeMenu homeMenu = new HomeMenu();
     private final Categoria_ItemMenu categoriaItemMenu = new Categoria_ItemMenu();
     private final SaldoAtualMenu saldoAtualMenu = new SaldoAtualMenu();
+    private final Folha_PagamentoMenu folhaPagamentoMenu = new Folha_PagamentoMenu();
     Conta_BancariaMenu contaBancariaMenu = new Conta_BancariaMenu();
 
     private TableMenu menuAtivo = homeMenu;
@@ -126,6 +127,9 @@ public class Orquestrador implements Model {
                 break;
             case "Conta Bancaria":
                 this.menuAtivo = contaBancariaMenu;
+                break;
+            case "Folha Pagamento":
+                this.menuAtivo = folhaPagamentoMenu;
                 break;
         }
 

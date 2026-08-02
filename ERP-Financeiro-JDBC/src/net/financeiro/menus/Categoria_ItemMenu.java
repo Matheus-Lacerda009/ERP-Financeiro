@@ -21,9 +21,9 @@ public class Categoria_ItemMenu implements TableMenu {
     private final Style WARN_STYLE = Style.newStyle()
             .foreground(RED);
 
-    private Categoria_ItemService service = new Categoria_ItemService();
+    private final Categoria_ItemService service = new Categoria_ItemService();
     private enum Estado { VISUALIZANDO, EDITANDO, CRIANDO, DELETANDO };
-    private Viewport viewport;
+    private final Viewport viewport;
 
     //estado do menu
     private Estado estado = Estado.VISUALIZANDO;

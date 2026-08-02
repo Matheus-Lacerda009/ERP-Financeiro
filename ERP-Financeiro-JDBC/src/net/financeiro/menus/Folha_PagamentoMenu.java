@@ -18,12 +18,12 @@ public class Folha_PagamentoMenu implements TableMenu {
     //Paleta e styles
     private final AdaptiveColor RED = new AdaptiveColor("#ff1f31", "#ff1f31");
 
-    private Style WARN_STYLE = Style.newStyle()
+    private final Style WARN_STYLE = Style.newStyle()
             .foreground(RED);
 
-    private Folha_PagamentoService service = new Folha_PagamentoService();
+    private final Folha_PagamentoService service = new Folha_PagamentoService();
     private enum Estado { VISUALIZANDO, EDITANDO, CRIANDO, DELETANDO }
-    private Viewport viewport;
+    private final Viewport viewport;
 
     //estado do menu
     private Estado estado = Estado.VISUALIZANDO;
@@ -37,7 +37,7 @@ public class Folha_PagamentoMenu implements TableMenu {
 
     //dados retornados por consultas
     private String errorMessage = "";
-    List<Folha_Pagamento> itens;
+    List<Folha_Pagamento> itens = new ArrayList<>();
 
     public Folha_PagamentoMenu() {
         this.viewport = new Viewport();
@@ -263,7 +263,7 @@ public class Folha_PagamentoMenu implements TableMenu {
                 break;
             case Estado.VISUALIZANDO:
                 for(int i = 0; i < itens.size(); i++) {
-                    Folha_Pagamento item = itens.get(cursor);
+                    Folha_Pagamento item = itens.get(i);
                     String prefix = (i == cursor) ? " > " : "   ";
 
                     String linha = String.format(
