@@ -272,6 +272,7 @@ public class Categoria_ItemMenu implements TableMenu {
 
     private void iniciarCampos() {
         TextInput nomeInput = new TextInput();
+        nomeInput.setPrompt("Nome: ");
         nomeInput.setPlaceholder("Ex: Eletrônicos");
         nomeInput.setCharLimit(100);
 

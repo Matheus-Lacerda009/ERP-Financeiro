@@ -271,10 +271,12 @@ public class Conta_BancariaMenu implements TableMenu {
 
     private void iniciarCampos() {
         TextInput nomeInput = new TextInput();
+        nomeInput.setPrompt("Nome: ");
         nomeInput.setPlaceholder("Ex: Nubank");
         nomeInput.setCharLimit(100);
 
         TextInput numeroContaInput = new TextInput();
+        numeroContaInput.setPrompt("Número Conta: ");
         numeroContaInput.setPlaceholder("Ex: 10101");
         numeroContaInput.setCharLimit(5);
 
