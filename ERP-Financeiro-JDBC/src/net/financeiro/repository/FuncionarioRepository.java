@@ -15,6 +15,7 @@ public class FuncionarioRepository {
 
     public Funcionario inserir(Funcionario ins){
         String sql = "INSERT INTO Funcionario (nome, cpf, telefone, email) VALUES (?, ?, ?, ?)";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getNome());
             pr.setString(2, ins.getCpf());
@@ -26,14 +27,12 @@ public class FuncionarioRepository {
                 ins.setId_funcionario(rs.getLong(1));
             }
             return ins;
-        } catch(SQLException e){
-            System.out.println("ERRO ao inserir : " + e.getMessage());
-            return null;
         }
     }
 
     public Funcionario atualizar(Funcionario alt, Long id){
         String sql = "UPDATE Funcionario SET nome = ?, cpf = ?, telefone = ?, email = ? WHERE id_funcionario = ?";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getNome());
             pr.setString(2, alt.getCpf());
@@ -42,36 +41,30 @@ public class FuncionarioRepository {
             pr.setLong(5, id);
             pr.executeUpdate();
             return alt;
-        } catch(SQLException e){
-            System.out.println("ERRO ao atualizar : " + e.getMessage());
-            return null;
         }
     }
 
     public boolean deletar(Long id){
         String sql = "update Funcionario set ativo = false WHERE id_funcionario = ?";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("ERRO ao deletar : " + e.getMessage());
-            return false;
         }
     }
 
     public boolean reativar(Long id){
         String sql = "update Funcionario set ativo = true WHERE id_funcionario = ?";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("ERRO ao reativar : " + e.getMessage());
-            return false;
         }
     }
 
     public List<Funcionario> listarInfo(){
         String sql = "SELECT * FROM Funcionario where ativo = true";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Funcionario> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -85,9 +78,6 @@ public class FuncionarioRepository {
                 ));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("ERRO ao listar : " + e.getMessage());
-            return null;
         }
     }
 
@@ -105,9 +95,6 @@ public class FuncionarioRepository {
                         rs.getString("email")
                 );
             }
-            return null;
-        } catch(SQLException e){
-            System.out.println("ERRO de busca : " + e.getMessage());
             return null;
         }
     }
@@ -171,9 +158,6 @@ public class FuncionarioRepository {
                 lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -204,9 +188,6 @@ public class FuncionarioRepository {
                 lista.get("VendaCategoria").add(rs.getString("Média Venda por categoria"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 }
