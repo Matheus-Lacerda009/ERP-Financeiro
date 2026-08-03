@@ -54,6 +54,7 @@ public class Folha_PagamentoMenu implements TableMenu {
         estado = Estado.VISUALIZANDO;
         cursor = 0;
         errorMessage = "";
+        iniciarCampos();
 
         return consultarBanco();
     }
@@ -158,9 +159,9 @@ public class Folha_PagamentoMenu implements TableMenu {
                         //pega valor dos inputs e cria/atualiza o objeto e envia a service para realizar as alterações no banco
                         final int idSelecionado = cursor;
                         final Estado modoOperacao = estado;
-                        final double desconto = Double.parseDouble(inputs.get(0).value());
+                        final double desconto = Double.parseDouble(inputs.get(0).value().replaceAll(",", "."));
                         final int horasTrabalhadas = Integer.parseInt(inputs.get(1).value());
-                        final double valorHora = Double.parseDouble(inputs.get(2).value());
+                        final double valorHora = Double.parseDouble(inputs.get(2).value().replaceAll(",", "."));
                         final long idFuncionario = Long.parseLong(inputs.get(3).value());
 
                         LocalDateTime now = LocalDateTime.now();
@@ -224,6 +225,17 @@ public class Folha_PagamentoMenu implements TableMenu {
         if(estado == Estado.EDITANDO || estado == Estado.CRIANDO) {
             if(!inputs.isEmpty()) {
                 UpdateResult<TextInput> res = inputs.get(inputCursor).update(msg);
+
+                String valorApenasNumerico = res.model().value().replaceAll("[^0-9]", "");
+
+                if(inputCursor == 0 || inputCursor == 2) {
+                    if(!valorApenasNumerico.isEmpty()) {
+                        double valor = Long.parseLong(valorApenasNumerico) / 100.0;
+                        valorApenasNumerico = String.format("%.2f", valor);
+                    }
+                }
+
+                res.model().setValue(valorApenasNumerico);
                 inputs.set(inputCursor, res.model());
                 atualizarViewport();
                 return res.command();
@@ -267,17 +279,17 @@ public class Folha_PagamentoMenu implements TableMenu {
                     String prefix = (i == cursor) ? " > " : "   ";
 
                     String linha = String.format(
-                            "%s%-5d %-15s %-6f %-5f %-4d %-15s",
+                            "%s%-5d %-20s R$%-6s R$%-5s %-4dh %-15s",
                             prefix,
                             item.getId_folha_pagamento(),
                             item.getNome_funcionario(),
-                            item.getDescontos(),
-                            item.getValor_hora(),
+                            String.format("%.2f", item.getDescontos()),
+                            String.format("%.2f", item.getValor_hora()),
                             item.getHoras_trabalhadas(),
                             item.getData_entrada()
                     );
 
-                    buffer.append(linha);
+                    buffer.append(linha).append("\n");
                 }
                 break;
         }
@@ -287,18 +299,26 @@ public class Folha_PagamentoMenu implements TableMenu {
 
     private void iniciarCampos() {
         TextInput descontosInput = new TextInput();
+        descontosInput.setPrompt("Descontos: ");
         descontosInput.setPlaceholder("Ex: 150.00");
 
         TextInput horasTrabalhadasInput = new TextInput();
+        horasTrabalhadasInput.setPrompt("Horas Trabalhadas: ");
         horasTrabalhadasInput.setPlaceholder("Ex: 30");
 
         TextInput valorHoraInput = new TextInput();
-        valorHoraInput.setPlaceholder("Ex: 27");
+        valorHoraInput.setPrompt("Valor Hora: ");
+        valorHoraInput.setPlaceholder("Ex: 27.00");
+
+        TextInput idFuncionarioInput = new TextInput();
+        idFuncionarioInput.setPrompt("Id Funcionario: ");
+        idFuncionarioInput.setPlaceholder("Ex: 1");
 
         inputs = new ArrayList<>();
         inputs.add(descontosInput);
         inputs.add(horasTrabalhadasInput);
         inputs.add(valorHoraInput);
+        inputs.add(idFuncionarioInput);
     }
 
     private void iniciarFormulario() {
@@ -311,6 +331,7 @@ public class Folha_PagamentoMenu implements TableMenu {
             inputs.get(0).setValue(String.valueOf(item.getDescontos()));
             inputs.get(1).setValue(String.valueOf(item.getHoras_trabalhadas()));
             inputs.get(2).setValue(String.valueOf(item.getValor_hora()));
+            inputs.get(3).setValue(String.valueOf(item.getId_funcionario()));
         } else if(estado == Estado.CRIANDO) {
             //limpa os campos
             for(TextInput input : inputs) {
