@@ -60,13 +60,4 @@ public class Operacao {
     public String getNome_funcionario() {
         return nome_funcionario;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_operacao
-                + "\nData da operação: " + data_operacao
-                + "\nStatus da operação: " + status_operacao
-                + "\nID do fornecedor/cliente: " + id_fornecedor_cliente
-                + "\nID do funcionário: " + id_funcionario;
-    }
 }

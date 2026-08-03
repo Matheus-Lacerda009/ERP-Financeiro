@@ -42,13 +42,4 @@ public class Fornecedor_Cliente {
     public void setId_fornecedor_cliente(Long id_fornecedor_cliente) {
         this.id_fornecedor_cliente = id_fornecedor_cliente;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_fornecedor_cliente
-                + "\nNome: " + razao_social_nome
-                + "\nCNPJ/CPF: " + cnpj_cpf
-                + "\nTelefone: " + telefone
-                + "\nEmail: " + email;
-    }
 }

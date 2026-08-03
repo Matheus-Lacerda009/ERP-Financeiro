@@ -31,11 +31,4 @@ public class Conta_Bancaria {
     public void setId_caixa(Long id_caixa) {
         this.id_caixa = id_caixa;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_caixa
-                + "\nNome do banco: " + nome_banco
-                + "\nNúmero da conta: " + numero_conta;
-    }
 }

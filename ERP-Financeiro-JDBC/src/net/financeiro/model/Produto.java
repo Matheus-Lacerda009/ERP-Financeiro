@@ -62,15 +62,4 @@ public class Produto {
     public void setId_produto(Long id_produto) {
         this.id_produto = id_produto;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_produto
-                + "\nNome: " + nome
-                + "\nDescrição: " + descricao
-                + "\nValor: " + valor
-                + "\nQuantidade em estoque: " + quantidade_estoque
-                + "\nID da categoria do item: " + id_categoria_item
-                + "\nNome da categoria do item: " + nome_categoria;
-    }
 }

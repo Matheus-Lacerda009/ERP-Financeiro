@@ -24,10 +24,4 @@ public class Valor_pVenda {
     public void setId_operacao(Long id_operacao) {
         this.id_operacao = id_operacao;
     }
-
-    @Override
-    public String toString(){
-        return "Valor da venda de ID " + id_operacao
-                + "Valor da venda: " + valor;
-    }
 }
