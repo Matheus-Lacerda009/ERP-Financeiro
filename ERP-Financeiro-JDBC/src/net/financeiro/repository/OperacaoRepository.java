@@ -68,13 +68,13 @@ public class OperacaoRepository {
     }
 
     public List<Operacao> listarInfo() throws SQLException{
-        String sql = "SELECT * FROM Operacao where ativo = true";
+        String sql = "SELECT Operacao.*, Fornecedor_Cliente.razao_social_nome, Funcionario.nome FROM Operacao join Funcionario on Funcionario.id_funcionario = Operacao.id_funcionario join Fornecedor_Cliente on Fornecedor_Cliente.id_fornecedor_cliente = Operacao.id_fornecedor_cliente where Operacao.ativo = true";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             List<Operacao> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
-                lista.add(new Operacao(rs.getLong("id_operacao"), rs.getLong("id_fornecedor_cliente"), rs.getLong("id_funcionario"), rs.getString("data_operacao"), rs.getString("status_operacao")));
+                lista.add(new Operacao(rs.getLong("id_operacao"), rs.getLong("id_fornecedor_cliente"), rs.getLong("id_funcionario"), rs.getString("data_operacao"), rs.getString("status_operacao"), rs.getString("razao_social_nome"), rs.getString("nome")));
             }
             pr.close();
             return lista;
