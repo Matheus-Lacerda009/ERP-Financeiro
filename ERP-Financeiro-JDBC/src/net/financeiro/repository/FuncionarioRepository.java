@@ -13,8 +13,9 @@ import java.util.List;
 
 public class FuncionarioRepository {
 
-    public Funcionario inserir(Funcionario ins){
+    public Funcionario inserir(Funcionario ins) throws SQLException {
         String sql = "INSERT INTO Funcionario (nome, cpf, telefone, email) VALUES (?, ?, ?, ?)";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getNome());
             pr.setString(2, ins.getCpf());
@@ -26,14 +27,12 @@ public class FuncionarioRepository {
                 ins.setId_funcionario(rs.getLong(1));
             }
             return ins;
-        } catch(SQLException e){
-            System.out.println("ERRO ao inserir : " + e.getMessage());
-            return null;
         }
     }
 
-    public Funcionario atualizar(Funcionario alt, Long id){
+    public Funcionario atualizar(Funcionario alt, Long id) throws SQLException {
         String sql = "UPDATE Funcionario SET nome = ?, cpf = ?, telefone = ?, email = ? WHERE id_funcionario = ?";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getNome());
             pr.setString(2, alt.getCpf());
@@ -42,38 +41,30 @@ public class FuncionarioRepository {
             pr.setLong(5, id);
             pr.executeUpdate();
             return alt;
-        } catch(SQLException e){
-            System.out.println("ERRO ao atualizar : " + e.getMessage());
-            return null;
         }
     }
 
-    public boolean deletar(Long id){
+    public boolean deletar(Long id) throws SQLException {
         String sql = "update Funcionario set ativo = false WHERE id_funcionario = ?";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
-        } catch(SQLException e){
-            System.out.println("ERRO ao deletar : " + e.getMessage());
-            return false;
+            return pr.executeUpdate() != 0;
         }
     }
 
-    public boolean reativar(Long id){
+    public boolean reativar(Long id) throws SQLException {
         String sql = "update Funcionario set ativo = true WHERE id_funcionario = ?";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
-        } catch(SQLException e){
-            System.out.println("ERRO ao reativar : " + e.getMessage());
-            return false;
+            return pr.executeUpdate() != 0;
         }
     }
 
-    public List<Funcionario> listarInfo(){
+    public List<Funcionario> listarInfo() throws SQLException {
         String sql = "SELECT * FROM Funcionario where ativo = true";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Funcionario> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -87,13 +78,10 @@ public class FuncionarioRepository {
                 ));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("ERRO ao listar : " + e.getMessage());
-            return null;
         }
     }
 
-    public Funcionario buscarPorId(Long id_funcionario){
+    public Funcionario buscarPorId(Long id_funcionario) throws SQLException {
         String sql = "SELECT * FROM Funcionario WHERE id_funcionario = ? and ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_funcionario);
@@ -108,12 +96,9 @@ public class FuncionarioRepository {
                 );
             }
             return null;
-        } catch(SQLException e){
-            System.out.println("ERRO de busca : " + e.getMessage());
-            return null;
         }
     }
-    public HashMap<String, List<String>> maiorVenda(){
+    public HashMap<String, List<String>> maiorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Venda por funcionários', f.nome as 'Nome funcionario'\n" +
@@ -128,25 +113,22 @@ public class FuncionarioRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) desc;";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeCategoria = new ArrayList<>();
             List<String> vendaCategoria = new ArrayList<>();
             lista.put("NomeCategoria", nomeCategoria);
             lista.put("VendaCategoria", vendaCategoria);
-            while(rs.next()){
+            while (rs.next()) {
                 lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
                 lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> menorVenda(){
+    public HashMap<String, List<String>> menorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Venda por funcionários', f.nome as 'Nome funcionario'\n" +
@@ -173,13 +155,10 @@ public class FuncionarioRepository {
                 lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> mediaVenda(){
+    public HashMap<String, List<String>> mediaVenda() throws SQLException {
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Média Venda por funcionários', f.nome as 'Nome funcionario'\n" +
@@ -206,9 +185,6 @@ public class FuncionarioRepository {
                 lista.get("VendaCategoria").add(rs.getString("Média Venda por categoria"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 }

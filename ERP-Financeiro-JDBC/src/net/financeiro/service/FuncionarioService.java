@@ -19,108 +19,68 @@ public class FuncionarioService {
     private final FuncionarioRepository repository = new FuncionarioRepository();
 
 
-    public Funcionario inserir(Funcionario ins) {
-        try {
-            if (ins.getNome() == null || ins.getNome().trim().isEmpty()) {
-                throw new NadaInseridoException("Erro: Nome está vazio");
-            }
-            if (ins.getCpf() == null  ) {
-                throw new NadaInseridoException("Erro: CPF Invaido ");
-            }
-            if (ins.getEmail() == null ) {
-                throw new NadaInseridoException("Erro: E-mail Invalido");
-            }
-            return repository.inserir(ins);
-        } catch (NadaInseridoException e) {
-            System.out.println(e.getMessage());
-            return null;
+    public Funcionario inserir(Funcionario ins) throws NadaInseridoException, SQLException {
+        if (ins.getNome() == null || ins.getNome().trim().isEmpty()) {
+            throw new NadaInseridoException("Erro: Nome está vazio");
         }
+        if (ins.getCpf() == null  ) {
+            throw new NadaInseridoException("Erro: CPF Invaido ");
+        }
+        if (ins.getEmail() == null ) {
+            throw new NadaInseridoException("Erro: E-mail Invalido");
+        }
+        return repository.inserir(ins);
     }
 
-    public Funcionario atualizar(Funcionario atl, Long id) {
-        try {
-            if (atl.getNome() == null || atl.getNome().trim().isEmpty()) {
-                throw new NadaInseridoException("ERRO: Nome inválido, não pode ser vazio");
-            } else if (repository.buscarPorId(id) == null) {
-                throw new IdNaoEncontradoException("ERRO: Id não encontrado");
-            }
-            return repository.atualizar(atl, id);
-        } catch (NadaInseridoException | IdNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-            return null;
+    public Funcionario atualizar(Funcionario atl, Long id) throws NadaInseridoException, SQLException, IdNaoEncontradoException {
+        if (atl.getNome() == null || atl.getNome().trim().isEmpty()) {
+            throw new NadaInseridoException("ERRO: Nome inválido, não pode ser vazio");
+        } else if (repository.buscarPorId(id) == null) {
+            throw new IdNaoEncontradoException("ERRO: Id não encontrado");
         }
+        return repository.atualizar(atl, id);
     }
 
-    public List<Funcionario> listarInfo() {
+    public List<Funcionario> listarInfo() throws SQLException, NadaInseridoException {
         List<Funcionario> lista = repository.listarInfo();
-        try {
-            if (lista == null || lista.isEmpty()) {
-                throw new NadaInseridoException("Erro: nada inserido no banco");
-            }
-            return lista;
-        } catch (NadaInseridoException e) {
-            System.out.println(e.getMessage());
-            return null;
+        if (lista == null || lista.isEmpty()) {
+            throw new NadaInseridoException("Erro: nada inserido no banco");
         }
+        return lista;
     }
 
-    public boolean deletar(Long id) {
-        try {
-            if (repository.buscarPorId(id) == null) {
-                throw new IdNaoEncontradoException("ERRO: Id não encontrado");
-            }
-            return repository.deletar(id);
-        } catch (IdNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-            return false;
+    public boolean deletar(Long id) throws SQLException, IdNaoEncontradoException {
+        if (repository.buscarPorId(id) == null) {
+            throw new IdNaoEncontradoException("ERRO: Id não encontrado");
         }
+        return repository.deletar(id);
     }
 
-    public boolean reativar(Long id) {
-        try {
-            if (repository.buscarPorId(id) == null) {
-                throw new IdNaoEncontradoException("ERRO: Id não encontrado");
-            }
-            return repository.reativar(id);
-        } catch (IdNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-            return false;
+    public boolean reativar(Long id) throws SQLException, IdNaoEncontradoException {
+        if (repository.buscarPorId(id) == null) {
+            throw new IdNaoEncontradoException("ERRO: Id não encontrado");
         }
+        return repository.reativar(id);
     }
 
-    public HashMap<String, List<String>> maiorVenda(){
-        try{
-            if(repository.listarInfo().isEmpty()){
-                throw new NadaInseridoException("Erro: nada inserido no banco");
-            }
-            return repository.maiorVenda();
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
+    public HashMap<String, List<String>> maiorVenda() throws SQLException, NadaInseridoException {
+        if(repository.listarInfo().isEmpty()){
+            throw new NadaInseridoException("Erro: nada inserido no banco");
         }
+        return repository.maiorVenda();
     }
 
-    public HashMap<String, List<String>> menorVenda(){
-        try{
-            if(repository.listarInfo().isEmpty()){
-                throw new NadaInseridoException("Erro: nada inserido no banco");
-            }
-            return repository.menorVenda();
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
+    public HashMap<String, List<String>> menorVenda() throws SQLException, NadaInseridoException {
+        if(repository.listarInfo().isEmpty()){
+            throw new NadaInseridoException("Erro: nada inserido no banco");
         }
+        return repository.menorVenda();
     }
 
-    public HashMap<String, List<String>> mediaVenda(){
-        try{
-            if(repository.listarInfo().isEmpty()){
-                throw new NadaInseridoException("Erro: nada inserido no banco");
-            }
-            return repository.mediaVenda();
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
+    public HashMap<String, List<String>> mediaVenda() throws SQLException, NadaInseridoException {
+        if(repository.listarInfo().isEmpty()){
+            throw new NadaInseridoException("Erro: nada inserido no banco");
         }
+        return repository.mediaVenda();
     }
 }

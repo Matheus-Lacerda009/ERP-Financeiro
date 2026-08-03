@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Folha_PagamentoRepository {
-    public Folha_Pagamento inserir(Folha_Pagamento ins){
+    public Folha_Pagamento inserir(Folha_Pagamento ins) throws SQLException {
         String sql = "INSERT INTO Folha_Pagamento (descontos, data_entrada, horas_trabalhadas, valor_hora, id_funcionario)\n" +
                 "VALUES (?, ?, ?, ?, ?)";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -25,13 +25,10 @@ public class Folha_PagamentoRepository {
             rs.next();
             ins.setId_folha_pagamento(rs.getLong("GENERATED_KEY"));
             return ins;
-        } catch(SQLException e){
-            System.out.println("Erro ao inserir dados: " + e.getMessage());
-            return null;
         }
     }
 
-    public Folha_Pagamento atualizar(Folha_Pagamento atl, Long id){
+    public Folha_Pagamento atualizar(Folha_Pagamento atl, Long id) throws SQLException {
         String sql = "UPDATE Folha_Pagamento SET descontos = ?, data_entrada = ?, horas_trabalhadas = ?, valor_hora = ?, id_funcionario = ? WHERE id_folha_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setDouble(1, atl.getDescontos());
@@ -42,37 +39,27 @@ public class Folha_PagamentoRepository {
             pr.setLong(6, id);
             pr.executeUpdate();
             return atl;
-        } catch(SQLException e){
-            System.out.println("Erro ao atualizar dados: " + e.getMessage());
-            return null;
         }
     }
 
-    public boolean deletar(Long id){
+    public boolean deletar(Long id) throws SQLException {
         String sql = "update Folha_Pagamento set ativo = false WHERE id_folha_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             pr.executeUpdate();
             return true;
-        } catch(SQLException e){
-            System.out.println("Erro ao deletar: " + e.getMessage());
-            return false;
         }
     }
 
-    public boolean reativar(Long id){
+    public boolean reativar(Long id) throws SQLException {
         String sql = "update Folha_Pagamento set ativo = true WHERE id_folha_pagamento = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            pr.executeUpdate();
-            return true;
-        } catch(SQLException e){
-            System.out.println("Erro ao reativar: " + e.getMessage());
-            return false;
+            return pr.executeUpdate() != 0;
         }
     }
 
-    public List<Folha_Pagamento> listarInfo(){
+    public List<Folha_Pagamento> listarInfo() throws SQLException {
         String sql = "SELECT Folha_Pagamento.*, Funcionario.nome " +
                 "FROM Folha_Pagamento " +
                 "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario" +
@@ -91,13 +78,10 @@ public class Folha_PagamentoRepository {
                         rs.getString("Funcionario.nome")));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public Folha_Pagamento buscarPorId(Long id_folha_pagamento){
+    public Folha_Pagamento buscarPorId(Long id_folha_pagamento) throws SQLException {
         String sql = "SELECT Folha_Pagamento.*, Funcionario.nome " +
                 "FROM Folha_Pagamento " +
                 "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
@@ -114,9 +98,6 @@ public class Folha_PagamentoRepository {
                     rs.getInt("horas_trabalhadas"),
                     rs.getString("data_entrada"),
                     rs.getString("Funcionario.nome"));
-        } catch(SQLException e){
-            System.out.println("Erro ao buscar por ID: " + e.getMessage());
-            return null;
         }
     }
 

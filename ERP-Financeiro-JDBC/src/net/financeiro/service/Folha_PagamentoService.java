@@ -7,6 +7,7 @@ import net.financeiro.model.Fluxo_Caixa;
 import net.financeiro.model.Folha_Pagamento;
 import net.financeiro.repository.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Folha_PagamentoService {
@@ -16,8 +17,8 @@ public class Folha_PagamentoService {
     private final Folha_PagamentoRepository repository = new Folha_PagamentoRepository();
     private final FuncionarioRepository repositoryA = new FuncionarioRepository();
 
-    public Folha_Pagamento inserir(Folha_Pagamento ins) throws NadaInseridoException, IdNaoEncontradoException, NadaInseridoException {
-        try{
+    public Folha_Pagamento inserir(Folha_Pagamento ins) throws NadaInseridoException, IdNaoEncontradoException, NadaInseridoException, SQLException {
+
 
             if(repositoryA.buscarPorId(ins.getId_funcionario()) == null){
                 throw new IdNaoEncontradoException("Erro: id funcionário não encontrado!");
@@ -37,19 +38,12 @@ public class Folha_PagamentoService {
 
             return repository.inserir(ins);
 
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
 
     }
 
-    public Folha_Pagamento atualizar(Folha_Pagamento atl, Long id){
+    public Folha_Pagamento atualizar(Folha_Pagamento atl, Long id) throws SQLException, NadaInseridoException, IdNaoEncontradoException {
 
-        try{
 
             if(repositoryA.buscarPorId(atl.getId_funcionario()) == null){
                 throw new IdNaoEncontradoException("Erro: id funcionário não encontrado!");
@@ -71,50 +65,36 @@ public class Folha_PagamentoService {
             }
             return repository.atualizar(atl, id);
 
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
 
 
     }
 
-    public List<Folha_Pagamento> listarInfo(){
-        try {
+    public List<Folha_Pagamento> listarInfo() throws NadaInseridoException, SQLException {
+
             List<Folha_Pagamento> lista = repository.listarInfo();
             if (lista.isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
             return lista;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
     }
 
-    public boolean deletar(Long id){
-        try {
+    public boolean deletar(Long id) throws SQLException, NadaInseridoException, IdNaoEncontradoException {
+
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
             if (repository.listarInfo().isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
-            return repository.deletar(id);
-        } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return false;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return false;
-        }
+            repository.deletar(id);
+            return true;
+
     }
 
-    public boolean reativar(Long id){
-        try {
+    public boolean reativar(Long id) throws SQLException, NadaInseridoException, IdNaoEncontradoException {
+
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
@@ -122,12 +102,8 @@ public class Folha_PagamentoService {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
             return repository.reativar(id);
-        } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return false;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return false;
-        }
+
     }
+
+
 }
