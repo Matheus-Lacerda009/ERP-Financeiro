@@ -47,6 +47,7 @@ public class Orquestrador implements Model {
     private final SaldoAtualMenu saldoAtualMenu = new SaldoAtualMenu();
     private final Folha_PagamentoMenu folhaPagamentoMenu = new Folha_PagamentoMenu();
     private final Valor_pVendaMenu valorPVendaMenu = new Valor_pVendaMenu();
+    private final ViewNotaFiscalMenu viewNotaFiscalMenu = new ViewNotaFiscalMenu();
     Conta_BancariaMenu contaBancariaMenu = new Conta_BancariaMenu();
 
     private TableMenu menuAtivo = homeMenu;
@@ -134,6 +135,9 @@ public class Orquestrador implements Model {
                 break;
             case "Valor por Venda":
                 this.menuAtivo = valorPVendaMenu;
+                break;
+            case "Nota Fiscal":
+                this.menuAtivo = viewNotaFiscalMenu;
                 break;
         }
 
