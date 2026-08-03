@@ -25,9 +25,6 @@ public class Folha_PagamentoRepository {
             rs.next();
             ins.setId_folha_pagamento(rs.getLong("GENERATED_KEY"));
             return ins;
-        } catch(SQLException e){
-            System.out.println("Erro ao inserir dados: " + e.getMessage());
-            return null;
         }
     }
 
@@ -42,9 +39,6 @@ public class Folha_PagamentoRepository {
             pr.setLong(6, atl.getId_folha_pagamento());
             pr.executeUpdate();
             return atl;
-        } catch(SQLException e){
-            System.out.println("Erro ao atualizar dados: " + e.getMessage());
-            return null;
         }
     }
 
@@ -54,9 +48,6 @@ public class Folha_PagamentoRepository {
             pr.setLong(1, id);
             pr.executeUpdate();
             return true;
-        } catch(SQLException e){
-            System.out.println("Erro ao deletar: " + e.getMessage());
-            return false;
         }
     }
 
@@ -78,9 +69,6 @@ public class Folha_PagamentoRepository {
                         rs.getString("Funcionario.nome")));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -101,9 +89,6 @@ public class Folha_PagamentoRepository {
                     rs.getInt("horas_trabalhadas"),
                     rs.getString("data_entrada"),
                     rs.getString("Funcionario.nome"));
-        } catch(SQLException e){
-            System.out.println("Erro ao buscar por ID: " + e.getMessage());
-            return null;
         }
     }
 

@@ -52,7 +52,6 @@ public class Folha_PagamentoService {
 
     public Folha_Pagamento atualizar(Folha_Pagamento atl){
 
-        try{
 
             if(repositoryA.buscarPorId(atl.getId_funcionario()) == null){
                 throw new IdNaoEncontradoException("Erro: id funcionário não encontrado!");
@@ -71,35 +70,23 @@ public class Folha_PagamentoService {
             }
             return repository.atualizar(atl);
 
-        } catch(NomeInvalidoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
 
 
     }
 
     public List<Folha_Pagamento> listarInfo(){
-        try {
+
             List<Folha_Pagamento> lista = repository.listarInfo();
             if (lista.isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
             return lista;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
     }
 
     public boolean deletar(Long id){
-        try {
+
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
@@ -108,13 +95,7 @@ public class Folha_PagamentoService {
             }
             repository.deletar(id);
             return true;
-        } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return false;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return false;
-        }
+
     }
 
 

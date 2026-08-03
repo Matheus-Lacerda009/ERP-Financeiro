@@ -19,7 +19,7 @@ public class Conta_BancariaService {
 
     public Conta_Bancaria inserir(Conta_Bancaria ins) throws NomeInvalidoException, NadaInseridoException {
 
-        try{
+
             if(ins.getNome_banco().trim().isEmpty()){
                 throw new NomeInvalidoException("Erro: nome banco vazio!");
             }
@@ -29,19 +29,12 @@ public class Conta_BancariaService {
 
 
             return repository.inserir(ins);
-        } catch(NomeInvalidoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
 
 
     }
 
     public Conta_Bancaria atualizar(Conta_Bancaria atl){
-        try{
             if(atl.getNome_banco().trim().isEmpty()){
                 throw new NomeInvalidoException("Erro: nome banco vazio!");
             }
@@ -52,34 +45,19 @@ public class Conta_BancariaService {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
             return repository.atualizar(atl);
-        } catch(NomeInvalidoException e){
-            System.out.println(e.getMessage());
-            return null;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
     }
 
     public List<Conta_Bancaria> listarInfo(){
-        try {
             List<Conta_Bancaria> lista = repository.listarInfo();
             if (lista.isEmpty()) {
                 throw new NadaInseridoException("Erro: nada inserido no banco");
             }
             return lista;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
     }
 
     public boolean deletar(Long id){
-        try {
             if (repository.buscarPorId(id) == null) {
                 throw new IdNaoEncontradoException("Erro: id não encontrado!");
             }
@@ -88,12 +66,6 @@ public class Conta_BancariaService {
             }
             repository.deletar(id);
             return true;
-        } catch(IdNaoEncontradoException e){
-            System.out.println(e.getMessage());
-            return false;
-        } catch(NadaInseridoException e){
-            System.out.println(e.getMessage());
-            return false;
-        }
+
     }
 }

@@ -31,9 +31,6 @@ public class Fluxo_CaixaRepository {
             rs.next();
             ins.setId_fluxo_caixa(rs.getLong("GENERATED_KEY"));
             return ins;
-        } catch(SQLException e){
-            System.out.println("Erro ao inserir dados: " + e.getMessage());
-            return null;
         }
     }
 
@@ -49,9 +46,6 @@ public class Fluxo_CaixaRepository {
             pr.setLong(7, atl.getId_fluxo_caixa());
             pr.executeUpdate();
             return atl;
-        } catch(SQLException e){
-            System.out.println("Erro ao atualizar dados: " + e.getMessage());
-            return null;
         }
     }
 
@@ -61,15 +55,16 @@ public class Fluxo_CaixaRepository {
             pr.setLong(1, id);
             pr.executeUpdate();
             return true;
-        } catch(SQLException e){
-            System.out.println("Erro ao deletar: " + e.getMessage());
-            return false;
         }
     }
 
 
     public List<Fluxo_Caixa> listarInfo(){
-        String sql =  "SELECT Fluxo_Caixa.*, Conta_Bancaria.nome_banco, Forma_Pagamento.nome, Funcionario.nome, Operacao.status_operacao " +
+        String sql =  "SELECT Fluxo_Caixa.*, " +
+                "Conta_Bancaria.nome_banco AS nome_banco, " +
+                "Forma_Pagamento.nome AS nome_forma_pagamento, " +
+                "Funcionario.nome AS nome_funcionario, " +
+                "Operacao.status_operacao AS status_operacao " +
                 "FROM Fluxo_Caixa " +
                 "join Conta_Bancaria on Conta_Bancaria.id_caixa = Fluxo_Caixa.id_caixa " +
                 "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
@@ -88,20 +83,21 @@ public class Fluxo_CaixaRepository {
                         rs.getInt("parcelas"),
                         rs.getLong("id_folha_pagamento"),
                         rs.getLong("id_operacao"),
-                        rs.getString("Conta_Bancaria.nome_banco"),
-                        rs.getString("Forma_Pagamento.nome"),
-                        rs.getString("Funcionario.nome"),
-                        rs.getString("Operacao.status_operacao")));
+                        rs.getString("nome_banco"),
+                        rs.getString("nome_forma_pagamento"),
+                        rs.getString("nome_funcionario"),
+                        rs.getString("status_operacao")));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
     public Fluxo_Caixa buscarPorId(Long id_fluxo_caixa ){
-        String sql = "SELECT Fluxo_Caixa.*, Conta_Bancaria.nome_banco, Forma_Pagamento.nome, Funcionario.nome, Operacao.status_operacao " +
+        String sql = "SELECT Fluxo_Caixa.*, " +
+                "Conta_Bancaria.nome_banco AS nome_banco, " +
+                "Forma_Pagamento.nome AS nome_forma_pagamento, " +
+                "Funcionario.nome AS nome_funcionario, " +
+                "Operacao.status_operacao AS status_operacao " +
                 "FROM Fluxo_Caixa " +
                 "join Conta_Bancaria on Conta_Bancaria.id_caixa = Fluxo_Caixa.id_caixa " +
                 "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
@@ -115,12 +111,9 @@ public class Fluxo_CaixaRepository {
             rs.next();
             return new Fluxo_Caixa(id_fluxo_caixa, rs.getLong("id_caixa"), rs.getLong("id_forma_pagamento"),
                     rs.getString("tipo_operacao"), rs.getInt("parcelas"), rs.getLong("id_folha_pagamento"),
-                    rs.getLong("id_operacao"), rs.getString("Conta_Bancaria.nome_banco"),
-                    rs.getString("Forma_Pagamento.nome"), rs.getString("Funcionario.nome"),
-                    rs.getString("Operacao.status_operacao"));
-        } catch(SQLException e){
-            System.out.println("Erro ao buscar por ID: " + e.getMessage());
-            return null;
+                    rs.getLong("id_operacao"), rs.getString("nome_banco"),
+                    rs.getString("nome_forma_pagamento"), rs.getString("nome_funcionario"),
+                    rs.getString("status_operacao"));
         }
     }
 
@@ -150,9 +143,6 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -177,9 +167,6 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -206,9 +193,6 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -234,17 +218,8 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
-
-
-
-
-
-
 
 
 }

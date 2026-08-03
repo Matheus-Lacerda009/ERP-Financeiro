@@ -24,9 +24,6 @@ public class Conta_BancariaRepository {
             rs.next();
             ins.setId_caixa(rs.getLong("GENERATED_KEY"));
             return ins;
-        } catch(SQLException e){
-            System.out.println("Erro ao inserir dados: " + e.getMessage());
-            return null;
         }
     }
 
@@ -38,9 +35,6 @@ public class Conta_BancariaRepository {
             pr.setLong(3, atl.getId_caixa());
             pr.executeUpdate();
             return atl;
-        } catch(SQLException e){
-            System.out.println("Erro ao atualizar dados: " + e.getMessage());
-            return null;
         }
     }
 
@@ -51,9 +45,6 @@ public class Conta_BancariaRepository {
             pr.setLong(1, id_caixa);
             pr.executeUpdate();
             return true;
-        } catch(SQLException e){
-            System.out.println("Erro ao deletar: " + e.getMessage());
-            return false;
         }
     }
 
@@ -66,9 +57,6 @@ public class Conta_BancariaRepository {
                 lista.add(new Conta_Bancaria(rs.getLong("id_caixa"), rs.getString("nome_banco"), rs.getInt("numero_conta")));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -79,9 +67,6 @@ public class Conta_BancariaRepository {
             ResultSet rs = pr.executeQuery();
             rs.next();
             return new Conta_Bancaria(id_caixa, rs.getString("nome_banco"), rs.getInt("numero_conta"));
-        } catch(SQLException e){
-            System.out.println("Erro ao buscar por ID: " + e.getMessage());
-            return null;
         }
     }
 
