@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ClienteRepository {
 
-    public Fornecedor_Cliente inserir(Fornecedor_Cliente ins){
+    public Fornecedor_Cliente inserir(Fornecedor_Cliente ins) throws SQLException {
         String sql = "INSERT INTO Fornecedor_Cliente (razao_social_nome, cnpj_cpf, telefone, email, fornecedor) VALUES (?, ?, ?, ?, 1)";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getRazao_social_nome());
@@ -26,13 +26,10 @@ public class ClienteRepository {
                 ins.setId_fornecedor_cliente(rs.getLong(1));
             }
             return ins;
-        } catch(SQLException e){
-            System.out.println("ERRO ao inserir : " + e.getMessage());
-            return null;
         }
     }
 
-    public Fornecedor_Cliente atualizar(Fornecedor_Cliente alt, Long id){
+    public Fornecedor_Cliente atualizar(Fornecedor_Cliente alt, Long id) throws SQLException {
         String sql = "UPDATE Fornecedor_Cliente SET razao_social_nome = ?, cnpj_cpf = ?, telefone = ?, email = ? WHERE id_fornecedor_cliente = ? and fornecedor = 0";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getRazao_social_nome());
@@ -42,35 +39,26 @@ public class ClienteRepository {
             pr.setLong(5, id);
             pr.executeUpdate();
             return alt;
-        } catch(SQLException e){
-            System.out.println("ERRO ao atualizar : " + e.getMessage());
-            return null;
         }
     }
 
-    public boolean deletar(Long id){
+    public boolean deletar(Long id) throws SQLException {
         String sql = "update Fornecedor_Cliente set ativo = false WHERE id_fornecedor_cliente = ? and fornecedor = 0";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("ERRO ao deletar: " + e.getMessage());
-            return false;
         }
     }
 
-    public boolean reativar(Long id){
+    public boolean reativar(Long id) throws SQLException {
         String sql = "update Fornecedor_Cliente set ativo = true WHERE id_fornecedor_cliente = ? and fornecedor = 0";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("ERRO ao reativar: " + e.getMessage());
-            return false;
         }
     }
 
-    public List<Fornecedor_Cliente> listarInfo(){
+    public List<Fornecedor_Cliente> listarInfo() throws SQLException {
         String sql = "SELECT * FROM Fornecedor_Cliente where ativo = true and fornecedor = 0";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Fornecedor_Cliente> lista = new ArrayList<>();
@@ -85,13 +73,10 @@ public class ClienteRepository {
                 ));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("ERRO ao listar : " + e.getMessage());
-            return null;
         }
     }
 
-    public Fornecedor_Cliente buscarPorId(Long id_fornecedor_cliente){
+    public Fornecedor_Cliente buscarPorId(Long id_fornecedor_cliente) throws SQLException {
         String sql = "SELECT * FROM Fornecedor_Cliente WHERE id_fornecedor_cliente = ? and ativo = true and fornecedor = 0";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_fornecedor_cliente);
@@ -106,13 +91,10 @@ public class ClienteRepository {
                 );
             }
             return null;
-        } catch(SQLException e){
-            System.out.println("ERRO de busca : " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> maiorVenda(){
+    public HashMap<String, List<String>> maiorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
@@ -139,13 +121,10 @@ public class ClienteRepository {
                 lista.get("VendaFornecedorCliente").add(rs.getString("Venda_Fornecedor_Cliente"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> menorVenda(){
+    public HashMap<String, List<String>> menorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
@@ -160,25 +139,22 @@ public class ClienteRepository {
                 "ORDER BY sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) asc;\n";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
             List<String> nomeFornecedorCliente = new ArrayList<>();
             List<String> vendaFornecedorCliente = new ArrayList<>();
             lista.put("NomeFornecedorCliente", nomeFornecedorCliente);
             lista.put("VendaFornecedorCliente", vendaFornecedorCliente);
-            while(rs.next()){
+            while (rs.next()) {
                 lista.get("NomeFornecedorCliente").add(rs.getString("Nome_Fornecedor_Cliente"));
                 lista.get("VendaFornecedorCliente").add(rs.getString("Venda_Fornecedor_Cliente"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> mediaVenda(){
+    public HashMap<String, List<String>> mediaVenda() throws SQLException {
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
                 "    ) as 'Media_Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
@@ -205,9 +181,6 @@ public class ClienteRepository {
                 lista.get("MediaVendaFornecedorCliente").add(rs.getString("Media_Venda_Fornecedor_Cliente"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 }
