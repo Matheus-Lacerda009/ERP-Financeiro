@@ -38,7 +38,7 @@ public class ClienteController {
     }
 
     @GetMapping("/mediaVenda")
-    public ResponseEntity<HashMap<String, List<String>>> mediaVenda(){
+    public ResponseEntity<HashMap<String, List<String>>> mediaVenda() throws NadaInseridoException, SQLException {
         return ResponseEntity.ok(service.mediaVenda());
     }
 
