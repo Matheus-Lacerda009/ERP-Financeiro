@@ -10,12 +10,12 @@ document.getElementById("formPost").addEventListener("submit", async (event) => 
         });
         const retorno = await resposta.json();
         if(retorno.error == null){
-            resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Inserido com sucesso!</p>`;
+            resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Inserido com sucesso!</p>`;
         } else {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao inserir!</p>`;
+        resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao inserir!</p>`;
     }
 });
 
@@ -30,7 +30,7 @@ document.getElementById("getTodos").addEventListener("click", async (event) => {
         const retorno = await resposta.json();
         let res = "";
         for(let i = 0; i < retorno.length; i++){
-            res += `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Id: ${retorno[i].id_categoria_item} | Nome: ${retorno[i].nome}<p>`;
+            res += `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Id: ${retorno[i].id_categoria_item} | Nome: ${retorno[i].nome}<p>`;
         }
         if(retorno.error == null){
             resultado.innerHTML = res;
@@ -38,7 +38,7 @@ document.getElementById("getTodos").addEventListener("click", async (event) => {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao listar!</p>`;
+        resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao listar!</p>`;
     }
 });
 
@@ -54,7 +54,7 @@ document.getElementById("maiorVenda").addEventListener("click", async (event) =>
         const nomes = retorno["NomeCategoria"];
         const vendas = retorno["VendaCategoria"];
         for(let i = 0; i < nomes.length; i++){
-            res += `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Nome da categoria: ${nomes[i]} | Valor de venda: ${vendas[i]}<p>`;
+            res += `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Nome da categoria: ${nomes[i]} | Valor de venda: ${vendas[i]}<p>`;
         }
         if(retorno.error == null){
             resultado.innerHTML = res;
@@ -62,7 +62,7 @@ document.getElementById("maiorVenda").addEventListener("click", async (event) =>
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao ordenar</p>!`;
+        resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao ordenar</p>!`;
     }
 });
 
@@ -78,7 +78,7 @@ document.getElementById("menorVenda").addEventListener("click", async (event) =>
         let nomes = retorno["NomeCategoria"];
         let vendas = retorno["VendaCategoria"];
         for(let i = 0; i < nomes.length; i++){
-            res += `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Nome da categoria: ${nomes[i]} | Valor de venda: ${vendas[i]}<p>`;
+            res += `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Nome da categoria: ${nomes[i]} | Valor de venda: ${vendas[i]}<p>`;
         }
         if(retorno.error == null){
             resultado.innerHTML = res;
@@ -86,7 +86,7 @@ document.getElementById("menorVenda").addEventListener("click", async (event) =>
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao ordenar!</p>`;
+        resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao ordenar!</p>`;
     }
 });
 
@@ -102,7 +102,7 @@ document.getElementById("mediaVenda").addEventListener("click", async (event) =>
         let nomes = retorno["NomeCategoria"];
         let vendas = retorno["VendaCategoria"];
         for(let i = 0; i < nomes.length; i++){
-            res += `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Nome da categoria: ${nomes[i]} | Valor médio de venda: ${vendas[i]}<p>`;
+            res += `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Nome da categoria: ${nomes[i]} | Valor médio de venda: ${vendas[i]}<p>`;
         }
         if(retorno.error == null){
             resultado.innerHTML = res;
@@ -110,7 +110,7 @@ document.getElementById("mediaVenda").addEventListener("click", async (event) =>
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao ordenar!</p>`;
+        resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao ordenar!</p>`;
     }
 });
 
@@ -127,12 +127,12 @@ document.getElementById("formPut").addEventListener("submit", async (event) => {
         });
         const retorno = await resposta.json();
         if(retorno.error == null){
-            resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Atualizado com sucesso!</p>`;
+            resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Atualizado com sucesso!</p>`;
         } else {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao atualizar!</p>`;
+        resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao atualizar!</p>`;
     }
 });
 
@@ -145,11 +145,11 @@ document.getElementById("formDelete").addEventListener("submit", async (event) =
             method : "DELETE"
         });
         if(retorno.error == null){
-            resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Deletado com sucesso!</p>`;
+            resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Deletado com sucesso!</p>`;
         } else {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao deletar!</p>`;
+        resultado.innerHTML = `<p style="background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao deletar!</p>`;
     }
 });
