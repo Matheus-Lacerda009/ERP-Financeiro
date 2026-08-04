@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/fornecedor_cliente")
+@RequestMapping("/fornecedor")
 public class FornecedorController {
     private final FornecedorService service = new FornecedorService();
 
