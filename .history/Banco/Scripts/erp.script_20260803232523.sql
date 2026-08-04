@@ -91,7 +91,7 @@ create table Fluxo_Caixa(
 
 
 
--- index trigger e transações/lock
+-- index
 
 CREATE INDEX idx_operacao_data ON Operacao(data_operacao);
 CREATE INDEX idx_operacao_status ON Operacao(status_operacao);

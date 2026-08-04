@@ -91,7 +91,11 @@ create table Fluxo_Caixa(
 
 
 
--- index trigger e transações/lock
+
+
+
+
+-- (depois de todas as CREATE TABLE)
 
 CREATE INDEX idx_operacao_data ON Operacao(data_operacao);
 CREATE INDEX idx_operacao_status ON Operacao(status_operacao);
@@ -101,48 +105,7 @@ CREATE INDEX idx_itens_produto_qtd ON Itens_Operacao(id_produto, quantidade_prod
 
 
 
-
-
-
-DELIMITER //
-
-CREATE TRIGGER trg_valida_email_fornecedor
-BEFORE INSERT ON Fornecedor_Cliente
-FOR EACH ROW
-BEGIN
-    IF NEW.email IS NOT NULL AND NEW.email NOT LIKE '%_@_%._%' THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Erro: formato do e-mail inválido';
-    END IF;
-END//
-
-CREATE TRIGGER trg_ajusta_estoque
-AFTER INSERT ON Fluxo_Caixa
-FOR EACH ROW
-BEGIN
-    IF NEW.tipo_operacao = 'Venda' THEN
-        UPDATE Produto p
-        JOIN Itens_Operacao io ON io.id_produto = p.id_produto
-        SET p.quantidade_estoque = p.quantidade_estoque - io.quantidade_produtos
-        WHERE io.id_operacao = NEW.id_operacao;
-    ELSEIF NEW.tipo_operacao = 'Compra' THEN
-        UPDATE Produto p
-        JOIN Itens_Operacao io ON io.id_produto = p.id_produto
-        SET p.quantidade_estoque = p.quantidade_estoque + io.quantidade_produtos
-        WHERE io.id_operacao = NEW.id_operacao;
-    END IF;
-END//
-
-DELIMITER ;
-
-
-
-
-
-
-
-
-DELIMITER //
+DELIMITER $$
 
 CREATE PROCEDURE registrar_venda_com_lock (
     IN p_id_fornecedor_cliente INT,
@@ -187,6 +150,6 @@ BEGIN
     VALUES ('Venda', 1, p_id_caixa, p_id_forma_pagamento, v_id_operacao, p_id_folha_pagamento);
 
     COMMIT;
-END//
+END$$
 
 DELIMITER ;

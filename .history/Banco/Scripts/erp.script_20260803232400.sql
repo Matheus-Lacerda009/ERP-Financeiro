@@ -90,9 +90,6 @@ create table Fluxo_Caixa(
 );
 
 
-
--- index trigger e transações/lock
-
 CREATE INDEX idx_operacao_data ON Operacao(data_operacao);
 CREATE INDEX idx_operacao_status ON Operacao(status_operacao);
 CREATE INDEX idx_fornecedor_nome ON Fornecedor_Cliente(razao_social_nome);
@@ -104,7 +101,7 @@ CREATE INDEX idx_itens_produto_qtd ON Itens_Operacao(id_produto, quantidade_prod
 
 
 
-DELIMITER //
+DELIMITER $$
 
 CREATE TRIGGER trg_valida_email_fornecedor
 BEFORE INSERT ON Fornecedor_Cliente
@@ -114,7 +111,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Erro: formato do e-mail inválido';
     END IF;
-END//
+END$$
 
 CREATE TRIGGER trg_ajusta_estoque
 AFTER INSERT ON Fluxo_Caixa
@@ -134,9 +131,6 @@ BEGIN
 END//
 
 DELIMITER ;
-
-
-
 
 
 
