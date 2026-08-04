@@ -1,6 +1,7 @@
 package net.financeiro.repository;
 
 import net.financeiro.connection.Conexao;
+import net.financeiro.connection.VerificarPermissao;
 import net.financeiro.exceptions.PermissaoNegadaException;
 import net.financeiro.model.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
@@ -31,12 +32,16 @@ public class UsuarioRepository {
     }
 
     public boolean validacao(Usuario user) throws SQLException {
-        String sql = "select senha from Usuarios where nome = ?";
+        String sql = "select senha, permissao from Usuarios where nome = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setString(1, user.getNome());
             ResultSet rs = pr.executeQuery();
             rs.next();
-            return BCrypt.checkpw(user.getSenha(), rs.getString("senha"));
+            if(BCrypt.checkpw(user.getSenha(), rs.getString("senha"))){
+                VerificarPermissao.setPermissao(rs.getString("permissao"));
+                return true;
+            }
+            return false;
         }
     }
 }
