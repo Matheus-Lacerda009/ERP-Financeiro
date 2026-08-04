@@ -3,6 +3,7 @@ package net.financeiro.model;
 public class Valor_Salario {
     private Long id_funcionario;
     private double salario;
+    private String nome_funcionario;
 
     public Valor_Salario(Long id_funcionario, double salario) {
         this.id_funcionario = id_funcionario;
@@ -23,11 +24,5 @@ public class Valor_Salario {
 
     public double getSalario() {
         return salario;
-    }
-
-    @Override
-    public String toString(){
-        return "ID do funcionário: " + id_funcionario
-                + "Salário: " + salario;
     }
 }

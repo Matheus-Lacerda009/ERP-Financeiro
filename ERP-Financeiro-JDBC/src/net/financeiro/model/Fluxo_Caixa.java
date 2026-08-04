@@ -78,22 +78,4 @@ public class Fluxo_Caixa {
     public String getStatus_operacao() {
         return status_operacao;
     }
-
-
-    @Override
-    public String toString(){
-        return "ID: " + id_fluxo_caixa
-                + "\nTipo de operação: " + tipo_operacao
-                + "\nParcelas: " + parcelas
-                + "\nID da conta bancária: " + id_caixa
-                + "\nNome da conta bancária: " + nome_caixa
-                + "\nID da forma de pagamento: " + id_forma_pagamento
-                + "\nNome da forma de pagamento: " + nome_forma_pagamento
-                + "\nID da folha de pagamento: " + id_folha_pagamento
-                + "\nFuncionário da folha de pagamento: " + nome_funcionario_folha
-                + "\nID da operação: " + id_operacao
-                + "\nStatus da operação: " + status_operacao;
-    }
-
-
 }

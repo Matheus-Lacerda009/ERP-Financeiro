@@ -45,12 +45,4 @@ public class Itens_Operacao {
     public void setId_itens_operacao(Long id_itens_operacao) {
         this.id_itens_operacao = id_itens_operacao;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_itens_operacao
-                + "\nQuantidade de produtos: " + quantidade_produtos
-                + "\nID do produto: " + id_produto
-                + "\nID da operação: " + id_operacao;
-    }
 }
