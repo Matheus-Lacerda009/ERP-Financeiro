@@ -265,7 +265,7 @@ public class FuncionarioMenu implements TableMenu {
                     String prefix = (i == cursor) ? " > " : "   ";
 
                     String linha = String.format(
-                            "%s%-5d %-20s %-15s %-15s %-20s",
+                            "%s%-5d %-20s %-15s %-15s %-20s\n",
                             prefix, item.getId_funcionario(),
                             item.getNome(), item.getCpf(),
                             item.getTelefone(), item.getEmail()
