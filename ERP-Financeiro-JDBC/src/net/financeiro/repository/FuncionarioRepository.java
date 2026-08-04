@@ -101,7 +101,7 @@ public class FuncionarioRepository {
     public HashMap<String, List<String>> maiorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por funcionários', f.nome as 'Nome funcionario'\n" +
+                "    ) as 'VendaPorFuncionários', f.nome as 'NomeFuncionario'\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
@@ -110,9 +110,7 @@ public class FuncionarioRepository {
                 "where f.ativo = true" +
                 "GROUP BY\n" +
                 "    f.id_funcionario\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) desc;";
+                "ORDER BY VendaPorFuncionários desc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -121,8 +119,8 @@ public class FuncionarioRepository {
             lista.put("NomeCategoria", nomeCategoria);
             lista.put("VendaCategoria", vendaCategoria);
             while (rs.next()) {
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
+                lista.get("VendaCategoria").add(rs.getString("VendaPorCategoria"));
             }
             return lista;
         }
@@ -131,7 +129,7 @@ public class FuncionarioRepository {
     public HashMap<String, List<String>> menorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por funcionários', f.nome as 'Nome funcionario'\n" +
+                "    ) as 'VendaPorFuncionários', f.nome as 'NomeFuncionario'\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
@@ -140,9 +138,7 @@ public class FuncionarioRepository {
                 "where f.ativo = true" +
                 "GROUP BY\n" +
                 "    f.id_funcionario\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc;";
+                "ORDER BY VendaPorFuncionários desc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -151,8 +147,8 @@ public class FuncionarioRepository {
             lista.put("NomeCategoria", nomeCategoria);
             lista.put("VendaCategoria", vendaCategoria);
             while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
+                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
+                lista.get("VendaCategoria").add(rs.getString("VendaPorCategoria"));
             }
             return lista;
         }
@@ -161,7 +157,7 @@ public class FuncionarioRepository {
     public HashMap<String, List<String>> mediaVenda() throws SQLException {
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Média Venda por funcionários', f.nome as 'Nome funcionario'\n" +
+                "    ) as 'MédiaVendaPorFuncionários', f.nome as 'NomeFuncionario'\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
@@ -170,9 +166,7 @@ public class FuncionarioRepository {
                 "where f.ativo = true" +
                 "GROUP BY\n" +
                 "    f.id_funcionario\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc;";
+                "ORDER BY MédiaVendaPorFuncionários desc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -181,8 +175,8 @@ public class FuncionarioRepository {
             lista.put("NomeCategoria", nomeCategoria);
             lista.put("VendaCategoria", vendaCategoria);
             while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Média Venda por categoria"));
+                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
+                lista.get("VendaCategoria").add(rs.getString("MédiaVendaPorCategoria"));
             }
             return lista;
         }
