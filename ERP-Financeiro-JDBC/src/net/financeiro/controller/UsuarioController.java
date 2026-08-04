@@ -16,8 +16,12 @@ public class UsuarioController {
     private final UsuarioService service = new UsuarioService();
 
     @PostMapping
-    public ResponseEntity<Boolean> cadastrando(@RequestBody Usuario adm, @RequestBody Usuario ins) throws NadaInseridoException, SQLException, ValorInvalidoException {
-        return ResponseEntity.ok(service.cadastrando(adm, ins));
+    public ResponseEntity<Boolean> cadastrando(@RequestBody Usuario adm, @RequestBody Usuario ins) {
+        try {
+            return ResponseEntity.ok(service.cadastrando(adm, ins));
+        } catch(Exception e){
+            return ResponseEntity.ok(false);
+        }
     }
 
     @GetMapping
