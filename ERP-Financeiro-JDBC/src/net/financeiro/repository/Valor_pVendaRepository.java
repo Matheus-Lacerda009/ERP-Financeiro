@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Valor_pVendaRepository {
-    public List<Valor_pVenda> visualizar() {
+    public List<Valor_pVenda> visualizar() throws SQLException {
         String sql = "SELECT * FROM Valor_pVenda";
 
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
@@ -22,9 +22,6 @@ public class Valor_pVendaRepository {
             }
 
             return lista;
-        } catch(SQLException e) {
-            System.out.println("Erro ao visuaizar dados: " + e.getMessage());
-            return null;
         }
     }
 }

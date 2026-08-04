@@ -89,6 +89,34 @@ create table Fluxo_Caixa(
     foreign key(id_folha_pagamento) references Folha_Pagamento(id_folha_pagamento)
 );
 
+alter table Fornecedor_Cliente add column fornecedor bool not null;
+
+set SQL_SAFE_UPDATES = 0;
+
+update Fornecedor_Cliente set fornecedor = true where length(cnpj_cpf) > 11;
+
+alter table Funcionario add column ativo bool default false;
+
+update Funcionario set ativo = true;
+
+alter table Folha_Pagamento add column ativo bool default true;
+
+alter table Fornecedor_Cliente add column ativo bool default true;
+
+alter table Categoria_Item add column ativo bool default true;
+
+alter table Conta_Bancaria add column ativo bool default true;
+
+alter table Forma_Pagamento add column ativo bool default true;
+
+alter table Produto add column ativo bool default true;
+
+alter table Operacao add column ativo bool default true;
+
+alter table Itens_Operacao add column ativo bool default true;
+
+alter table Fluxo_Caixa add column ativo bool default true;
+
 
 
 -- index trigger e transações/lock
