@@ -5,6 +5,7 @@ import com.williamcallahan.tui4j.compat.bubbles.viewport.Viewport;
 import com.williamcallahan.tui4j.compat.bubbletea.*;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
+import net.financeiro.connection.VerificarPermissao;
 import net.financeiro.menus.events.JdbcQueryResult;
 import net.financeiro.model.Conta_Bancaria;
 import net.financeiro.service.Conta_BancariaService;
@@ -113,21 +114,24 @@ public class Conta_BancariaMenu implements TableMenu {
                         return null;
                     case "n":
                         //inicia a criação de uma nova entidade
-                        //todo fazer verificação de permissão antes de continuar ação
-                        estado = Estado.CRIANDO;
-                        iniciarFormulario();
+                        if(VerificarPermissao.validar("W")) {
+                            estado = Estado.CRIANDO;
+                            iniciarFormulario();
+                        }
                         return null;
                     case "f":
                         //inicia a edição da entidade selecionada
-                        //todo fazer verificação de permissão antes de continuar ação
-                        estado = Estado.EDITANDO;
-                        iniciarFormulario();
+                        if(VerificarPermissao.validar("W")) {
+                            estado = Estado.EDITANDO;
+                            iniciarFormulario();
+                        }
                         return null;
                     case "x":
                         //deleta a entidade selecionada
-                        //todo fazer verificação de permissão antes de continuar ação
-                        estado = Estado.DELETANDO;
-                        atualizarViewport();
+                        if(VerificarPermissao.validar("D")) {
+                            estado = Estado.DELETANDO;
+                            atualizarViewport();
+                        }
                         return null;
                     case "ctrl+r":
                         return consultarBanco();
