@@ -78,7 +78,7 @@ public class Fluxo_CaixaRepository {
                 "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
                 "join Folha_Pagamento on Folha_Pagamento.id_folha_pagamento = Fluxo_Caixa.id_folha_pagamento " +
                 "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
-                "join Operacao on Operacao.id_operacao = Fluxo_Caixa.id_operacao" +
+                "join Operacao on Operacao.id_operacao = Fluxo_Caixa.id_operacao " +
                 "where Fluxo_Caixa.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Fluxo_Caixa> lista = new ArrayList<>();

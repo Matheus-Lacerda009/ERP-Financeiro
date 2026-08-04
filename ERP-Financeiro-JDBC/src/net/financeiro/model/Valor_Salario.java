@@ -10,6 +10,12 @@ public class Valor_Salario {
         this.salario = salario;
     }
 
+    public Valor_Salario(Long id_funcionario, double salario, String nome_funcionario) {
+        this.id_funcionario = id_funcionario;
+        this.salario = salario;
+        this.nome_funcionario = nome_funcionario;
+    }
+
     public Valor_Salario(double salario) {
         this.salario = salario;
     }
@@ -24,5 +30,13 @@ public class Valor_Salario {
 
     public double getSalario() {
         return salario;
+    }
+
+    public String getNome_funcionario() {
+        return nome_funcionario;
+    }
+
+    public void setNome_funcionario(String nome_funcionario) {
+        this.nome_funcionario = nome_funcionario;
     }
 }
