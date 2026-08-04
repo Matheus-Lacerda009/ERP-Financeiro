@@ -1,11 +1,14 @@
 package net.financeiro.controller;
 
+import net.financeiro.exceptions.IdNaoEncontradoException;
+import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Forma_Pagamento;
 import net.financeiro.service.Categoria_ItemService;
 import net.financeiro.service.Forma_PagamentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,22 +19,22 @@ public class Forma_PagamentoController {
     private final Forma_PagamentoService service = new Forma_PagamentoService();
 
     @PostMapping
-    public ResponseEntity<Forma_Pagamento> inserir(@RequestBody Forma_Pagamento ins) {
+    public ResponseEntity<Forma_Pagamento> inserir(@RequestBody Forma_Pagamento ins) throws NadaInseridoException, SQLException {
         return ResponseEntity.ok(service.inserir(ins));
     }
 
     @GetMapping
-    public ResponseEntity<List<Forma_Pagamento>> listarInfo(){
+    public ResponseEntity<List<Forma_Pagamento>> listarInfo() throws NadaInseridoException, SQLException {
         return ResponseEntity.ok(service.listarInfo());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Forma_Pagamento> atualizar(@RequestBody Forma_Pagamento atl, @PathVariable Long id){
+    public ResponseEntity<Forma_Pagamento> atualizar(@RequestBody Forma_Pagamento atl, @PathVariable Long id) throws NadaInseridoException, SQLException, IdNaoEncontradoException {
         return ResponseEntity.ok(service.atualizar(atl, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id){
+    public ResponseEntity<Void> deletar(@PathVariable Long id) throws SQLException, IdNaoEncontradoException {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }

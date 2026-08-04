@@ -64,7 +64,7 @@ public class ClienteService {
         return repository.menorVenda();
     }
 
-    public HashMap<String, List<String>> mediaVendas() throws SQLException, NadaInseridoException {
+    public HashMap<String, List<String>> mediaVenda() throws SQLException, NadaInseridoException {
         if(repository.listarInfo().isEmpty()){
             throw new NadaInseridoException("Erro: nada inserido no banco");
         }
