@@ -1,5 +1,7 @@
 package net.financeiro.model;
 
+import java.util.List;
+
 public class Categoria_Item {
     private Long id_categoria_item;
     private String nome;
@@ -26,10 +28,5 @@ public class Categoria_Item {
     public void setId_categoria_item(Long id_categoria_item) {
         this.id_categoria_item = id_categoria_item;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_categoria_item
-                + "\nNome: " + nome;
-    }
 }
+

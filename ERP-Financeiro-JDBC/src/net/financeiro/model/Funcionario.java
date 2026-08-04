@@ -42,13 +42,4 @@ public class Funcionario {
     public void setId_funcionario(Long id_funcionario) {
         this.id_funcionario = id_funcionario;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_funcionario
-                + "\nNome: " + nome
-                + "\nCPF: " + cpf
-                + "\nTelefone: " + telefone
-                + "\nEmail: " + email;
-    }
 }

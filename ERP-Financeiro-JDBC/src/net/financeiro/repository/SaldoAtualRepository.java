@@ -1,7 +1,21 @@
 package net.financeiro.repository;
 
-import org.springframework.stereotype.Repository;
+import net.financeiro.connection.Conexao;
+import net.financeiro.model.SaldoAtual;
 
-@Repository
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class SaldoAtualRepository {
+    public SaldoAtual visualizar() throws SQLException {
+        String sql = "SELECT * FROM SaldoAtual";
+
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
+
+            rs.next();
+            return new SaldoAtual(rs.getDouble("Saldo_Total"));
+        }
+    }
 }

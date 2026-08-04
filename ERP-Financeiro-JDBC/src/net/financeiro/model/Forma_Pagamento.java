@@ -26,9 +26,4 @@ public class Forma_Pagamento {
     public void setId_forma_pagamento(Long id_forma_pagamento) {
         this.id_forma_pagamento = id_forma_pagamento;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_forma_pagamento + "\nNome: " + nome;
-    }
 }
