@@ -109,7 +109,7 @@ public class FornecedorRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true and fc.fornecedor = 1" +
+                "where fc.ativo = true and fc.fornecedor = 1 " +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY VendaFornecedorCliente desc;";
@@ -137,7 +137,7 @@ public class FornecedorRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true and fc.fornecedor = 1" +
+                "where fc.ativo = true and fc.fornecedor = 1 " +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY VendaFornecedorCliente desc;\n";
@@ -165,7 +165,7 @@ public class FornecedorRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true and fc.fornecedor = 1" +
+                "where fc.ativo = true and fc.fornecedor = 1 " +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
                 "ORDER BY MediaVendaFornecedorCliente desc;\n";

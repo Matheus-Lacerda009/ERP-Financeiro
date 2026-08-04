@@ -97,18 +97,16 @@ public class ClienteRepository {
     public HashMap<String, List<String>> maiorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
+                "    ) as Venda_Fornecedor_Cliente, fc.razao_social_nome as Nome_Fornecedor_Cliente\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true and fc.fornecedor = 0" +
+                "where fc.ativo = true and fc.fornecedor = 0 " +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) desc;";
+                "ORDER BY Venda_Fornecedor_Cliente desc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -127,18 +125,16 @@ public class ClienteRepository {
     public HashMap<String, List<String>> menorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
+                "    ) as Venda_Fornecedor_Cliente, fc.razao_social_nome as Nome_Fornecedor_Cliente\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true and fc.fornecedor = 0" +
+                "where fc.ativo = true and fc.fornecedor = 0 " +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc;\n";
+                "ORDER BY Venda_Fornecedor_Cliente asc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -157,18 +153,16 @@ public class ClienteRepository {
     public HashMap<String, List<String>> mediaVenda() throws SQLException {
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Media_Venda_Fornecedor_Cliente', fc.razao_social_nome as 'Nome_Fornecedor_Cliente'\n" +
+                "    ) as Media_Venda_Fornecedor_Cliente, fc.razao_social_nome as Nome_Fornecedor_Cliente\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente\n" +
-                "where fc.ativo = true and fc.fornecedor = 0" +
+                "where fc.ativo = true and fc.fornecedor = 0 " +
                 "GROUP BY\n" +
                 "    fc.id_fornecedor_cliente\n" +
-                "ORDER BY avg(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc;\n";
+                "ORDER BY Venda_Fornecedor_Cliente desc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();

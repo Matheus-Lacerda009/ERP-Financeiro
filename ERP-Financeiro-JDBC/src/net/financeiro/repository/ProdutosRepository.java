@@ -77,7 +77,7 @@ public class ProdutosRepository {
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
-                "where p.ativo = true" +
+                "where p.ativo = true " +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
                 "ORDER BY VendaPorProduto desc";
@@ -103,7 +103,7 @@ public class ProdutosRepository {
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
-                "where p.ativo = true" +
+                "where p.ativo = true " +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
                 "ORDER BY VendaPorProduto asc";
@@ -115,8 +115,8 @@ public class ProdutosRepository {
             lista.put("NomeProduto", nomeCategoria);
             lista.put("VendaProduto", vendaCategoria);
             while (rs.next()) {
-                lista.get("NomeProduto").add(rs.getString("Nome produto"));
-                lista.get("VendaProduto").add(rs.getString("Venda por produto"));
+                lista.get("NomeProduto").add(rs.getString("NomeProduto"));
+                lista.get("VendaProduto").add(rs.getString("VendaPorProduto"));
             }
             return lista;
         }
@@ -129,7 +129,7 @@ public class ProdutosRepository {
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
-                "where p.ativo = true" +
+                "where p.ativo = true " +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
                 "ORDER BY VendaPorProduto desc";

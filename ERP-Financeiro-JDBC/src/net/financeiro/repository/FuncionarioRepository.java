@@ -107,7 +107,7 @@ public class FuncionarioRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Funcionario` as f on f.id_funcionario = op.id_funcionario\n" +
-                "where f.ativo = true" +
+                "where f.ativo = true " +
                 "GROUP BY\n" +
                 "    f.id_funcionario\n" +
                 "ORDER BY VendaPorFuncionários desc;";
@@ -119,8 +119,8 @@ public class FuncionarioRepository {
             lista.put("NomeCategoria", nomeCategoria);
             lista.put("VendaCategoria", vendaCategoria);
             while (rs.next()) {
-                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
-                lista.get("VendaCategoria").add(rs.getString("VendaPorCategoria"));
+                lista.get("NomeCategoria").add(rs.getString("NomeFuncionario"));
+                lista.get("VendaCategoria").add(rs.getString("VendaPorFuncionários"));
             }
             return lista;
         }
@@ -135,7 +135,7 @@ public class FuncionarioRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Funcionario` as f on f.id_funcionario = op.id_funcionario\n" +
-                "where f.ativo = true" +
+                "where f.ativo = true " +
                 "GROUP BY\n" +
                 "    f.id_funcionario\n" +
                 "ORDER BY VendaPorFuncionários desc;";
@@ -147,8 +147,8 @@ public class FuncionarioRepository {
             lista.put("NomeCategoria", nomeCategoria);
             lista.put("VendaCategoria", vendaCategoria);
             while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
-                lista.get("VendaCategoria").add(rs.getString("VendaPorCategoria"));
+                lista.get("NomeCategoria").add(rs.getString("NomeFuncionario"));
+                lista.get("VendaCategoria").add(rs.getString("VendaPorFuncionários"));
             }
             return lista;
         }
@@ -163,7 +163,7 @@ public class FuncionarioRepository {
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "    join `Operacao` as op on op.id_operacao = i.id_operacao\n" +
                 "    join `Funcionario` as f on f.id_funcionario = op.id_funcionario\n" +
-                "where f.ativo = true" +
+                "where f.ativo = true " +
                 "GROUP BY\n" +
                 "    f.id_funcionario\n" +
                 "ORDER BY MédiaVendaPorFuncionários desc;";
@@ -175,8 +175,8 @@ public class FuncionarioRepository {
             lista.put("NomeCategoria", nomeCategoria);
             lista.put("VendaCategoria", vendaCategoria);
             while(rs.next()){
-                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
-                lista.get("VendaCategoria").add(rs.getString("MédiaVendaPorCategoria"));
+                lista.get("NomeCategoria").add(rs.getString("NomeFuncionario"));
+                lista.get("VendaCategoria").add(rs.getString("MédiaVendaPorFuncionários"));
             }
             return lista;
         }
