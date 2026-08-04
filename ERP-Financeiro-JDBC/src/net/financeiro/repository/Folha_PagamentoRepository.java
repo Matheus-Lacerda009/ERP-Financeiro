@@ -62,7 +62,7 @@ public class Folha_PagamentoRepository {
     public List<Folha_Pagamento> listarInfo() throws SQLException {
         String sql = "SELECT Folha_Pagamento.*, Funcionario.nome " +
                 "FROM Folha_Pagamento " +
-                "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario" +
+                "join Funcionario on Funcionario.id_funcionario = Folha_Pagamento.id_funcionario " +
                 "where Folha_Pagamento.ativo = true";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Folha_Pagamento> lista = new ArrayList<>();
