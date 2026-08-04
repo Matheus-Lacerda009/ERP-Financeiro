@@ -67,15 +67,4 @@ public class Folha_Pagamento {
     public String getNome_funcionario() {
         return nome_funcionario;
     }
-
-    @Override
-    public String toString(){
-        return "ID: " + id_folha_pagamento
-                + "\nDescontos: " + descontos
-                + "\nValor da hora: " + valor_hora
-                + "\nHoras trabalhadas: " + horas_trabalhadas
-                + "\nData entrada: " + data_entrada
-                + "\nID do funcionário: " + id_funcionario
-                + "\nNome do funcionário: " + nome_funcionario;
-    }
 }

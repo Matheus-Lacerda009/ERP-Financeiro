@@ -75,18 +75,4 @@ public class ViewNotaFiscal {
     public void setNumero_nota_fiscal(Long numero_nota_fiscal) {
         this.numero_nota_fiscal = numero_nota_fiscal;
     }
-
-    @Override
-    public String toString() {
-        return "Número da nota fiscal:" + numero_nota_fiscal
-                + "\nID do fluxo de caixa:" + id_fluxo_caixa
-                + "\nID do parceiro:" + id_parceiro
-                + "\nData de emissão:" + data_emissao
-                + "\nNome do parceiro:" + nome_parceiro
-                + "\nDocumentação do parceiro:" + documento_parceiro
-                + "\nEmail do parceiro:" + email_parceiro
-                + "\nForma de pagamento:" + forma_pagamento
-                + "\nNome do banco:" + banco_recebimento
-                + "\nNúmero de parcelas:" + parcelas;
-    }
 }
