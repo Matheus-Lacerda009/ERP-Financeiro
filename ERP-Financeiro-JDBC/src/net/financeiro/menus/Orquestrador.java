@@ -7,6 +7,7 @@ import com.williamcallahan.tui4j.compat.lipgloss.Position;
 import com.williamcallahan.tui4j.compat.lipgloss.Style;
 import com.williamcallahan.tui4j.compat.lipgloss.border.StandardBorder;
 import com.williamcallahan.tui4j.compat.lipgloss.color.AdaptiveColor;
+import net.financeiro.menus.events.AutenticacaoUsuario;
 import net.financeiro.menus.events.JdbcQueryResult;
 
 public class Orquestrador implements Model {
@@ -43,6 +44,7 @@ public class Orquestrador implements Model {
 
     //windows management
     private final HomeMenu homeMenu = new HomeMenu();
+    private final LoginMenu loginMenu = new LoginMenu();
     private final Categoria_ItemMenu categoriaItemMenu = new Categoria_ItemMenu();
     private final SaldoAtualMenu saldoAtualMenu = new SaldoAtualMenu();
     private final Folha_PagamentoMenu folhaPagamentoMenu = new Folha_PagamentoMenu();
@@ -53,7 +55,9 @@ public class Orquestrador implements Model {
     Conta_BancariaMenu contaBancariaMenu = new Conta_BancariaMenu();
 
     private TableMenu menuAtivo = homeMenu;
-    
+
+    private boolean userAuthenticated = false;
+
     //constructor
     public Orquestrador() {
         this.spinner = new Spinner(SpinnerType.POINTS)
@@ -75,6 +79,26 @@ public class Orquestrador implements Model {
              return UpdateResult.from(this);
          }
 
+        if(userAuthenticated == false && !(menuAtivo instanceof LoginMenu)) {
+            trocarModulo("Login");
+            return UpdateResult.from(this);
+        }
+
+        if(msg instanceof AutenticacaoUsuario result) {
+            if(result.result() == null) {
+                menuAtivo.onDataReceived(null, result.error() != null ? result.error() : "Erro desconhecido.");
+                return UpdateResult.from(this);
+            }
+
+            if(result.result()) {
+                userAuthenticated = true;
+                this.menuAtivo = homeMenu;
+            } else {
+                menuAtivo.onDataReceived(result.result(), null);
+            }
+            UpdateResult.from(this);
+        }
+
         if(msg instanceof JdbcQueryResult result) {
             this.isLoading = false;
             menuAtivo.onDataReceived(result.data(), result.error());
@@ -94,7 +118,7 @@ public class Orquestrador implements Model {
                 return UpdateResult.from(this, QuitMessage::new);
             }
 
-            if("esc".equals(k) && menuAtivo != homeMenu) {
+            if("esc".equals(k) && menuAtivo != homeMenu && userAuthenticated) {
                 homeMenu.limparSelecao();
                 this.menuAtivo = homeMenu;
                 this.isLoading = false;
@@ -146,6 +170,9 @@ public class Orquestrador implements Model {
                 break;
             case "Funcionario":
                 this.menuAtivo = funcionarioMenu;
+                break;
+            case "Login":
+                this.menuAtivo = loginMenu;
                 break;
         }
 
