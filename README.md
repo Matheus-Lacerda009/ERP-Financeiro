@@ -179,8 +179,6 @@ Fluxo_Caixa, Folha_Pagamento
 
 A maioria das tabelas principais possui uma coluna booleana `ativo` (usada na exclusão lógica) e chave primária autoincremento (usada com `Statement.RETURN_GENERATED_KEYS`).
 
-> Recomenda-se criar um script `schema.sql` (DDL) versionado junto ao projeto para reprodutibilidade do ambiente.
-
 ---
 
 ## ▶️ Como executar
@@ -196,6 +194,4 @@ A maioria das tabelas principais possui uma coluna booleana `ativo` (usada na ex
 javac -cp ".:libs/*" -d out $(find financeiro -name "*.java")
 java  -cp "out:libs/*" net.financeiro.Main
 ```
-
-> `Main.java` atualmente está vazio — é o ponto de partida para implementar o menu/CLI (ou outra camada de apresentação) que consome os `Service`s.
 
