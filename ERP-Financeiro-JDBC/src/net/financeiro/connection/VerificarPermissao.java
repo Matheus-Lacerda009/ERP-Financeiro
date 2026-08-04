@@ -1,5 +1,6 @@
 package net.financeiro.connection;
 
+//Classe para verificar a permissão do usuário
 public class VerificarPermissao {
     private static String permissao;
 
