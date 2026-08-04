@@ -199,7 +199,3 @@ java  -cp "out:libs/*" net.financeiro.Main
 
 > `Main.java` atualmente está vazio — é o ponto de partida para implementar o menu/CLI (ou outra camada de apresentação) que consome os `Service`s.
 
----
-## 📄 Licença
-
-Não definida — adicione uma licença (ex.: MIT) caso pretenda distribuir ou abrir o projeto publicamente.
