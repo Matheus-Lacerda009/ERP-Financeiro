@@ -9,6 +9,38 @@ header{
     align-content: center;
 }
 
+#menu{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 2vh;
+    position: absolute;
+    left: 90vw;
+    color: white;
+    font-size: 3vmin;
+    text-decoration-color: white;
+    background-color: #22A9D3;
+    padding: .6%;
+    border: 3px solid white;
+    transition: .5s;
+    border-radius: 10px;
+}
+
+#menu:hover{
+    background-color: #087EAC;
+    padding: 1%;
+    color: white;
+    text-decoration-color: white;
+}
+
+input:hover::placeholder{
+    color: white;
+}
+
+input:hover{
+    background-color: #22A9D3;
+    color: white;
+    border: 3px solid white;
+}
+
 h1{
     color: white;
     font-size: 6vmin;
@@ -41,10 +73,6 @@ input::placeholder{
     text-align: center;
     color: black;
     transition: .5s;
-}
-
-input:hover::placeholder{
-    color: white;
 }
 
 input{
@@ -102,11 +130,6 @@ button:hover{
     background-color: #087EAC;
     height: 4vmin;
     width: 11vmin;
-    color: white;
-}
-
-input:hover{
-    background-color: #2f7a7c;
     color: white;
 }
 
