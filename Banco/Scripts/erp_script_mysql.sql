@@ -10,7 +10,7 @@ use ERP_Financeiro;
 --Criação de tabelas/entidadades e entidades associativas:
 
 create table Funcionario(
-	id_funcionario int auto_increment primary key,
+    id_funcionario int auto_increment primary key,
     nome varchar(100) not null,
     cpf varchar(11) unique not null,
     telefone varchar(11) unique not null,
@@ -19,7 +19,7 @@ create table Funcionario(
 
 
 create table Folha_Pagamento(
-	id_folha_pagamento int auto_increment primary key,
+    id_folha_pagamento int auto_increment primary key,
     descontos decimal(10, 2) not null,
     data_entrada datetime not null,
     horas_trabalhadas decimal(5, 2) not null,
@@ -30,7 +30,7 @@ create table Folha_Pagamento(
 
 
 create table Fornecedor_Cliente(
-	id_fornecedor_cliente int auto_increment primary key,
+    id_fornecedor_cliente int auto_increment primary key,
     razao_social_nome varchar(100) not null,
     cnpj_cpf varchar(14) unique not null,
     telefone varchar(11) unique not null,
@@ -39,26 +39,26 @@ create table Fornecedor_Cliente(
 
 
 create table Categoria_Item(
-	id_categoria_item int auto_increment primary key,
+    id_categoria_item int auto_increment primary key,
     nome varchar(100) not null
 );
 
 
 create table Conta_Bancaria(
-	id_caixa int auto_increment primary key,
+    id_caixa int auto_increment primary key,
     nome_banco varchar(100) not null,
     numero_conta int unique
 );
 
 
 create table Forma_Pagamento(
-	id_forma_pagamento int auto_increment primary key,
+    id_forma_pagamento int auto_increment primary key,
     nome varchar(100) unique not null
 );
 
 
 create table Produto(
-	id_produto int auto_increment primary key,
+    id_produto int auto_increment primary key,
     nome varchar(100) not null,
     valor decimal(8, 2) not null,
     descricao text,
@@ -69,7 +69,7 @@ create table Produto(
 
 
 create table Operacao(
-	id_operacao int auto_increment primary key,
+    id_operacao int auto_increment primary key,
     data_operacao datetime not null,
     status_operacao enum('Pendente', 'Concluída') not null,
     id_fornecedor_cliente int not null,
@@ -80,7 +80,7 @@ create table Operacao(
 
 
 create table Itens_Operacao(
-	id_itens_operacao int auto_increment primary key,
+    id_itens_operacao int auto_increment primary key,
     quantidade_produtos int not null,
     id_produto int not null,
     foreign key(id_produto) references Produto(id_produto),
@@ -90,7 +90,7 @@ create table Itens_Operacao(
 
 
 create table Fluxo_Caixa(
-	id_fluxo_caixa int auto_increment primary key,
+    id_fluxo_caixa int auto_increment primary key,
     tipo_operacao enum('Compra', 'Venda') not null,
     parcelas int not null,
     id_caixa int not null,
@@ -283,55 +283,55 @@ JOIN Produto p ON io.id_produto = p.id_produto;
 --Tabela geral -> ver as principais informações por: categoria, funcionário, produto e fornecedor:
 
 --Categoria:
-SELECT * FROM `Categoria_Item`;
+SELECT * FROM Categoria_Item;
 
 
-SELECT nome FROM `Categoria_Item`;
+SELECT nome FROM Categoria_Item;
 
 --Funcionário:
-SELECT * FROM `Funcionario`;
+SELECT * FROM Funcionario;
 
 
-select nome from `Funcionario`;
+select nome from Funcionario;
 
 
-select cpf from `Funcionario`;
+select cpf from Funcionario;
 
 
-select telefone from `Funcionario`;
+select telefone from Funcionario;
 
 
-select email from `Funcionario`;
+select email from Funcionario;
 
 --Produto:
-SELECT * FROM `Produto`;
+SELECT * FROM Produto;
 
 
-SELECT nome FROM `Produto`;
+SELECT nome FROM Produto;
 
 
-SELECT valor FROM `Produto`;
+SELECT valor FROM Produto;
 
 
-SELECT descricao FROM `Produto`;
+SELECT descricao FROM Produto;
 
 
-SELECT quantidade_estoque FROM `Produto`;
+SELECT quantidade_estoque FROM Produto;
 
 --Fornecedor_cliente:
-SELECT * FROM `Fornecedor_Cliente`;
+SELECT * FROM Fornecedor_Cliente;
 
 
-SELECT razao_social_nome FROM `Fornecedor_Cliente`;
+SELECT razao_social_nome FROM Fornecedor_Cliente;
 
 
-SELECT cnpj_cpf FROM `Fornecedor_Cliente`;
+SELECT cnpj_cpf FROM Fornecedor_Cliente;
 
 
-SELECT telefone FROM `Fornecedor_Cliente`;
+SELECT telefone FROM Fornecedor_Cliente;
 
 
-SELECT email FROM `Fornecedor_Cliente`;
+SELECT email FROM Fornecedor_Cliente;
 
 --Maior venda -> ver as maiores vendas por: categoria, funcionário, produto e fornecedor:
 
@@ -342,7 +342,7 @@ select sum(
 from
     Produto as p
     join Itens_Operacao as io on io.id_produto = p.id_produto
-    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item
+    join Categoria_Item as ci on ci.id_categoria_item = p.id_categoria_item
 group by
     ci.id_categoria_item
 ORDER BY sum(
@@ -356,9 +356,9 @@ SELECT sum(
     ) as 'Venda por funcionários', f.nome as 'Nome funcionario'
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
-    join `Operacao` as op on op.id_operacao = i.id_operacao
-    join `Funcionario` as f on f.id_funcionario = op.id_funcionario
+    join Itens_Operacao as i on i.id_produto = p.id_produto
+    join Operacao as op on op.id_operacao = i.id_operacao
+    join Funcionario as f on f.id_funcionario = op.id_funcionario
 GROUP BY
     f.id_funcionario
 ORDER BY sum(
@@ -372,7 +372,7 @@ SELECT sum(
     ) as 'Venda por produto', p.nome as 'Nome produto'
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
+    join Itens_Operacao as i on i.id_produto = p.id_produto
 GROUP BY
     p.id_produto
 ORDER BY sum(
@@ -386,9 +386,9 @@ SELECT sum(
     ) as 'Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente '
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
-    join `Operacao` as op on op.id_operacao = i.id_operacao
-    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente
+    join Itens_Operacao as i on i.id_produto = p.id_produto
+    join Operacao as op on op.id_operacao = i.id_operacao
+    join Fornecedor_Cliente as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente
 GROUP BY
     fc.id_fornecedor_cliente
 ORDER BY sum(
@@ -404,7 +404,7 @@ select sum(
 from
     Produto as p
     join Itens_Operacao as io on io.id_produto = p.id_produto
-    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item
+    join Categoria_Item as ci on ci.id_categoria_item = p.id_categoria_item
 group by
     ci.id_categoria_item
 ORDER BY sum(
@@ -418,9 +418,9 @@ SELECT sum(
     ) as 'Venda por funcionários', f.nome as 'Nome funcionario'
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
-    join `Operacao` as op on op.id_operacao = i.id_operacao
-    join `Funcionario` as f on f.id_funcionario = op.id_funcionario
+    join Itens_Operacao as i on i.id_produto = p.id_produto
+    join Operacao as op on op.id_operacao = i.id_operacao
+    join Funcionario as f on f.id_funcionario = op.id_funcionario
 GROUP BY
     f.id_funcionario
 ORDER BY sum(
@@ -434,7 +434,7 @@ SELECT sum(
     ) as 'Venda por produto', p.nome as 'Nome produto'
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
+    join Itens_Operacao as i on i.id_produto = p.id_produto
 GROUP BY
     p.id_produto
 ORDER BY sum(
@@ -448,9 +448,9 @@ SELECT sum(
     ) as 'Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente '
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
-    join `Operacao` as op on op.id_operacao = i.id_operacao
-    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente
+    join Itens_Operacao as i on i.id_produto = p.id_produto
+    join Operacao as op on op.id_operacao = i.id_operacao
+    join Fornecedor_Cliente as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente
 GROUP BY
     fc.id_fornecedor_cliente
 ORDER BY sum(
@@ -466,7 +466,7 @@ select avg(
 from
     Produto as p
     join Itens_Operacao as io on io.id_produto = p.id_produto
-    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item
+    join Categoria_Item as ci on ci.id_categoria_item = p.id_categoria_item
 group by
     ci.id_categoria_item
 ORDER BY sum(
@@ -480,9 +480,9 @@ SELECT avg(
     ) as 'Média Venda por funcionários', f.nome as 'Nome funcionario'
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
-    join `Operacao` as op on op.id_operacao = i.id_operacao
-    join `Funcionario` as f on f.id_funcionario = op.id_funcionario
+    join Itens_Operacao as i on i.id_produto = p.id_produto
+    join Operacao as op on op.id_operacao = i.id_operacao
+    join Funcionario as f on f.id_funcionario = op.id_funcionario
 GROUP BY
     f.id_funcionario
 ORDER BY sum(
@@ -496,7 +496,7 @@ SELECT avg(
     ) as 'Média Venda por produto', p.nome as 'Nome produto'
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
+    join Itens_Operacao as i on i.id_produto = p.id_produto
 GROUP BY
     p.id_produto
 ORDER BY sum(
@@ -510,9 +510,9 @@ SELECT avg(
     ) as 'Média Venda por Fornecedores_Clientes', fc.razao_social_nome as 'Nome Fornecedor_Cliente '
 from
     Produto as p
-    join `Itens_Operacao` as i on i.id_produto = p.id_produto
-    join `Operacao` as op on op.id_operacao = i.id_operacao
-    join `Fornecedor_Cliente` as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente
+    join Itens_Operacao as i on i.id_produto = p.id_produto
+    join Operacao as op on op.id_operacao = i.id_operacao
+    join Fornecedor_Cliente as fc on fc.id_fornecedor_cliente = op.id_fornecedor_cliente
 GROUP BY
     fc.id_fornecedor_cliente
 ORDER BY sum(
@@ -577,3 +577,105 @@ grant select on ERP_Financeiro.* to 'yago'@'%' ;
 
 
 flush privileges;
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- index trigger e transações/lock
+
+CREATE INDEX idx_operacao_data ON Operacao(data_operacao);
+CREATE INDEX idx_operacao_status ON Operacao(status_operacao);
+CREATE INDEX idx_fornecedor_nome ON Fornecedor_Cliente(razao_social_nome);
+CREATE INDEX idx_produto_nome ON Produto(nome);
+CREATE INDEX idx_itens_produto_qtd ON Itens_Operacao(id_produto, quantidade_produtos);
+
+
+
+
+
+
+DELIMITER //
+
+CREATE TRIGGER trg_valida_email_fornecedor
+BEFORE INSERT ON Fornecedor_Cliente
+FOR EACH ROW
+BEGIN
+    IF NEW.email IS NOT NULL AND NEW.email NOT LIKE '%@%._%' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Erro: formato do e-mail inválido';
+    END IF;
+END//
+
+CREATE TRIGGER trg_ajusta_estoque
+AFTER INSERT ON Fluxo_Caixa
+FOR EACH ROW
+BEGIN
+    IF NEW.tipo_operacao = 'Venda' THEN
+        UPDATE Produto p
+        JOIN Itens_Operacao io ON io.id_produto = p.id_produto
+        SET p.quantidade_estoque = p.quantidade_estoque - io.quantidade_produtos
+        WHERE io.id_operacao = NEW.id_operacao;
+    ELSEIF NEW.tipo_operacao = 'Compra' THEN
+        UPDATE Produto p
+        JOIN Itens_Operacao io ON io.id_produto = p.id_produto
+        SET p.quantidade_estoque = p.quantidade_estoque + io.quantidade_produtos
+        WHERE io.id_operacao = NEW.id_operacao;
+    END IF;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE registrar_venda_com_lock (
+    IN p_id_fornecedor_cliente INT,
+    IN p_id_funcionario INT,
+    IN p_id_produto INT,
+    IN p_quantidade INT,
+    IN p_id_caixa INT,
+    IN p_id_forma_pagamento INT,
+    IN p_id_folha_pagamento INT
+)
+BEGIN
+    DECLARE v_id_operacao INT;
+    DECLARE v_estoque_atual INT;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    SELECT quantidade_estoque INTO v_estoque_atual
+    FROM Produto
+    WHERE id_produto = p_id_produto
+    FOR UPDATE;
+
+    IF v_estoque_atual < p_quantidade THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Estoque insuficiente para concluir esta venda';
+    END IF;
+
+    INSERT INTO Operacao (data_operacao, status_operacao, id_fornecedor_cliente, id_funcionario)
+    VALUES (NOW(), 'Concluída', p_id_fornecedor_cliente, p_id_funcionario);
+
+    SET v_id_operacao = LAST_INSERT_ID();
+
+    INSERT INTO Itens_Operacao (quantidade_produtos, id_produto, id_operacao)
+    VALUES (p_quantidade, p_id_produto, v_id_operacao);
+
+    INSERT INTO Fluxo_Caixa (tipo_operacao, parcelas, id_caixa, id_forma_pagamento, id_operacao, id_folha_pagamento)
+    VALUES ('Venda', 1, p_id_caixa, p_id_forma_pagamento, v_id_operacao, p_id_folha_pagamento);
+
+    COMMIT;
+END//
+
+DELIMITER ;
