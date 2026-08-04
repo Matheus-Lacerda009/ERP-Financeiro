@@ -2,8 +2,10 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
     event.preventDefault();
     try{
         const loginErro = document.getElementById("loginErro");
-        loginErro.style.color = "black";
+        loginErro.style.color = "white";
         loginErro.innerHTML = "Carregando...";
+        loginErro.style.border = "3px solid white"
+        loginErro.style.backgroundColor = "#22A9D3";
         const form = document.getElementById("formLogin");
         const nome = document.getElementById("inputNome").value;
         const senha = document.getElementById("inputSenha").value;

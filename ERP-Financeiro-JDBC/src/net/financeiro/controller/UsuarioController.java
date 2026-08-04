@@ -21,8 +21,12 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Boolean> validacao(@RequestParam String nome, @RequestParam String senha) throws NadaInseridoException, SQLException {
-        Usuario log = new Usuario(nome, senha);
-        return ResponseEntity.ok(service.validacao(log));
+    public ResponseEntity<Boolean> validacao(@RequestParam String nome, @RequestParam String senha) {
+        try {
+            Usuario log = new Usuario(nome, senha);
+            return ResponseEntity.ok(service.validacao(log));
+        } catch(Exception e){
+            return ResponseEntity.ok(false);
+        }
     }
 }
