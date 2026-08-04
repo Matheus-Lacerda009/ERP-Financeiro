@@ -63,7 +63,7 @@ public class Categoria_ItemRepository {
     public HashMap<String, List<String>> maiorVenda() throws SQLException {
         String sql = "select sum(\n" +
                 "                        p.valor * io.quantidade_produtos\n" +
-                "                    ) as 'Venda por categoria', ci.nome as 'Nome categoria', ci.ativo\n" +
+                "                    ) as VendaPorCategoria, ci.nome as NomeCategoria, ci.ativo\n" +
                 "                from\n" +
                 "                    Produto as p\n" +
                 "                    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
@@ -71,65 +71,7 @@ public class Categoria_ItemRepository {
                 "                    where ci.ativo = 1\n" +
                 "                group by\n" +
                 "                    ci.id_categoria_item\n" +
-                "                ORDER BY sum(\n" +
-                "                        p.valor * io.quantidade_produtos\n" +
-                "                    ) desc;";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
-            ResultSet rs = pr.executeQuery();
-            HashMap<String, List<String>> lista = new HashMap<>();
-            List<String> nomeCategoria = new ArrayList<>();
-            List<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
-            while (rs.next()) {
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
-            }
-            return lista;
-        }
-    }
-
-    public HashMap<String, List<String>> menorVenda() throws SQLException {
-        String sql = "select sum(\n" +
-                "                        p.valor * io.quantidade_produtos\n" +
-                "                    ) as 'Venda por categoria', ci.nome as 'Nome categoria', ci.ativo\n" +
-                "                from\n" +
-                "                    Produto as p\n" +
-                "                    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
-                "                    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
-                "                    where ci.ativo = 1\n" +
-                "                group by\n" +
-                "                    ci.id_categoria_item\n" +
-                "                ORDER BY sum(\n" +
-                "                        p.valor * io.quantidade_produtos\n" +
-                "                    ) asc;";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
-            ResultSet rs = pr.executeQuery();
-            HashMap<String, List<String>> lista = new HashMap<>();
-            ArrayList<String> nomeCategoria = new ArrayList<>();
-            ArrayList<String> vendaCategoria = new ArrayList<>();
-            lista.put("NomeCategoria", nomeCategoria);
-            lista.put("VendaCategoria", vendaCategoria);
-            while (rs.next()) {
-                lista.get("NomeCategoria").add(rs.getString("Nome categoria"));
-                lista.get("VendaCategoria").add(rs.getString("Venda por categoria"));
-            }
-            return lista;
-        }
-    }
-
-    public HashMap<String, List<String>> mediaVenda() throws SQLException {
-        String sql = "select avg(\n" +
-                "\t   p.valor * io.quantidade_produtos\n" +
-                "\t  ) as MediaVendaporCategoria, ci.nome as NomeCategoria, ci.ativo\n" +
-                "\tfrom\n" +
-                "\t  Produto as p\n" +
-                "\t  join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
-                "\t  join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
-                "\t  where ci.ativo = 1\n" +
-                "\tgroup by\n" +
-                "\t  ci.id_categoria_item\n" +
-                "\tORDER BY MediaVendaporCategoria desc;";
+                "                ORDER BY VendaPorCategoria desc;";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -139,7 +81,61 @@ public class Categoria_ItemRepository {
             lista.put("VendaCategoria", vendaCategoria);
             while (rs.next()) {
                 lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
-                lista.get("VendaCategoria").add(rs.getString("MediaVendaporCategoria"));
+                lista.get("VendaCategoria").add(rs.getString("VendaPorCategoria"));
+            }
+            return lista;
+        }
+    }
+
+    public HashMap<String, List<String>> menorVenda() throws SQLException {
+        String sql = "select sum(\n" +
+                "                        p.valor * io.quantidade_produtos\n" +
+                "                    ) as VendaPorCategoria, ci.nome as NomeCategoria, ci.ativo\n" +
+                "                from\n" +
+                "                    Produto as p\n" +
+                "                    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+                "                    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+                "                    where ci.ativo = 1\n" +
+                "                group by\n" +
+                "                    ci.id_categoria_item\n" +
+                "                ORDER BY VendaPorCategoria asc;";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeCategoria", nomeCategoria);
+            lista.put("VendaCategoria", vendaCategoria);
+            while (rs.next()) {
+                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
+                lista.get("VendaCategoria").add(rs.getString("VendaPorCategoria"));
+            }
+            return lista;
+        }
+    }
+
+    public HashMap<String, List<String>> mediaVenda() throws SQLException {
+        String sql = "select avg(\n" +
+                "                        p.valor * io.quantidade_produtos\n" +
+                "                    ) as VendaPorCategoria, ci.nome as NomeCategoria, ci.ativo\n" +
+                "                from\n" +
+                "                    Produto as p\n" +
+                "                    join Itens_Operacao as io on io.id_produto = p.id_produto\n" +
+                "                    join `Categoria_Item` as ci on ci.id_categoria_item = p.id_categoria_item\n" +
+                "                    where ci.ativo = 1\n" +
+                "                group by\n" +
+                "                    ci.id_categoria_item\n" +
+                "                ORDER BY VendaPorCategoria desc;";
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+            ResultSet rs = pr.executeQuery();
+            HashMap<String, List<String>> lista = new HashMap<>();
+            List<String> nomeCategoria = new ArrayList<>();
+            List<String> vendaCategoria = new ArrayList<>();
+            lista.put("NomeCategoria", nomeCategoria);
+            lista.put("VendaCategoria", vendaCategoria);
+            while (rs.next()) {
+                lista.get("NomeCategoria").add(rs.getString("NomeCategoria"));
+                lista.get("VendaCategoria").add(rs.getString("VendaPorCategoria"));
             }
             return lista;
         }
@@ -150,8 +146,10 @@ public class Categoria_ItemRepository {
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             pr.setLong(1, id_categoria_item);
             ResultSet rs = pr.executeQuery();
-            rs.next();
-            return new Categoria_Item(id_categoria_item, rs.getString("nome"));
+            if(rs.next()) {
+                return new Categoria_Item(id_categoria_item, rs.getString("nome"));
+            }
+            return null;
         }
     }
 }

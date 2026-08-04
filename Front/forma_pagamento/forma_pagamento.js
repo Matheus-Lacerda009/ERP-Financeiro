@@ -10,12 +10,12 @@ document.getElementById("formPost").addEventListener("submit", async (event) => 
         });
         const retorno = await resposta.json();
         if(retorno.error == null){
-            resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Inserido com sucesso!</p>`;
+            resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Inserido com sucesso!</p>`;
         } else {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao inserir!</p>`;
+        resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao inserir!</p>`;
     }
 });
 
@@ -31,7 +31,7 @@ document.getElementById("getTodos").addEventListener("click", async (event) => {
         retorno.sort((a, b) => a.id_forma_pagamento - b.id_forma_pagamento);
         let res = "";
         for(let i = 0; i < retorno.length; i++){
-            res += `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Id: ${retorno[i].id_forma_pagamento} | Nome: ${retorno[i].nome}<p>`;
+            res += `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">> Id: ${retorno[i].id_forma_pagamento} | Nome: ${retorno[i].nome}<p>`;
         }
         if(retorno.error == null){
             resultado.innerHTML = res;
@@ -39,7 +39,7 @@ document.getElementById("getTodos").addEventListener("click", async (event) => {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao listar!</p>`;
+        resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao listar!</p>`;
     }
 });
 
@@ -56,12 +56,12 @@ document.getElementById("formPut").addEventListener("submit", async (event) => {
         });
         const retorno = await resposta.json();
         if(retorno.error == null){
-            resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Atualizado com sucesso!</p>`;
+            resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Atualizado com sucesso!</p>`;
         } else {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao atualizar!</p>`;
+        resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao atualizar!</p>`;
     }
 });
 
@@ -73,12 +73,12 @@ document.getElementById("formDelete").addEventListener("submit", async (event) =
         const resposta = await fetch(`http://localhost:8085/forma_pagamento/${id}`, {
             method : "DELETE"
         });
-        if(retorno.error == null){
-            resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Deletado com sucesso!</p>`;
+        if(resposta.ok){
+            resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Deletado com sucesso!</p>`;
         } else {
             throw error;
         }
     } catch (error) {
-        resultado.innerHTML = `<p style="background-color:#C5D8D1; color: black; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao deletar!</p>`;
+        resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Erro ao deletar!</p>`;
     }
 });

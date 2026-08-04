@@ -1,30 +1,44 @@
-
 header{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 20%;
-    background-color: #12263af3;
+    background-color: #064B72;
     text-align: center;
     align-content: center;
 }
 
-footer{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10%;
-    background-color: #12263af3;
-    text-align: center;
-    align-content: center;
-}
-
-#github{
+#menu{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 2vh;
+    position: absolute;
+    left: 90vw;
     color: white;
-    font-size: 4vmin;
-    text-decoration: none;
+    font-size: 3vmin;
+    text-decoration-color: white;
+    background-color: #22A9D3;
+    padding: .6%;
+    border: 3px solid white;
+    transition: .5s;
+    border-radius: 10px;
+}
+
+#menu:hover{
+    background-color: #087EAC;
+    padding: 1%;
+    color: white;
+    text-decoration-color: white;
+}
+
+input:hover::placeholder{
+    color: white;
+}
+
+input:hover{
+    background-color: #22A9D3;
+    color: white;
+    border: 3px solid white;
 }
 
 h1{
@@ -37,32 +51,8 @@ h1{
     font-size: 3vmin;
 }
 
-#menu{
-    margin-top: 4vmin;
-    position: absolute;
-    left: 90vw;
-    color: black;
-    font-size: 3vmin;
-    text-decoration: none;
-    background-color: #C5D8D1;
-    padding: .6%;
-    border: 3px solid white;
-    transition: .5s;
-    text-align: center;
-    align-content: center;
-    border-radius: 10px;
-    width: 5%;
-    height: 15%;
-}
-
-#menu:hover{
-    background-color: #2f7a7c;
-    padding: 1%;
-    color: white;
-}
-
 body{
-    background-color: #1f4e50;
+    background-color: white;
 }
 
 .container{
@@ -75,12 +65,7 @@ body{
 
 h2{
     font-size: 2.5vmin;
-    color: #C5D8D1;
-}
-
-p{
-    font-size: 1.5vmin;
-    color: #C5D8D1;
+    color: white;
 }
 
 input::placeholder{
@@ -90,17 +75,13 @@ input::placeholder{
     transition: .5s;
 }
 
-input:hover::placeholder{
-    color: white;
-}
-
 input{
     font-size: 1.4vmin;
     height: 3vh;
     width: 7vw;
     transition: .5s;
-    background-color: #C5D8D1;
-    border: 3px solid white;
+    background-color: white;
+    border: 3px solid #22A9D3;
     color: black;
 }
 
@@ -109,56 +90,64 @@ input{
     margin-top: 20vh;
     width: 50vmin;
     height: 40vmin;
-    border: .5vmin solid rgb(255, 255, 255);
+    border: 3px solid rgb(255, 255, 255);
     display: grid;
     grid-template-columns: repeat(1, 7fr);
     text-align: center;
     justify-content: center;
     align-items: center;
-    background-color: #12263A;
+    background-color: #064B72;
 }
 
 button{
-    background-color: #C5D8D1;
+    background-color: #22A9D3;
     height: 3vmin;
     width: 10vmin;
     margin: auto;
     transition: .5s;
-    border: .5vmin solid white;
+    border: 3px solid white;
     border-radius: 10px;
     font-size: 1.4vmin;
     text-align: center;
+    color: white;
 }
 
 #enviar{
     margin-top: 2vh;
 }
 
+.listarMod{
+    height: 8vmin;
+    width: 11vmin;
+}
+
+.listarMod:hover{
+    height: 9vmin;
+    width: 12vmin;
+}
+
 button:hover{
-    background-color: #2f7a7c;
+    background-color: #087EAC;
     height: 4vmin;
     width: 11vmin;
     color: white;
 }
 
-input:hover{
-    background-color: #2f7a7c;
-    color: white;
-}
-
 #resultados{
     width: 180vmin;
-    border: .5vmin solid rgb(255, 255, 255);
+    border: 3px solid #22A9D3;
     margin: auto;
     margin-bottom: 11vh;
-    background-color: #12263A;
+    background-color: #064B72;
     align-content: center;
     justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
 }
 
 #resultadoBusca{
     margin-left: 2vmin;
-    color: #C5D8D1;
+    color: white;
+}
+
+P{
+    color: white;
 }

@@ -73,16 +73,14 @@ public class ProdutosRepository {
     public HashMap<String, List<String>> maiorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por produto', p.nome as 'Nome produto'\n" +
+                "    ) as VendaPorProduto, p.nome as NomeProduto\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "where p.ativo = true" +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) desc";
+                "ORDER BY VendaPorProduto desc";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -91,8 +89,8 @@ public class ProdutosRepository {
             lista.put("NomeProduto", nomeCategoria);
             lista.put("VendaProduto", vendaCategoria);
             while (rs.next()) {
-                lista.get("NomeProduto").add(rs.getString("Nome produto"));
-                lista.get("VendaProduto").add(rs.getString("Venda por produto"));
+                lista.get("NomeProduto").add(rs.getString("NomeProduto"));
+                lista.get("VendaProduto").add(rs.getString("VendaPorProduto"));
             }
             return lista;
         }
@@ -101,16 +99,14 @@ public class ProdutosRepository {
     public HashMap<String, List<String>> menorVenda() throws SQLException {
         String sql = "SELECT sum(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Venda por produto', p.nome as 'Nome produto'\n" +
+                "    ) as VendaPorProduto, p.nome as NomeProduto\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "where p.ativo = true" +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc";
+                "ORDER BY VendaPorProduto asc";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -129,16 +125,14 @@ public class ProdutosRepository {
     public HashMap<String, List<String>> mediaVenda() throws SQLException {
         String sql = "SELECT avg(\n" +
                 "        p.valor * i.quantidade_produtos\n" +
-                "    ) as 'Média Venda por produto', p.nome as 'Nome produto'\n" +
+                "    ) as VendaPorProduto, p.nome as NomeProduto\n" +
                 "from\n" +
                 "    Produto as p\n" +
                 "    join `Itens_Operacao` as i on i.id_produto = p.id_produto\n" +
                 "where p.ativo = true" +
                 "GROUP BY\n" +
                 "    p.id_produto\n" +
-                "ORDER BY sum(\n" +
-                "        p.valor * i.quantidade_produtos\n" +
-                "    ) asc";
+                "ORDER BY VendaPorProduto desc";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             HashMap<String, List<String>> lista = new HashMap<>();
@@ -147,8 +141,8 @@ public class ProdutosRepository {
             lista.put("NomeProduto", nomeCategoria);
             lista.put("VendaProduto", vendaCategoria);
             while (rs.next()) {
-                lista.get("NomeProduto").add(rs.getString("Nome produto"));
-                lista.get("VendaProduto").add(rs.getString("Média Venda por produto"));
+                lista.get("NomeProduto").add(rs.getString("NomeProduto"));
+                lista.get("VendaProduto").add(rs.getString("VendaPorProduto"));
             }
             return lista;
         }

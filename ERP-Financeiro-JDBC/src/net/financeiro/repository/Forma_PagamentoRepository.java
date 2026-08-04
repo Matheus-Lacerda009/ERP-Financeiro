@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 public class Forma_PagamentoRepository {
 
     public Forma_Pagamento inserir(Forma_Pagamento ins) throws SQLException{
@@ -65,7 +64,7 @@ public class Forma_PagamentoRepository {
     }
 
     public Forma_Pagamento buscarPorId(Long id_Forma_Pagamento) throws SQLException{
-        String sql = "SELECT * FROM Forma_Pagamento where id_forma_pagamento = ? and ativo = true";
+        String sql = "SELECT * FROM Forma_Pagamento where id_forma_pagamento = ? and ativo = 1";
         try (PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_Forma_Pagamento);
             ResultSet rs = pr.executeQuery();

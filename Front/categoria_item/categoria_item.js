@@ -144,7 +144,7 @@ document.getElementById("formDelete").addEventListener("submit", async (event) =
         const resposta = await fetch(`http://localhost:8085/categoria_item/${id}`, {
             method : "DELETE"
         });
-        if(retorno.error == null){
+        if(resposta.ok){
             resultado.innerHTML = `<p style="width: fit-content;background-color:#22A9D3; color: white; padding: 1.25vmin; border: .5vmin solid white; margin: .5vmin">Deletado com sucesso!</p>`;
         } else {
             throw error;

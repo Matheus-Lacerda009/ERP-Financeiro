@@ -5,10 +5,11 @@ import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.exceptions.NadaInseridoException;
 import net.financeiro.model.Forma_Pagamento;
 import net.financeiro.repository.Forma_PagamentoRepository;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
-
+@Service
 public class Forma_PagamentoService {
     private final Forma_PagamentoRepository repository = new Forma_PagamentoRepository();
 
