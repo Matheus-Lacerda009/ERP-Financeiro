@@ -15,6 +15,7 @@ public class FornecedorRepository {
 
     public Fornecedor_Cliente inserir(Fornecedor_Cliente ins){
         String sql = "INSERT INTO Fornecedor_Cliente (razao_social_nome, cnpj_cpf, telefone, email, fornecedor) VALUES (?, ?, ?, ?, 1)";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pr.setString(1, ins.getRazao_social_nome());
             pr.setString(2, ins.getCnpj_cpf());
@@ -26,14 +27,12 @@ public class FornecedorRepository {
                 ins.setId_fornecedor_cliente(rs.getLong(1));
             }
             return ins;
-        } catch(SQLException e){
-            System.out.println("ERRO ao inserir : " + e.getMessage());
-            return null;
         }
     }
 
     public Fornecedor_Cliente atualizar(Fornecedor_Cliente alt, Long id){
         String sql = "UPDATE Fornecedor_Cliente SET razao_social_nome = ?, cnpj_cpf = ?, telefone = ?, email = ? WHERE id_fornecedor_cliente = ? and fornecedor = 1";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setString(1, alt.getRazao_social_nome());
             pr.setString(2, alt.getCnpj_cpf());
@@ -42,36 +41,30 @@ public class FornecedorRepository {
             pr.setLong(5, id);
             pr.executeUpdate();
             return alt;
-        } catch(SQLException e){
-            System.out.println("ERRO ao atualizar : " + e.getMessage());
-            return null;
         }
     }
 
     public boolean deletar(Long id){
         String sql = "update Fornecedor_Cliente set ativo = false WHERE id_fornecedor_cliente = ? and fornecedor = 1";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("ERRO ao deletar: " + e.getMessage());
-            return false;
         }
     }
 
     public boolean reativar(Long id){
         String sql = "update Fornecedor_Cliente set ativo = true WHERE id_fornecedor_cliente = ? and fornecedor = 1";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
             return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("ERRO ao reativar: " + e.getMessage());
-            return false;
         }
     }
 
     public List<Fornecedor_Cliente> listarInfo(){
         String sql = "SELECT * FROM Fornecedor_Cliente where ativo = true and fornecedor = 1";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             List<Fornecedor_Cliente> lista = new ArrayList<>();
             ResultSet rs = pr.executeQuery();
@@ -85,14 +78,12 @@ public class FornecedorRepository {
                 ));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("ERRO ao listar : " + e.getMessage());
-            return null;
         }
     }
 
     public Fornecedor_Cliente buscarPorId(Long id_fornecedor_cliente){
         String sql = "SELECT * FROM Fornecedor_Cliente WHERE id_fornecedor_cliente = ? and ativo = true and fornecedor = 1";
+
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id_fornecedor_cliente);
             ResultSet rs = pr.executeQuery();
@@ -105,9 +96,6 @@ public class FornecedorRepository {
                         rs.getString("email")
                 );
             }
-            return null;
-        } catch(SQLException e){
-            System.out.println("ERRO de busca : " + e.getMessage());
             return null;
         }
     }
@@ -139,9 +127,6 @@ public class FornecedorRepository {
                 lista.get("VendaFornecedorCliente").add(rs.getString("Venda_Fornecedor_Cliente"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -172,9 +157,6 @@ public class FornecedorRepository {
                 lista.get("VendaFornecedorCliente").add(rs.getString("Venda_Fornecedor_Cliente"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
@@ -205,9 +187,6 @@ public class FornecedorRepository {
                 lista.get("MediaVendaFornecedorCliente").add(rs.getString("Media_Venda_Fornecedor_Cliente"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 }

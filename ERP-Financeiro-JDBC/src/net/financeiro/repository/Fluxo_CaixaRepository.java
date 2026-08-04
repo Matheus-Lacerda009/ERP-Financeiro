@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Fluxo_CaixaRepository {
 
-    public Fluxo_Caixa inserir(Fluxo_Caixa ins){
+    public Fluxo_Caixa inserir(Fluxo_Caixa ins) throws SQLException {
         String sql = "INSERT INTO Fluxo_Caixa (id_caixa, id_forma_pagamento, tipo_operacao, parcelas, id_folha_pagamento, id_operacao)\n" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -31,13 +31,10 @@ public class Fluxo_CaixaRepository {
             rs.next();
             ins.setId_fluxo_caixa(rs.getLong("GENERATED_KEY"));
             return ins;
-        } catch(SQLException e){
-            System.out.println("Erro ao inserir dados: " + e.getMessage());
-            return null;
         }
     }
 
-    public Fluxo_Caixa atualizar(Fluxo_Caixa atl, Long id){
+    public Fluxo_Caixa atualizar(Fluxo_Caixa atl, Long id) throws SQLException {
         String sql = "UPDATE Fluxo_Caixa SET id_caixa = ?, id_forma_pagamento = ?, tipo_operacao  = ?, parcelas  = ?, id_folha_pagamento = ?, id_operacao = ? WHERE id_fluxo_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, atl.getId_caixa());
@@ -49,36 +46,33 @@ public class Fluxo_CaixaRepository {
             pr.setLong(7, id);
             pr.executeUpdate();
             return atl;
-        } catch(SQLException e){
-            System.out.println("Erro ao atualizar dados: " + e.getMessage());
-            return null;
         }
     }
 
-    public boolean deletar(Long id){
+    public boolean deletar(Long id) throws SQLException {
         String sql = "update Fluxo_Caixa set ativo = false WHERE id_fluxo_caixa = ?";
         try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
             pr.setLong(1, id);
-            return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("Erro ao deletar: " + e.getMessage());
-            return false;
+            pr.executeUpdate();
+            return true;
         }
     }
 
-    public boolean reativar(Long id){
+    public boolean reativar(Long id) throws SQLException {
         String sql = "update Fluxo_Caixa set ativo = true WHERE id_fluxo_caixa = ?";
-        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)){
+        try(PreparedStatement pr = Conexao.connecting().prepareStatement(sql)) {
+
             pr.setLong(1, id);
             return pr.executeUpdate() != 0;
-        } catch(SQLException e){
-            System.out.println("Erro ao reativar: " + e.getMessage());
-            return false;
         }
     }
 
-    public List<Fluxo_Caixa> listarInfo(){
-        String sql =  "SELECT Fluxo_Caixa.*, Conta_Bancaria.nome_banco, Forma_Pagamento.nome, Funcionario.nome, Operacao.status_operacao " +
+    public List<Fluxo_Caixa> listarInfo() throws SQLException {
+        String sql =  "SELECT Fluxo_Caixa.*, " +
+                "Conta_Bancaria.nome_banco AS nome_banco, " +
+                "Forma_Pagamento.nome AS nome_forma_pagamento, " +
+                "Funcionario.nome AS nome_funcionario, " +
+                "Operacao.status_operacao AS status_operacao " +
                 "FROM Fluxo_Caixa " +
                 "join Conta_Bancaria on Conta_Bancaria.id_caixa = Fluxo_Caixa.id_caixa " +
                 "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
@@ -98,20 +92,21 @@ public class Fluxo_CaixaRepository {
                         rs.getInt("parcelas"),
                         rs.getLong("id_folha_pagamento"),
                         rs.getLong("id_operacao"),
-                        rs.getString("Conta_Bancaria.nome_banco"),
-                        rs.getString("Forma_Pagamento.nome"),
-                        rs.getString("Funcionario.nome"),
-                        rs.getString("Operacao.status_operacao")));
+                        rs.getString("nome_banco"),
+                        rs.getString("nome_forma_pagamento"),
+                        rs.getString("nome_funcionario"),
+                        rs.getString("status_operacao")));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public Fluxo_Caixa buscarPorId(Long id_fluxo_caixa ){
-        String sql = "SELECT Fluxo_Caixa.*, Conta_Bancaria.nome_banco, Forma_Pagamento.nome, Funcionario.nome, Operacao.status_operacao " +
+    public Fluxo_Caixa buscarPorId(Long id_fluxo_caixa ) throws SQLException {
+        String sql = "SELECT Fluxo_Caixa.*, " +
+                "Conta_Bancaria.nome_banco AS nome_banco, " +
+                "Forma_Pagamento.nome AS nome_forma_pagamento, " +
+                "Funcionario.nome AS nome_funcionario, " +
+                "Operacao.status_operacao AS status_operacao " +
                 "FROM Fluxo_Caixa " +
                 "join Conta_Bancaria on Conta_Bancaria.id_caixa = Fluxo_Caixa.id_caixa " +
                 "join Forma_Pagamento on Forma_Pagamento.id_forma_pagamento = Fluxo_Caixa.id_forma_pagamento " +
@@ -125,18 +120,15 @@ public class Fluxo_CaixaRepository {
             rs.next();
             return new Fluxo_Caixa(id_fluxo_caixa, rs.getLong("id_caixa"), rs.getLong("id_forma_pagamento"),
                     rs.getString("tipo_operacao"), rs.getInt("parcelas"), rs.getLong("id_folha_pagamento"),
-                    rs.getLong("id_operacao"), rs.getString("Conta_Bancaria.nome_banco"),
-                    rs.getString("Forma_Pagamento.nome"), rs.getString("Funcionario.nome"),
-                    rs.getString("Operacao.status_operacao"));
-        } catch(SQLException e){
-            System.out.println("Erro ao buscar por ID: " + e.getMessage());
-            return null;
+                    rs.getLong("id_operacao"), rs.getString("nome_banco"),
+                    rs.getString("nome_forma_pagamento"), rs.getString("nome_funcionario"),
+                    rs.getString("status_operacao"));
         }
     }
 
     /*MÉTODOS QUERIES8*/
 
-    public HashMap<String, List<String>> entradas_realizadas(int dias){
+    public HashMap<String, List<String>> entradas_realizadas(int dias) throws SQLException {
 
         String sql = "SELECT o.data_operacao AS Data, vv.valor_total AS ValorVenda\n" +
                 "FROM Fluxo_Caixa fc\n" +
@@ -160,13 +152,10 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> entradas_previstas (int dias){
+    public HashMap<String, List<String>> entradas_previstas (int dias) throws SQLException {
         String sql = "SELECT o.data_operacao AS Data, vv.valor_total AS ValorVenda\n" +
                 "FROM Fluxo_Caixa fc\n" +
                 "JOIN Operacao o ON o.id_operacao = fc.id_operacao\n" +
@@ -188,13 +177,10 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> saidas_realizadas (int dias){
+    public HashMap<String, List<String>> saidas_realizadas (int dias) throws SQLException {
         String sql = "SELECT o.data_operacao AS Data, vv.valor_total AS ValorVenda\n" +
                 "FROM Fluxo_Caixa fc\n" +
                 "JOIN Operacao o ON o.id_operacao = fc.id_operacao\n" +
@@ -217,13 +203,10 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 
-    public HashMap<String, List<String>> saidas_previstas  (int dias){
+    public HashMap<String, List<String>> saidas_previstas  (int dias) throws SQLException {
         String sql = "SELECT o.data_operacao AS Data, vv.valor_total AS ValorVenda\n" +
                 "FROM Fluxo_Caixa fc\n" +
                 "JOIN Operacao o ON o.id_operacao = fc.id_operacao\n" +
@@ -246,9 +229,6 @@ public class Fluxo_CaixaRepository {
                 lista.get("ValorVenda").add(rs.getString("ValorVenda"));
             }
             return lista;
-        } catch(SQLException e){
-            System.out.println("Erro ao listar: " + e.getMessage());
-            return null;
         }
     }
 }
