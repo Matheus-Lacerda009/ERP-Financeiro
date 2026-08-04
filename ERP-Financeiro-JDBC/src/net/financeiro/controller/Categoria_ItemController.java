@@ -19,38 +19,71 @@ public class Categoria_ItemController {
     private final Categoria_ItemService service = new Categoria_ItemService();
 
     @PostMapping
-    public ResponseEntity<Categoria_Item> inserir(@RequestBody Categoria_Item ins) throws SQLException, ValorInvalidoException {
-        return ResponseEntity.ok(service.inserir(ins));
+    public ResponseEntity<Categoria_Item> inserir(@RequestBody Categoria_Item ins) {
+        try {
+            return ResponseEntity.ok(service.inserir(ins));
+        } catch(Exception e){
+            return ResponseEntity.ok(null);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<Categoria_Item>> listarInfo() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.listarInfo());
+    public ResponseEntity<List<Categoria_Item>> listarInfo()  {
+        try {
+            return ResponseEntity.ok(service.listarInfo());
+        } catch (SQLException | NadaInseridoException e) {
+            return ResponseEntity.ok(null);
+        }
     }
 
     @GetMapping("/maiorVenda")
-    public ResponseEntity<HashMap<String, List<String>>> maiorVenda() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.maiorVenda());
+    public ResponseEntity<HashMap<String, List<String>>> maiorVenda()  {
+        try {
+            return ResponseEntity.ok(service.maiorVenda());
+        } catch (SQLException | NadaInseridoException e) {
+            return ResponseEntity.ok(null);
+        }
     }
 
     @GetMapping("/menorVenda")
     public ResponseEntity<HashMap<String, List<String>>> menorVenda() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.menorVenda());
+        try {
+            return ResponseEntity.ok(service.menorVenda());
+        } catch (SQLException | NadaInseridoException e) {
+            return ResponseEntity.ok(null);
+        }
     }
 
     @GetMapping("/mediaVenda")
     public ResponseEntity<HashMap<String, List<String>>> mediaVenda() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.mediaVenda());
+        try{
+            return ResponseEntity.ok(service.mediaVenda());
+        } catch (SQLException | NadaInseridoException e) {
+            return ResponseEntity.ok(null);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria_Item> atualizar(@RequestBody Categoria_Item atl, @PathVariable Long id) throws IdNaoEncontradoException, SQLException, ValorInvalidoException {
-        return ResponseEntity.ok(service.atualizar(atl, id));
+    public ResponseEntity<Categoria_Item> atualizar(@RequestBody Categoria_Item atl, @PathVariable Long id)   {
+        try{
+            return ResponseEntity.ok(service.atualizar(atl, id));
+        } catch (SQLException | IdNaoEncontradoException | ValorInvalidoException e) {
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) throws NadaInseridoException, IdNaoEncontradoException, SQLException {
-        service.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deletar(@PathVariable Long id)   {
+        try{
+            service.deletar(id);
+            return ResponseEntity.noContent().build();
+
+        }catch (NadaInseridoException| IdNaoEncontradoException| SQLException e){
+            return ResponseEntity.ok(null);
+        }
+
+
+
     }
 }

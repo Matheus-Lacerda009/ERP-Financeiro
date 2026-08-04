@@ -18,38 +18,81 @@ public class FornecedorController {
     private final FornecedorService service = new FornecedorService();
 
     @PostMapping
-    public ResponseEntity<Fornecedor_Cliente> inserir(@RequestBody Fornecedor_Cliente ins) throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.inserir(ins));
+    public ResponseEntity<Fornecedor_Cliente> inserir(@RequestBody Fornecedor_Cliente ins)  {
+
+
+        try{
+            return ResponseEntity.ok(service.inserir(ins));
+        } catch ( NadaInseridoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<Fornecedor_Cliente>> listarInfo() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.listarInfo());
+    public ResponseEntity<List<Fornecedor_Cliente>> listarInfo()  {
+
+        try{
+            return ResponseEntity.ok(service.listarInfo());
+        } catch ( NadaInseridoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @GetMapping("/maiorVenda")
-    public ResponseEntity<HashMap<String, List<String>>> maiorVenda() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.maiorVenda());
+    public ResponseEntity<HashMap<String, List<String>>> maiorVenda()  {
+
+        try{
+            return ResponseEntity.ok(service.maiorVenda());
+        } catch ( NadaInseridoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @GetMapping("/menorVenda")
-    public ResponseEntity<HashMap<String, List<String>>> menorVenda() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.menorVenda());
+    public ResponseEntity<HashMap<String, List<String>>> menorVenda() {
+
+        try{
+            return ResponseEntity.ok(service.menorVenda());
+        } catch ( NadaInseridoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @GetMapping("/mediaVenda")
-    public ResponseEntity<HashMap<String, List<String>>> mediaVenda() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.mediaVenda());
+    public ResponseEntity<HashMap<String, List<String>>> mediaVenda()  {
+
+        try{
+            return ResponseEntity.ok(service.mediaVenda());
+        } catch ( NadaInseridoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Fornecedor_Cliente> atualizar(@RequestBody Fornecedor_Cliente atl, @PathVariable Long id) throws NadaInseridoException, SQLException, IdNaoEncontradoException {
-        return ResponseEntity.ok(service.atualizar(atl, id));
+    public ResponseEntity<Fornecedor_Cliente> atualizar(@RequestBody Fornecedor_Cliente atl, @PathVariable Long id)  {
+        try{
+            return ResponseEntity.ok(service.atualizar(atl, id));
+        } catch ( NadaInseridoException |IdNaoEncontradoException| SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) throws SQLException, IdNaoEncontradoException {
-        service.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deletar(@PathVariable Long id)   {
+
+
+
+        try{
+            service.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch ( IdNaoEncontradoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 }

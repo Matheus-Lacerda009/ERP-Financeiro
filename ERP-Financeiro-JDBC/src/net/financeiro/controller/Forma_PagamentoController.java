@@ -19,23 +19,47 @@ public class Forma_PagamentoController {
     private final Forma_PagamentoService service = new Forma_PagamentoService();
 
     @PostMapping
-    public ResponseEntity<Forma_Pagamento> inserir(@RequestBody Forma_Pagamento ins) throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.inserir(ins));
+    public ResponseEntity<Forma_Pagamento> inserir(@RequestBody Forma_Pagamento ins)  {
+        try{
+            return ResponseEntity.ok(service.inserir(ins));
+        } catch ( NadaInseridoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @GetMapping
-    public ResponseEntity<List<Forma_Pagamento>> listarInfo() throws NadaInseridoException, SQLException {
-        return ResponseEntity.ok(service.listarInfo());
+    public ResponseEntity<List<Forma_Pagamento>> listarInfo()  {
+
+        try{
+            return ResponseEntity.ok(service.listarInfo());
+        } catch ( NadaInseridoException | SQLException e ){
+            return ResponseEntity.ok(null);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Forma_Pagamento> atualizar(@RequestBody Forma_Pagamento atl, @PathVariable Long id) throws NadaInseridoException, SQLException, IdNaoEncontradoException {
-        return ResponseEntity.ok(service.atualizar(atl, id));
+    public ResponseEntity<Forma_Pagamento> atualizar(@RequestBody Forma_Pagamento atl, @PathVariable Long id) {
+
+        try{
+            return ResponseEntity.ok(service.atualizar(atl, id));
+        } catch ( NadaInseridoException | IdNaoEncontradoException| SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) throws SQLException, IdNaoEncontradoException {
-        service.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deletar(@PathVariable Long id)  {
+
+
+        try{
+            service.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch ( IdNaoEncontradoException| SQLException e ){
+            return ResponseEntity.ok(null);
+        }
+
+
     }
 }
