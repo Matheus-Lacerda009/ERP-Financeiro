@@ -14,6 +14,8 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
         } else {
             loginErro.innerHTML = "Erro ao logar!";
             loginErro.style.color = "red";
+            loginErro.style.backgroundColor = "white";
+            loginErro.style.border = "3px solid #22A9D3"
         }
     } catch(erro){
         console.log(erro);

@@ -1,85 +1,48 @@
-header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%;
-    background-color: #12263af3;
-    text-align: center;
-    align-content: center;
-}
-
-footer{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10%;
-    background-color: #12263af3;
-    text-align: center;
-    align-content: center;
-}
-
-#github{
+h2{
     color: white;
-    font-size: 2vw;
-    text-decoration: none;
-}
-
-h1{
-    font-size: 300%;
-    color: white;
-    font-size: 3vw;
-}
-
-header, h2{
-    color: white;
-    font-size: 1.5vw;
+    font-size: 7vmin;
 }
 
 body{
     margin: 0;
     padding: 0;
-    background-color: #1f4e50;
 }
 
 .container{
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    flex-direction: column;
+}
+
+#logo{
+    width: 50%;
+    height:auto;
 }
 
 #divLogin{
-    top: 50%;
-    left: 50%;
-    width: 15%;
-    height: 35%;
+    margin-left: auto;
+    border-left: 3px solid rgb(90, 90, 90);
+    width: 50%;
+    height: 100%;
     justify-content: center;
     align-content: center;
     text-align: center;
-    background-color: #12263A;
-    border: 3px outset white;
-    border-radius: 20px;
+    background-color: #064B72;
 }
 
 #botaoEnvio{
-    width: 5vw;
-    height: 3vh;
+    width: 20vw;
+    height: 5vh;
     transition: .5s;
-    background-color: #C5D8D1;
+    background-color: #22A9D3;
     border: 3px solid white;
-    border-radius: 10px;
-    color: black;
-    font-size: .75vw;
-    margin-bottom: 2vmin;
+    color: rgb(255, 255, 255);
+    font-size: 2.5vmin;
+    margin-bottom: 10vmin;
 }
 
 input::placeholder{
-    font-size: .7vw;
-    text-align: center;
-    color: black;
+    font-size: 2.5vmin;
+    color: rgb(90, 90, 90);
     transition: .5s;
 }
 
@@ -88,51 +51,33 @@ input:hover::placeholder{
 }
 
 #inputNome, #inputSenha{
-    font-size: .7vw;
-    margin-bottom: 5%;
-    height: 3vh;
-    width: 7vw;
+    font-size: 2.5vmin;
+    margin-bottom: 10vmin;
+    height: 5vh;
+    width: 20vw;
     transition: .5s;
-    background-color: #C5D8D1;
-    border: 3px solid white;
+    background-color: white;
+    border: 3px solid #22A9D3;
     color: black;
 }
 
 #botaoEnvio:hover{
-    background-color: #2f7a7c;
-    height: 4vh;
-    width: 6vw;
-    color: white;
+    background-color: #064B72;
 }
 
 #inputNome:hover, #inputSenha:hover{
-    background-color: #2f7a7c;
+    background-color: #22A9D3;
     color: white;
-}
-
-#formLogin, label{
-    color: white;
-    font-size: 1vw;
-}
-
-#login{
-    color: white;
+    border: 3px solid white;
 }
 
 #loginErro {
-    color: black;
+    color: rgb(255, 255, 255);
     transition: .5s;
     transition-behavior: allow-discrete;
-    background-color: #C5D8D1;
-    border: .5vmin solid white;
-    width: 10vmin;
+    background-color: #22A9D3;
+    border: 3px solid white;
+    padding: 1vmin;
     border-radius: 10px;
-    padding: .5vmin;
-    font-size: 1vmin;
-}
-
-@starting-style {
-  #loginErro {
-    color: black;
-  }
+    font-size: 2.5vmin;
 }
